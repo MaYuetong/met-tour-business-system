@@ -19,16 +19,21 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const res  = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    if (data.ok) {
-      router.push(from);
-    } else {
-      setError(data.error ?? "登录失败");
+    try {
+      const res  = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        router.push(from);
+      } else {
+        setError(data.error ?? "用户名或密码错误");
+        setLoading(false);
+      }
+    } catch {
+      setError("网络错误，请重试");
       setLoading(false);
     }
   };
