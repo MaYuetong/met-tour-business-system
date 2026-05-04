@@ -81,7 +81,7 @@ function SuccessContent() {
             {[
               { label: "姓名",     value: name },
               { label: "邮箱",     value: email },
-              { label: "支付方式", value: paymentType === "full" ? `全额 — $75` : `定金 — $${paidAmount}（+ $55 尾款）` },
+              { label: "支付方式", value: paymentType === "full" ? `全额 — $75` : paymentType === "deposit" ? `定金 — $${paidAmount}（+ $55 尾款）` : "已于其他方式支付" },
               { label: "导览时长", value: "3.5 小时" },
               { label: "地点",     value: "大都会艺术博物馆，纽约" },
             ].map((row) => (

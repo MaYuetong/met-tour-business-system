@@ -159,7 +159,7 @@ export default function ReviewPage() {
             <div>
               <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的姓名 *</label>
               <input type="text" required value={form.name} onChange={(e) => setField("name", e.target.value)}
-                placeholder="例如：陈小明"
+                placeholder="例如：李雷"
                 className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
             </div>
             <div>

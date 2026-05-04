@@ -60,6 +60,22 @@ function BookingForm() {
     setLoading(true);
     setError("");
     try {
+      if (form.paymentType === "paid") {
+        const amount = 0;
+        const bookRes = await fetch("/api/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...form, amount, status: "confirmed" }),
+        });
+        const bookData = await bookRes.json();
+        if (bookData.ok) {
+          window.location.href = `/book/success?name=${encodeURIComponent(form.name)}&email=${encodeURIComponent(form.email)}&paymentType=paid&amount=0&mock=1&bookingId=${bookData.booking.id}`;
+          return;
+        }
+        setError("预约失败，请重试。");
+        return;
+      }
+
       const res  = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -209,7 +225,7 @@ function BookingForm() {
                         </label>
                         <input type="text" required value={form.name}
                           onChange={(e) => set("name", e.target.value)}
-                          placeholder="请输入您的姓名"
+                          placeholder="例如：李雷"
                           className="w-full bg-white border border-[#E0D5C8] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
                       </div>
                       <div>
@@ -454,6 +470,7 @@ function BookingForm() {
                         {[
                           { id: "full",    price: "$75", sub: "今日全额支付 · 完整体验", tag: "推荐" },
                           { id: "deposit", price: "$20", sub: "先付定金，导览当天补 $55 尾款", tag: "" },
+                          { id: "paid",    price: "✓",   sub: "已于其他方式支付（微信 / 支付宝）", tag: "" },
                         ].map((opt) => (
                           <button key={opt.id} type="button" onClick={() => set("paymentType", opt.id)}
                             className={`w-full flex items-center justify-between p-5 border text-left transition-all ${
@@ -498,7 +515,7 @@ function BookingForm() {
                             ? "bg-[#A6192E] text-white hover:bg-[#8B1525]"
                             : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
                         }`}>
-                        {loading ? "正在跳转..." : `前往支付 ${form.paymentType === "full" ? "$75" : "$20"} →`}
+                        {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$75" : "$20"} →`}
                       </button>
                       <p className="font-sans-ui text-[10px] text-center text-[#8B7D72] tracking-wider mt-3">
                         由 Stripe 加密保护 · 我们不储存您的支付信息
@@ -626,7 +643,7 @@ function BookingForm() {
                   ? "bg-[#A6192E] text-white active:bg-[#8B1525]"
                   : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
               }`}>
-              {loading ? "正在跳转..." : `前往支付 ${form.paymentType === "full" ? "$75" : "$20"} →`}
+              {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$75" : "$20"} →`}
             </button>
           )}
         </div>
