@@ -137,7 +137,6 @@ export default async function LandingPage() {
               </div>
 
               <h1 className="font-noto text-white leading-[1.1] mb-8">
-                <span className="block text-[clamp(52px,8vw,96px)] font-[200] text-white/20 tracking-tight">三点五小时</span>
                 <span className="block text-[clamp(48px,7.5vw,88px)] font-[200] text-white mt-2">读懂</span>
                 <span className="block text-[clamp(48px,7.5vw,88px)] font-[200] text-[#A6192E]">欧洲艺术史</span>
               </h1>
@@ -161,7 +160,6 @@ export default async function LandingPage() {
               {/* Key stats */}
               <div className="grid grid-cols-2 sm:flex sm:items-center sm:gap-10 gap-5 pt-8 border-t border-white/10">
                 {[
-                  { val: "3.5 小时", label: "深度导览" },
                   { val: "4 展区", label: "精选路线" },
                   { val: "$75", label: "每人起" },
                   { val: "≤ 6 人", label: "私享小团" },
@@ -228,8 +226,6 @@ export default async function LandingPage() {
               <span>欧洲艺术史私人导览</span>
               <span className="text-white/30">·</span>
               <span>含拉斐尔特展</span>
-              <span className="text-white/30">·</span>
-              <span>3.5 小时深度体验</span>
               <span className="text-white/30">·</span>
             </span>
           ))}
@@ -388,7 +384,7 @@ export default async function LandingPage() {
               <p className="font-sans-ui text-[12px] text-white/60 tracking-wider mb-8">每人 · 全包价格</p>
               <ul className="space-y-3 mb-10">
                 {[
-                  "3.5 小时深度导览",
+                  "精品私人导览",
                   "拉斐尔特展专场",
                   "参观前个性化问卷",
                   "导览后学习资料",
@@ -525,7 +521,7 @@ export default async function LandingPage() {
             <span className="text-white/50">是时候真正看懂它了。</span>
           </h2>
           <p className="font-noto text-white/60 text-lg leading-relaxed mb-12 max-w-md mx-auto">
-            预约一场 3.5 小时的私人导览，踏入欧洲最重要的艺术收藏之一。
+            预约一场私人导览，踏入欧洲最重要的艺术收藏之一。
           </p>
           <Link href="/book"
             className="inline-flex items-center gap-4 bg-white text-[#A6192E] px-14 py-5 font-sans-ui text-sm tracking-widest uppercase hover:bg-[#F8F5F0] transition-colors shadow-2xl font-[500]">
