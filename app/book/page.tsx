@@ -31,13 +31,24 @@ function BookingForm() {
   const [form, setForm] = useState({
     name: "", email: "", phone: "",
     tourDate: "", timeSlot: "", groupSize: 1,
-    hasElderly: false, elderlyCount: 1,
+    hasElderly: false, elderlyCount: 1, elderlyAges: [""],
     hasChildren: false, childrenCount: 1, childrenAges: [""],
     notes: "", paymentType: defaultPlan, referralCode,
   });
 
   const set = (key: string, value: string | number | boolean) =>
     setForm((f) => ({ ...f, [key]: value }));
+
+  const setElderlyCount = (n: number) =>
+    setForm(f => ({
+      ...f, elderlyCount: n,
+      elderlyAges: Array.from({ length: n }, (_, i) => f.elderlyAges[i] ?? ""),
+    }));
+
+  const setElderlyAge = (i: number, age: string) =>
+    setForm(f => ({
+      ...f, elderlyAges: f.elderlyAges.map((a, idx) => idx === i ? age : a),
+    }));
 
   const setChildrenCount = (n: number) =>
     setForm(f => ({
@@ -344,16 +355,31 @@ function BookingForm() {
                         </div>
                       </div>
                       {form.hasElderly && (
-                        <div className="mt-4 pt-4 border-t border-[#E0D5C8]">
-                          <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wider uppercase mb-3">老年人人数</p>
-                          <div className="flex gap-2 flex-wrap">
-                            {[1,2,3,4,5,6].map(n => (
-                              <button key={n} type="button" onClick={() => set("elderlyCount", n)}
-                                className={`w-12 h-12 border font-noto text-sm transition-all ${
-                                  form.elderlyCount === n
-                                    ? "border-[#A6192E] bg-[#A6192E] text-white"
-                                    : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"
-                                }`}>{n}</button>
+                        <div className="mt-4 pt-4 border-t border-[#E0D5C8] space-y-4">
+                          <div>
+                            <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wider uppercase mb-3">老年人人数</p>
+                            <div className="flex gap-2 flex-wrap">
+                              {[1,2,3,4,5,6].map(n => (
+                                <button key={n} type="button" onClick={() => setElderlyCount(n)}
+                                  className={`w-12 h-12 border font-noto text-sm transition-all ${
+                                    form.elderlyCount === n
+                                      ? "border-[#A6192E] bg-[#A6192E] text-white"
+                                      : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"
+                                  }`}>{n}</button>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {form.elderlyAges.map((age, i) => (
+                              <div key={i}>
+                                <label className="block font-sans-ui text-[10px] text-[#8B7D72] tracking-wider uppercase mb-1.5">
+                                  第 {i + 1} 位 · 年龄（岁）
+                                </label>
+                                <input type="number" min="50" max="110" value={age}
+                                  onChange={e => setElderlyAge(i, e.target.value)}
+                                  placeholder="例如：68"
+                                  className="w-full bg-white border border-[#E0D5C8] px-3 py-3 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                              </div>
                             ))}
                           </div>
                         </div>
@@ -363,7 +389,7 @@ function BookingForm() {
                     {/* Children */}
                     <div className="bg-[#F8F5F0] border border-[#E0D5C8] p-5">
                       <div className="flex items-center justify-between gap-4">
-                        <p className="font-noto text-sm text-[#1A1A1A]">团队中有儿童吗？</p>
+                        <p className="font-noto text-sm text-[#1A1A1A]">团队中有儿童或18岁以下少年吗？</p>
                         <div className="flex gap-2 flex-shrink-0">
                           {([{ val: true, label: "有" }, { val: false, label: "没有" }] as const).map(opt => (
                             <button key={String(opt.val)} type="button"
@@ -444,7 +470,7 @@ function BookingForm() {
                           { label: "日期",   value: form.tourDate ? new Date(form.tourDate + "T12:00:00").toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" }) : "—" },
                           { label: "场次",   value: form.timeSlot ? (form.timeSlot === "10:00" ? "上午 10:00" : "下午 2:00") : "—" },
                           { label: "人数",   value: `${form.groupSize} 人` },
-                          ...(form.hasElderly ? [{ label: "老年人", value: `${form.elderlyCount} 位` }] : []),
+                          ...(form.hasElderly ? [{ label: "老年人", value: `${form.elderlyCount} 位${form.elderlyAges.some(a => a) ? `（${form.elderlyAges.join("、")} 岁）` : ""}` }] : []),
                           ...(form.hasChildren ? [{ label: "儿童", value: `${form.childrenCount} 位${form.childrenAges.some(a => a) ? `（${form.childrenAges.join("、")} 岁）` : ""}` }] : []),
                         ].map((row) => (
                           <div key={row.label} className="flex justify-between px-5 py-3.5">
