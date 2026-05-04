@@ -40,18 +40,13 @@ const TOUR_ROUTE = [
 const STATIC_TESTIMONIALS = [
   {
     quote: "我去过大都会五次，却从未真正看懂过。这次导览彻底改变了我。仅仅是拉斐尔那一小时，就值回全部的票价。",
-    name: "Sarah M.",
-    detail: "首次参加导览的访客",
+    name: "蒋女士",
+    detail: "来自深圳",
   },
   {
-    quote: "Yuetong 有一种罕见的才能——她把数百年的艺术史讲成了一个私人故事。节奏恰到好处，深度令人惊叹。",
-    name: "David L.",
-    detail: "二度参加导览",
-  },
-  {
-    quote: "作为一个有艺术史学位的人，我原本持怀疑态度。我错了。她在各时期之间建立的联系，是真正具有启发性的。",
-    name: "陈教授",
-    detail: "学术界访客",
+    quote: "A rare gift — centuries of art history told as a personal story. The pacing was perfect, the depth astonishing.",
+    name: "Cathy Wong",
+    detail: "来自西雅图",
   },
 ];
 
@@ -181,8 +176,8 @@ export default async function LandingPage() {
                 <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
                 <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
                 <p className="section-caps text-[#C9A84C]/60 mb-8">下一场导览</p>
-                <p className="font-noto text-white/20 text-[68px] font-[200] leading-none tracking-tighter mb-2">周末</p>
-                <p className="font-noto text-white/70 text-lg font-[300] mb-8">每周六、日开放场次</p>
+                <p className="font-noto text-white/20 text-[68px] font-[200] leading-none tracking-tighter mb-2">5月12日</p>
+                <p className="font-noto text-white/70 text-lg font-[300] mb-8">周日 · 名额有限</p>
                 <div className="space-y-3 mb-8">
                   {[
                     { time: "10:00", note: "上午场 · 人流最少" },
@@ -490,7 +485,7 @@ export default async function LandingPage() {
           <div className="divide-y divide-[#E0D5C8]">
             {[
               { q: "需要艺术史基础吗？", a: "我们会根据您的情况设计适合您的讲解内容，导览专门设计为对任何背景的访客都有真实的启发，无论是第一次进博物馆还是第一百次。" },
-              { q: "大都会门票包含在内吗？", a: "我们提供当日有效的折扣票价，凭票可多次自由出入博物馆，无需重新排队。票价另计，导览费用不含门票。" },
+              { q: "大都会门票包含在内吗？", a: "不包含。大都会的建议成人门票为 $30，需另行购买。我们提供当日有效的折扣票价，可以多次出入。" },
               { q: "每组最多几人？", a: "最多 6 位访客。保持亲密的团队规模，确保每位访客都能自由提问。" },
               { q: "预约后会发生什么？", a: "您将收到包含参观前问卷链接的确认邮件，帮助我们为您个性化本次体验。" },
               { q: "可以用中文导览吗？", a: "可以。中文或英文均可，预约时请在备注中说明。" },
