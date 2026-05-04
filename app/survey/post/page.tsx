@@ -52,7 +52,7 @@ function PostSurveyForm() {
   const [step, setStep]             = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone]             = useState(false);
-  const [referralLink, setReferralLink] = useState("");
+  const [codeCopied, setCodeCopied] = useState(false);
   const [form, setForm] = useState({
     ratings: { overall: 0, clarity: 0, pacing: 0 },
     mostImpressive: "",
@@ -83,15 +83,6 @@ function PostSurveyForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, bookingId }),
       });
-      if (form.interestedInFuture === "yes" && form.contactEmail) {
-        const refRes = await fetch("/api/referrals", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: form.contactEmail, name: "访客" }),
-        });
-        const refData = await refRes.json();
-        if (refData.ok) setReferralLink(refData.link);
-      }
       setDone(true);
     } catch {
       alert("提交失败，请重试。");
@@ -119,25 +110,27 @@ function PostSurveyForm() {
           <p className="font-noto text-[#6B5E52] text-base leading-relaxed mb-8">
             您的反馈对我们极为珍贵，将影响每一次未来的导览。
           </p>
-          {referralLink && (
-            <div className="border border-[#E0D5C8] mb-8">
-              <div className="bg-[#F8F5F0] px-5 py-3 border-b border-[#E0D5C8]">
-                <p className="font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase">专属推荐链接</p>
-              </div>
-              <div className="p-5">
-                <p className="font-noto text-sm text-[#6B5E52] mb-4 leading-relaxed">
-                  将您的专属链接分享给朋友。当他们预约后，双方都将获得特别优惠。
-                </p>
-                <div className="bg-[#F8F5F0] border border-[#E0D5C8] px-4 py-3 mb-3">
-                  <p className="font-noto text-sm text-[#A6192E] break-all">{referralLink}</p>
+          <div className="border border-[#A6192E]/30 mb-8">
+            <div className="bg-[#A6192E] px-5 py-3">
+              <p className="font-sans-ui text-[11px] tracking-wider text-white uppercase">推荐好友 · 获得返现</p>
+            </div>
+            <div className="p-5 bg-[#FDF8F8]">
+              <p className="font-noto text-[#1A1A1A] mb-1.5">推荐他人预约，获得 <strong className="text-[#A6192E]">$3 返现</strong></p>
+              <p className="font-noto text-sm text-[#6B5E52] mb-5 leading-relaxed">
+                将以下专属码分享给朋友，对方成功预约导览后，您将获得 $3 返现。
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 bg-white border border-[#E0D5C8] px-5 py-3 text-center">
+                  <p className="font-sans-ui text-xl tracking-[0.3em] text-[#A6192E] font-[500]">REFERME</p>
                 </div>
-                <button onClick={() => navigator.clipboard?.writeText(referralLink)}
-                  className="font-sans-ui text-[11px] tracking-widest uppercase text-[#8B7D72] border border-[#E0D5C8] px-4 py-2 hover:border-[#A6192E] hover:text-[#A6192E] transition-colors">
-                  复制链接
+                <button
+                  onClick={() => { navigator.clipboard?.writeText("REFERME"); setCodeCopied(true); setTimeout(() => setCodeCopied(false), 2000); }}
+                  className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E0D5C8] bg-white px-4 py-3 hover:border-[#A6192E] hover:text-[#A6192E] transition-colors whitespace-nowrap">
+                  {codeCopied ? "已复制 ✓" : "复制码"}
                 </button>
               </div>
             </div>
-          )}
+          </div>
           <div className="w-10 h-px bg-[#C9A84C] mb-6" />
           <Link href="/" className="font-sans-ui text-[11px] text-[#A6192E] tracking-wider hover:underline">← 返回首页</Link>
         </main>
