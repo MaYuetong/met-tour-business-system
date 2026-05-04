@@ -209,6 +209,37 @@ export async function useReferral(code: string, bookingId: string): Promise<bool
   return true;
 }
 
+// ─── Reviews ─────────────────────────────────────────────────────────────────
+
+export type ReviewRecord = {
+  id: string;
+  createdAt: string;
+  name: string;
+  email?: string;
+  tourDate?: string;
+  rating: number;
+  section: string;
+  review: string;
+  wouldRecommend: string;
+  allowQuote: string;
+};
+
+export async function addReview(data: Omit<ReviewRecord, "id" | "createdAt">): Promise<ReviewRecord> {
+  const records = await readJSON<ReviewRecord>("reviews.json");
+  const entry: ReviewRecord = {
+    id: `rev_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+    createdAt: new Date().toISOString(),
+    ...data,
+  };
+  records.push(entry);
+  await writeJSON("reviews.json", records);
+  return entry;
+}
+
+export async function getReviews(): Promise<ReviewRecord[]> {
+  return readJSON<ReviewRecord>("reviews.json");
+}
+
 // ─── Analytics ────────────────────────────────────────────────────────────────
 
 export async function getAnalytics() {

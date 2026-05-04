@@ -457,6 +457,7 @@ export default async function LandingPage() {
           <div className="flex items-center gap-6 text-xs font-garamond tracking-widest uppercase">
             <Link href="/survey/pre" className="hover:text-white/80 transition-colors">Pre-Survey</Link>
             <Link href="/survey/post" className="hover:text-white/80 transition-colors">Post-Survey</Link>
+            <Link href="/review" className="hover:text-white/80 transition-colors">Leave a Review</Link>
             <Link href="/admin" className="hover:text-white/80 transition-colors">Admin</Link>
           </div>
           <p className="text-xs font-garamond">© 2026 · All rights reserved</p>
