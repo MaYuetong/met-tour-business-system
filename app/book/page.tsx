@@ -20,7 +20,7 @@ const STEPS = [
 
 function BookingForm() {
   const params = useSearchParams();
-  const defaultPlan  = (params.get("plan") as "full" | "deposit") ?? "full";
+  const defaultPlan  = (params.get("plan") as "full" | "deposit" | "paid") ?? "full";
   const referralCode = params.get("ref") ?? "";
   const wasCancelled = params.get("cancelled") === "1";
 
