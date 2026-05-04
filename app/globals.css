@@ -3,13 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --met-red: #A6192E;
+  --met-red:      #A6192E;
   --met-red-dark: #8B1525;
-  --met-bg: #F8F5F0;
-  --met-text: #1A1A1A;
-  --met-gold: #C9A84C;
-  --met-border: #E0D5C8;
-  --met-muted: #8B7D72;
+  --met-bg:       #F8F5F0;
+  --met-text:     #1A1A1A;
+  --met-gold:     #C9A84C;
+  --met-border:   #E0D5C8;
+  --met-muted:    #8B7D72;
+  --met-dark:     #111111;
 }
 
 html { scroll-behavior: smooth; }
@@ -17,28 +18,65 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--met-bg);
   color: var(--met-text);
-  font-family: var(--font-garamond), Georgia, serif;
+  font-family: var(--font-noto), "Noto Serif SC", "Songti SC", "STSong", serif;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
 }
 
+/* Headings use thin-weight serif — matches Met Museum editorial style */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-noto), "Noto Serif SC", "Songti SC", "STSong", serif;
+  line-height: 1.3;
+  font-weight: 300;
 }
 
-/* Transitions */
+/* Sans-serif class for navigation and UI chrome */
+.font-sans-ui {
+  font-family: var(--font-sans), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+p, span, label, button { letter-spacing: 0.02em; }
+
+/* ── Transitions ── */
 .step-transition { animation: slideUp 0.4s ease-out; }
 .fade-in         { animation: fadeIn 0.5s ease-in-out; }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* Form Controls */
+/* ── Met-style ornament divider ── */
+.ornament-divider {
+  display: flex; align-items: center; gap: 16px; color: var(--met-gold);
+}
+.ornament-divider::before, .ornament-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--met-border);
+}
+
+/* ── Gold horizontal rule ── */
+.gold-rule {
+  width: 48px; height: 1px; background: var(--met-gold); display: block;
+}
+
+/* ── Met-style section caps label ── */
+.section-caps {
+  font-family: var(--font-sans), "Noto Sans SC", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--met-muted);
+}
+
+/* ── Form Controls ── */
 .met-radio {
   appearance: none; -webkit-appearance: none;
   width: 20px; height: 20px;
@@ -49,10 +87,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   flex-shrink: 0;
 }
-.met-radio:checked {
-  border-color: var(--met-red);
-  background-color: var(--met-red);
-}
+.met-radio:checked { border-color: var(--met-red); background-color: var(--met-red); }
 .met-radio:checked::after {
   content: "";
   position: absolute;
@@ -73,10 +108,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   flex-shrink: 0;
 }
-.met-checkbox:checked {
-  border-color: var(--met-red);
-  background-color: var(--met-red);
-}
+.met-checkbox:checked { border-color: var(--met-red); background-color: var(--met-red); }
 .met-checkbox:checked::after {
   content: "";
   position: absolute;
@@ -89,11 +121,8 @@ h1, h2, h3, h4, h5, h6 {
 
 input[type="range"].met-range {
   -webkit-appearance: none; appearance: none;
-  height: 4px;
-  background: var(--met-border);
-  border-radius: 2px;
-  outline: none;
-  width: 100%;
+  height: 4px; background: var(--met-border);
+  border-radius: 2px; outline: none; width: 100%;
 }
 input[type="range"].met-range::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -105,21 +134,7 @@ input[type="range"].met-range::-webkit-slider-thumb {
   box-shadow: 0 2px 6px rgba(166,25,46,0.35);
 }
 
-/* Decorative divider */
-.ornament-divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  color: var(--met-gold);
-}
-.ornament-divider::before,
-.ornament-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--met-border);
-}
-
+/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--met-bg); }
 ::-webkit-scrollbar-thumb { background: var(--met-border); border-radius: 3px; }

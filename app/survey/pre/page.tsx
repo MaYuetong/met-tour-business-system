@@ -7,38 +7,37 @@ import Link from "next/link";
 const TOTAL_STEPS = 5;
 
 const INTERESTS = [
-  { id: "architecture", label: "European Architecture & Sculpture" },
-  { id: "medieval", label: "Medieval Art" },
-  { id: "renaissance", label: "Renaissance (Leonardo, Raphael, Michelangelo)" },
-  { id: "baroque", label: "Baroque / Court Art" },
-  { id: "neoclassicism", label: "Neoclassicism" },
-  { id: "impressionism", label: "Impressionism" },
-  { id: "europe-new-world", label: "Europe vs New World" },
+  { id: "architecture",     label: "欧洲建筑与雕塑" },
+  { id: "medieval",         label: "中世纪艺术" },
+  { id: "renaissance",      label: "文艺复兴（达芬奇、拉斐尔、米开朗基罗）" },
+  { id: "baroque",          label: "巴洛克 / 宫廷艺术" },
+  { id: "neoclassicism",    label: "新古典主义" },
+  { id: "impressionism",    label: "印象派" },
+  { id: "europe-new-world", label: "欧洲与新世界" },
 ];
 
 const KNOWLEDGE_LEVELS = [
-  { id: "beginner", label: "Beginner", desc: "New to art history" },
-  { id: "some", label: "Some Knowledge", desc: "Visited museums before" },
-  { id: "familiar", label: "Familiar", desc: "Read about major movements" },
-  { id: "professional", label: "Professional", desc: "Academic or expert background" },
+  { id: "beginner",     label: "初次接触", desc: "对艺术史完全陌生" },
+  { id: "some",         label: "略知一二", desc: "曾参观过博物馆" },
+  { id: "familiar",     label: "有所了解", desc: "读过主要流派的相关内容" },
+  { id: "professional", label: "专业背景", desc: "学术或专家级别" },
 ];
 
 const EXPERIENCE_PREFS = [
-  { id: "storytelling", label: "Storytelling", desc: "Rich narratives and human drama" },
-  { id: "structured", label: "Structured Knowledge", desc: "Clear chronological framework" },
-  { id: "academic", label: "Academic Depth", desc: "Detailed art-historical analysis" },
-  { id: "photo", label: "Photo-Friendly / Casual", desc: "Relaxed pace with photo stops" },
+  { id: "storytelling", label: "故事叙述", desc: "丰富的叙事与人物故事" },
+  { id: "structured",   label: "系统知识", desc: "清晰的历史脉络框架" },
+  { id: "academic",     label: "学术深度", desc: "详细的艺术史分析" },
+  { id: "photo",        label: "轻松随性", desc: "节奏舒缓，可随时拍照" },
 ];
 
 function PreSurveyForm() {
-  const params = useSearchParams();
-  const bookingId = params.get("bookingId") ?? "";
-  const paramName  = params.get("name")  ?? "";
-  const paramEmail = params.get("email") ?? "";
+  const params     = useSearchParams();
+  const bookingId  = params.get("bookingId") ?? "";
+  const paramName  = params.get("name")      ?? "";
 
-  const [step, setStep] = useState(1);
+  const [step, setStep]           = useState(1);
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone]           = useState(false);
   const [profileTag, setProfileTag] = useState("");
   const [form, setForm] = useState({
     name: paramName,
@@ -77,7 +76,7 @@ function PreSurveyForm() {
       setProfileTag(data.profileTag ?? "");
       setDone(true);
     } catch {
-      alert("Something went wrong. Please try again.");
+      alert("提交失败，请重试。");
     } finally {
       setSubmitting(false);
     }
@@ -85,83 +84,105 @@ function PreSurveyForm() {
 
   if (done) {
     const tagLabels: Record<string, string> = {
-      academic: "Academic Explorer",
-      storytelling: "Story Seeker",
-      "photo-type": "Visual Wanderer",
-      beginner: "Curious Newcomer",
-      "curious-learner": "Curious Learner",
+      academic:          "学术探索者",
+      storytelling:      "故事追寻者",
+      "photo-type":      "视觉漫游者",
+      beginner:          "好奇的新访客",
+      "curious-learner": "求知探索者",
     };
 
     return (
-      <main className="min-h-screen bg-[#F8F5F0] flex items-center justify-center p-6">
-        <div className="text-center max-w-md animate-fade-in">
-          <div className="w-16 h-16 rounded-full bg-[#A6192E]/10 flex items-center justify-center mx-auto mb-6">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A6192E" strokeWidth="2">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+      <div className="min-h-screen bg-white flex flex-col">
+        <header className="bg-[#A6192E]">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 h-14 flex items-center">
+            <Link href="/" className="flex items-end gap-2.5">
+              <div className="flex flex-col leading-[0.8]">
+                <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">THE</span>
+                <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">MET</span>
+              </div>
+            </Link>
           </div>
-          <h2 className="font-playfair text-3xl text-[#1A1A1A] mb-3">Profile Created</h2>
-
-          {profileTag && (
-            <div className="inline-block bg-[#A6192E]/10 border border-[#A6192E]/20 rounded-sm px-6 py-3 mb-6">
-              <p className="text-xs text-[#8B7D72] uppercase tracking-widest font-garamond mb-1">Your Tour Profile</p>
-              <p className="font-playfair text-[#A6192E] text-xl">{tagLabels[profileTag] ?? profileTag}</p>
+        </header>
+        <main className="flex-1 flex items-center justify-center px-6 py-16">
+          <div className="text-center max-w-md">
+            <div className="w-14 h-14 bg-[#A6192E] flex items-center justify-center mx-auto mb-8">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             </div>
-          )}
-
-          <p className="text-[#8B7D72] font-garamond text-lg leading-relaxed mb-8">
-            We've noted your preferences. Your guide will tailor the experience to match your interests.
-          </p>
-          <div className="w-12 h-px bg-[#C9A84C] mx-auto mb-8" />
-          <Link href="/" className="text-xs tracking-widest uppercase text-[#A6192E] font-garamond hover:underline">
-            ← Return Home
-          </Link>
-        </div>
-      </main>
+            <div className="flex items-center gap-3 justify-center mb-4">
+              <div className="w-6 h-px bg-[#C9A84C]" />
+              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#C9A84C]">参观前问卷</p>
+              <div className="w-6 h-px bg-[#C9A84C]" />
+            </div>
+            <h2 className="font-noto text-3xl text-[#1A1A1A] font-[300] mb-4">个人画像已生成</h2>
+            {profileTag && (
+              <div className="inline-block bg-[#A6192E] px-8 py-4 mb-6">
+                <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-white/60 mb-1">您的导览风格</p>
+                <p className="font-noto text-white text-xl font-[300]">{tagLabels[profileTag] ?? profileTag}</p>
+              </div>
+            )}
+            <p className="font-noto text-[#6B5E52] text-base leading-relaxed mb-8">
+              我们已记录您的偏好。导览将根据您的兴趣量身定制。
+            </p>
+            <div className="w-10 h-px bg-[#C9A84C] mx-auto mb-8" />
+            <Link href="/" className="font-sans-ui text-[11px] text-[#A6192E] tracking-wider hover:underline">
+              ← 返回首页
+            </Link>
+          </div>
+        </main>
+      </div>
     );
   }
 
+  const stepTitles = ["欢迎来到大都会", "您的艺术知识背景", "您的兴趣方向", "您的理想体验方式", "最后一个问题"];
+
   return (
-    <main className="min-h-screen bg-[#F8F5F0]">
-      {/* Header progress */}
-      <div className="border-b border-[#E0D5C8] bg-white/60 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <Link href="/" className="text-xs text-[#8B7D72] tracking-widest uppercase font-garamond hover:text-[#A6192E] transition-colors">
-              ← Back
-            </Link>
-            <span className="text-xs text-[#8B7D72] font-garamond">Step {step} of {TOTAL_STEPS}</span>
-          </div>
-          <div className="w-full bg-[#E0D5C8] rounded-full h-1">
-            <div className="bg-[#A6192E] h-1 rounded-full transition-all duration-500" style={{ width: `${(step / TOTAL_STEPS) * 100}%` }} />
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Red Met header */}
+      <header className="bg-[#A6192E] sticky top-0 z-40">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-end gap-2.5">
+            <div className="flex flex-col leading-[0.8]">
+              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">THE</span>
+              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">MET</span>
+            </div>
+            <p className="font-noto text-[8px] tracking-[0.2em] uppercase text-white/60 pb-0.5 leading-tight hidden sm:block">欧洲艺术史导览</p>
+          </Link>
+          <span className="font-sans-ui text-[11px] text-white/70 tracking-wider">{step} / {TOTAL_STEPS}</span>
+        </div>
+      </header>
+
+      {/* Progress bar */}
+      <div className="bg-[#F8F5F0] border-b border-[#E0D5C8]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#C9A84C] mb-2">参观前问卷</p>
+          <div className="w-full bg-[#E0D5C8] h-1">
+            <div className="bg-[#A6192E] h-1 transition-all duration-500" style={{ width: `${(step / TOTAL_STEPS) * 100}%` }} />
           </div>
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-6 py-12">
-        <div className="mb-10">
-          <p className="text-xs tracking-[0.25em] uppercase text-[#C9A84C] font-garamond mb-2">Pre-Tour Survey</p>
-          <h1 className="font-playfair text-3xl md:text-4xl text-[#1A1A1A]">
-            {["Welcome to the MET", "Your Art Knowledge", "Your Interests", "Your Ideal Experience", "One Last Question"][step - 1]}
-          </h1>
+      <div className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-8 pb-32 md:pb-12">
+        <div className="mb-8">
+          <h1 className="font-noto text-3xl sm:text-4xl text-[#1A1A1A] font-[300]">{stepTitles[step - 1]}</h1>
         </div>
 
         <div key={step} className="step-transition">
-          {/* Step 1 */}
           {step === 1 && (
             <div className="space-y-8">
               <div>
-                <label className="block font-garamond text-sm text-[#8B7D72] uppercase tracking-widest mb-3">Your name (optional)</label>
+                <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的姓名（选填）</label>
                 <input type="text" value={form.name} onChange={(e) => setField("name", e.target.value)}
-                  placeholder="e.g. Sarah Chen"
-                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-garamond text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors text-lg" />
+                  placeholder="例如：陈小明"
+                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors text-lg" />
               </div>
               <div>
-                <p className="font-garamond text-sm text-[#8B7D72] uppercase tracking-widest mb-5">Is this your first time at the MET?</p>
+                <p className="font-noto text-xs text-[#8B7D72] mb-5">这是您第一次参观大都会艺术博物馆吗？</p>
                 <div className="grid grid-cols-2 gap-4">
-                  {[{ id: "yes", label: "Yes, first visit" }, { id: "no", label: "I've been before" }].map((opt) => (
+                  {[{ id: "yes", label: "是，第一次" }, { id: "no", label: "来过" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("firstVisit", opt.id)}
-                      className={`py-5 px-6 border rounded-sm font-playfair text-base transition-all duration-200 ${form.firstVisit === opt.id ? "border-[#A6192E] bg-[#A6192E] text-white" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"}`}>
+                      className={`py-5 px-6 border rounded-sm font-noto text-base transition-all duration-200 ${form.firstVisit === opt.id ? "border-[#A6192E] bg-[#A6192E] text-white" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"}`}>
                       {opt.label}
                     </button>
                   ))}
@@ -170,18 +191,17 @@ function PreSurveyForm() {
             </div>
           )}
 
-          {/* Step 2 */}
           {step === 2 && (
             <div className="space-y-4">
-              <p className="text-[#8B7D72] font-garamond mb-6 leading-relaxed">There are no wrong answers. This helps calibrate the depth of the tour.</p>
+              <p className="text-[#8B7D72] font-noto mb-6 leading-relaxed text-sm">没有对错之分，这有助于我们调整导览的深度与重点。</p>
               {KNOWLEDGE_LEVELS.map((opt) => (
                 <button key={opt.id} onClick={() => setField("knowledgeLevel", opt.id)}
                   className={`w-full text-left border rounded-sm p-6 transition-all duration-200 ${form.knowledgeLevel === opt.id ? "border-[#A6192E] bg-white shadow-sm" : "border-[#E0D5C8] bg-white hover:border-[#A6192E]/50"}`}>
                   <div className="flex items-center gap-4">
                     <input type="radio" className="met-radio" readOnly checked={form.knowledgeLevel === opt.id} />
                     <div>
-                      <div className="font-playfair text-[#1A1A1A]">{opt.label}</div>
-                      <div className="text-sm text-[#8B7D72] font-garamond mt-0.5">{opt.desc}</div>
+                      <div className="font-noto text-[#1A1A1A]">{opt.label}</div>
+                      <div className="text-sm text-[#8B7D72] font-noto mt-0.5">{opt.desc}</div>
                     </div>
                   </div>
                 </button>
@@ -189,17 +209,16 @@ function PreSurveyForm() {
             </div>
           )}
 
-          {/* Step 3 */}
           {step === 3 && (
             <div>
-              <p className="text-[#8B7D72] font-garamond mb-6 leading-relaxed">Select all that interest you. Your guide will emphasize these areas.</p>
+              <p className="text-[#8B7D72] font-noto mb-6 leading-relaxed text-sm">可多选。导览将重点介绍您感兴趣的领域。</p>
               <div className="space-y-3">
                 {INTERESTS.map((opt) => (
                   <button key={opt.id} onClick={() => toggleInterest(opt.id)}
                     className={`w-full text-left border rounded-sm p-5 transition-all duration-200 ${form.interests.includes(opt.id) ? "border-[#A6192E] bg-white shadow-sm" : "border-[#E0D5C8] bg-white hover:border-[#A6192E]/50"}`}>
                     <div className="flex items-center gap-4">
                       <input type="checkbox" className="met-checkbox" readOnly checked={form.interests.includes(opt.id)} />
-                      <span className="font-garamond text-[#1A1A1A]">{opt.label}</span>
+                      <span className="font-noto text-[#1A1A1A]">{opt.label}</span>
                     </div>
                   </button>
                 ))}
@@ -207,18 +226,17 @@ function PreSurveyForm() {
             </div>
           )}
 
-          {/* Step 4 */}
           {step === 4 && (
             <div className="space-y-4">
-              <p className="text-[#8B7D72] font-garamond mb-6 leading-relaxed">How would you most like to experience the art?</p>
+              <p className="text-[#8B7D72] font-noto mb-6 leading-relaxed text-sm">您希望以何种方式体验艺术？</p>
               {EXPERIENCE_PREFS.map((opt) => (
                 <button key={opt.id} onClick={() => setField("experiencePreference", opt.id)}
                   className={`w-full text-left border rounded-sm p-6 transition-all duration-200 ${form.experiencePreference === opt.id ? "border-[#A6192E] bg-white shadow-sm" : "border-[#E0D5C8] bg-white hover:border-[#A6192E]/50"}`}>
                   <div className="flex items-center gap-4">
                     <input type="radio" className="met-radio" readOnly checked={form.experiencePreference === opt.id} />
                     <div>
-                      <div className="font-playfair text-[#1A1A1A]">{opt.label}</div>
-                      <div className="text-sm text-[#8B7D72] font-garamond mt-0.5">{opt.desc}</div>
+                      <div className="font-noto text-[#1A1A1A]">{opt.label}</div>
+                      <div className="text-sm text-[#8B7D72] font-noto mt-0.5">{opt.desc}</div>
                     </div>
                   </div>
                 </button>
@@ -226,49 +244,79 @@ function PreSurveyForm() {
             </div>
           )}
 
-          {/* Step 5 */}
           {step === 5 && (
             <div>
-              <p className="text-[#8B7D72] font-garamond mb-6 leading-relaxed text-lg">
-                What are you most hoping to see or understand today?
+              <p className="text-[#8B7D72] font-noto mb-6 leading-relaxed">
+                今天您最希望看到或理解什么？
               </p>
               <textarea value={form.openQuestion} onChange={(e) => setField("openQuestion", e.target.value)}
-                placeholder="A specific artwork, a personal connection to art, a period of history..."
+                placeholder="某件特定的作品、与艺术的个人情缘、某段历史时期……"
                 rows={6}
-                className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-garamond text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors resize-none leading-relaxed" />
-              <p className="text-xs text-[#8B7D72] font-garamond mt-3">Optional — but deeply appreciated.</p>
+                className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors resize-none leading-relaxed" />
+              <p className="text-xs text-[#8B7D72] font-noto mt-3">选填——但我们非常感谢您的分享。</p>
             </div>
           )}
         </div>
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between mt-12 pt-8 border-t border-[#E0D5C8]">
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center justify-between mt-12 pt-8 border-t border-[#E0D5C8]">
           {step > 1 ? (
-            <button onClick={() => setStep((s) => s - 1)} className="text-sm font-garamond text-[#8B7D72] tracking-widest uppercase hover:text-[#1A1A1A] transition-colors">
-              ← Previous
+            <button onClick={() => setStep((s) => s - 1)}
+              className="font-sans-ui text-sm text-[#8B7D72] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              上一步
             </button>
           ) : <div />}
-
           {step < TOTAL_STEPS ? (
             <button onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}
-              className={`px-10 py-4 font-garamond text-sm tracking-widest uppercase transition-all duration-200 rounded-sm ${canProceed() ? "bg-[#A6192E] text-white hover:bg-[#8B1525]" : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"}`}>
-              Continue →
+              className={`px-10 py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#A6192E] text-white hover:bg-[#8B1525]" : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"}`}>
+              下一步 →
             </button>
           ) : (
             <button onClick={handleSubmit} disabled={submitting}
-              className="px-10 py-4 bg-[#A6192E] text-white font-garamond text-sm tracking-widest uppercase hover:bg-[#8B1525] transition-colors rounded-sm disabled:opacity-60">
-              {submitting ? "Saving..." : "Submit Survey"}
+              className="px-10 py-4 bg-[#A6192E] text-white font-sans-ui text-sm tracking-widest uppercase hover:bg-[#8B1525] transition-colors disabled:opacity-60">
+              {submitting ? "保存中..." : "提交问卷"}
             </button>
           )}
         </div>
       </div>
-    </main>
+
+      {/* Mobile sticky footer */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-[#E0D5C8] p-4">
+        <div className="flex items-center gap-3">
+          {step > 1 && (
+            <button onClick={() => setStep((s) => s - 1)}
+              className="flex-shrink-0 w-12 h-12 border border-[#E0D5C8] flex items-center justify-center text-[#8B7D72]">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+          )}
+          {step < TOTAL_STEPS ? (
+            <button onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}
+              className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#A6192E] text-white" : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"}`}>
+              下一步 →
+            </button>
+          ) : (
+            <button onClick={handleSubmit} disabled={submitting}
+              className="flex-1 h-12 bg-[#A6192E] text-white font-sans-ui text-sm tracking-widest uppercase disabled:opacity-60">
+              {submitting ? "保存中..." : "提交问卷"}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default function PreSurveyPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#F8F5F0] flex items-center justify-center"><div className="text-[#8B7D72] font-garamond">Loading...</div></div>}>
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-[#A6192E] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="font-sans-ui text-[11px] tracking-widest text-[#8B7D72] uppercase">加载中</p>
+        </div>
+      </div>
+    }>
       <PreSurveyForm />
     </Suspense>
   );

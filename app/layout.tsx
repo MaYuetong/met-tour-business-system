@@ -1,36 +1,36 @@
 import type { Metadata } from "next";
-import { Playfair_Display, EB_Garamond } from "next/font/google";
+import { Noto_Serif_SC, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["400", "500", "600", "700", "800"],
+const notoSerifSC = Noto_Serif_SC({
+  weight: ["200", "300", "400", "500", "700"],
+  variable: "--font-noto",
   display: "swap",
+  preload: false,
 });
 
-const garamond = EB_Garamond({
-  subsets: ["latin"],
-  variable: "--font-garamond",
-  weight: ["400", "500"],
+const notoSansSC = Noto_Sans_SC({
+  weight: ["300", "400", "500"],
+  variable: "--font-sans",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
-  title: "MET Art Tour — European Masterworks with Raphael Exhibition",
+  title: "大都会艺术博物馆 · 欧洲艺术史私人导览",
   description:
-    "A premium 3.5-hour guided journey through European art history at the Metropolitan Museum of Art. From Roman antiquity to Impressionism, including the Raphael Exhibition.",
+    "3.5 小时深度游览欧洲艺术史，含拉斐尔特展。从古罗马到印象派，在大都会艺术博物馆开启一段珍贵的文化之旅。",
   openGraph: {
-    title: "MET Art Tour — European Masterworks",
-    description: "Premium guided art experience at the Metropolitan Museum of Art",
+    title: "大都会艺术博物馆 · 欧洲艺术史私人导览",
+    description: "3.5 小时，从古罗马到印象派，含拉斐尔特展",
     type: "website",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${playfair.variable} ${garamond.variable} antialiased`}>
+    <html lang="zh-CN">
+      <body className={`${notoSerifSC.variable} ${notoSansSC.variable} antialiased`}>
         {children}
       </body>
     </html>

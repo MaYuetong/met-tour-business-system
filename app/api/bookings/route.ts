@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createBooking, getBookings, createReferral, useReferral } from "@/lib/db";
+import { sendBookingConfirmation } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,6 +22,16 @@ export async function POST(req: NextRequest) {
     }
 
     await createReferral(email, name);
+
+    // Fire email in background — non-blocking, doesn't affect booking response
+    sendBookingConfirmation({
+      id: booking.id,
+      name: booking.name,
+      email: booking.email,
+      tourDate: booking.tourDate,
+      amount: booking.amount,
+      paymentType: booking.paymentType,
+    }).catch(console.error);
 
     return NextResponse.json({ ok: true, booking }, { status: 201 });
   } catch (e) {
