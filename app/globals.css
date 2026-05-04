@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --met-red: #A6192E;
+  --met-red-dark: #8B1525;
+  --met-bg: #F8F5F0;
+  --met-text: #1A1A1A;
+  --met-gold: #C9A84C;
+  --met-border: #E0D5C8;
+  --met-muted: #8B7D72;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--met-bg);
+  color: var(--met-text);
+  font-family: var(--font-garamond), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+/* Transitions */
+.step-transition { animation: slideUp 0.4s ease-out; }
+.fade-in         { animation: fadeIn 0.5s ease-in-out; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Form Controls */
+.met-radio {
+  appearance: none; -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border: 2px solid var(--met-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  flex-shrink: 0;
+}
+.met-radio:checked {
+  border-color: var(--met-red);
+  background-color: var(--met-red);
+}
+.met-radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+.met-checkbox {
+  appearance: none; -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border: 2px solid var(--met-border);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  flex-shrink: 0;
+}
+.met-checkbox:checked {
+  border-color: var(--met-red);
+  background-color: var(--met-red);
+}
+.met-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 3px; left: 6px;
+  width: 5px; height: 9px;
+  border: 2px solid white;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+
+input[type="range"].met-range {
+  -webkit-appearance: none; appearance: none;
+  height: 4px;
+  background: var(--met-border);
+  border-radius: 2px;
+  outline: none;
+  width: 100%;
+}
+input[type="range"].met-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--met-red);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(166,25,46,0.35);
+}
+
+/* Decorative divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--met-gold);
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--met-border);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--met-bg); }
+::-webkit-scrollbar-thumb { background: var(--met-border); border-radius: 3px; }
