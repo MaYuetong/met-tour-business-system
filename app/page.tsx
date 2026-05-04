@@ -46,7 +46,7 @@ const STATIC_TESTIMONIALS = [
     detail: "来自深圳",
   },
   {
-    quote: "Brought my 16-year-old daughter who usually tunes out at museums. She asked more questions than I did. We never felt rushed — there was always time to stop and really look. Genuinely one of the best things we did in New York.",
+    quote: "Brought my 16-year-old daughter who usually tunes out at museums. She asked more questions than I did. We never felt rushed, there was always time to stop and really look. Genuinely one of the best things we did in New York.",
     name: "Cathy Wong",
     detail: "来自西雅图",
   },
