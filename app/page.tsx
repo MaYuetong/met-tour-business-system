@@ -143,7 +143,7 @@ export default async function LandingPage() {
 
               <p className="font-noto text-white/50 text-lg tracking-wider mb-3 font-[200]">含拉斐尔特展 · 全程中文</p>
               <p className="font-noto text-white/60 text-base leading-relaxed max-w-xl mb-12 font-[300]">
-                一场穿越五个世纪的私人导览——从古罗马到印象派，在大都会艺术博物馆，用一个下午建立起属于你的艺术史观。
+                一场穿越五个世纪的私人导览——从古罗马到印象派，在大都会艺术博物馆，用 3.5 小时建立起属于你的艺术史观。
               </p>
 
               <div className="flex flex-wrap gap-4 mb-16">
