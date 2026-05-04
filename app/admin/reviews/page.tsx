@@ -28,9 +28,15 @@ export default async function AdminReviewsPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-noto text-2xl text-[#1A1A1A]">访客评语</h1>
-        <a href="/review" target="_blank" className="text-xs font-noto text-[#A6192E] hover:underline">
-          查看评语表单 ↗
-        </a>
+        <div className="flex items-center gap-3">
+          <a href="/review" target="_blank" className="text-xs font-noto text-[#A6192E] hover:underline">
+            查看评语表单 ↗
+          </a>
+          <a href="/api/admin/export?type=reviews" download
+            className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E0D5C8] bg-white px-4 py-2 text-[#8B7D72] hover:border-[#A6192E] hover:text-[#A6192E] transition-colors">
+            下载 CSV
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

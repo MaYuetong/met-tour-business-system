@@ -86,7 +86,7 @@ export type PostSurveyRecord = {
   bookingId?: string;
   createdAt: string;
   ratings: { overall: number; clarity: number; pacing: number };
-  mostImpressive: string;
+  mostImpressive: string | string[];
   improvement: string;
   pricePerception: string;
   nps: number;
@@ -277,8 +277,11 @@ export async function getAnalytics() {
   const priceBreakdown: Record<string, number> = {};
   const sectionBreakdown: Record<string, number> = {};
   for (const r of post) {
-    priceBreakdown[r.pricePerception]  = (priceBreakdown[r.pricePerception]  ?? 0) + 1;
-    sectionBreakdown[r.mostImpressive] = (sectionBreakdown[r.mostImpressive] ?? 0) + 1;
+    priceBreakdown[r.pricePerception] = (priceBreakdown[r.pricePerception] ?? 0) + 1;
+    const items = Array.isArray(r.mostImpressive) ? r.mostImpressive : [r.mostImpressive];
+    for (const item of items) {
+      sectionBreakdown[item] = (sectionBreakdown[item] ?? 0) + 1;
+    }
   }
   const testimonials = post
     .filter((r) => r.testimonial && r.testimonial.trim().length > 20)

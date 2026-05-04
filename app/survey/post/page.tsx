@@ -55,7 +55,7 @@ function PostSurveyForm() {
   const [codeCopied, setCodeCopied] = useState(false);
   const [form, setForm] = useState({
     ratings: { overall: 0, clarity: 0, pacing: 0 },
-    mostImpressive: "",
+    mostImpressive: [] as string[],
     improvement: "",
     pricePerception: "",
     nps: -1,
@@ -67,9 +67,17 @@ function PostSurveyForm() {
   const setField = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
 
+  const toggleSection = (id: string) =>
+    setForm((f) => ({
+      ...f,
+      mostImpressive: f.mostImpressive.includes(id)
+        ? f.mostImpressive.filter((x) => x !== id)
+        : [...f.mostImpressive, id],
+    }));
+
   const canProceed = () => {
     if (step === 1) return form.ratings.overall > 0 && form.ratings.clarity > 0 && form.ratings.pacing > 0;
-    if (step === 2) return !!form.mostImpressive;
+    if (step === 2) return form.mostImpressive.length > 0;
     if (step === 3) return !!form.pricePerception;
     if (step === 4) return form.nps >= 0;
     return true;
@@ -197,11 +205,11 @@ function PostSurveyForm() {
           {step === 2 && (
             <div className="space-y-8">
               <div>
-                <p className="font-noto text-[#8B7D72] mb-5 leading-relaxed text-sm">哪个部分给您留下了最深刻的印象？</p>
+                <p className="font-noto text-[#8B7D72] mb-5 leading-relaxed text-sm">哪个部分给您留下了最深刻的印象？（可多选）</p>
                 <div className="grid grid-cols-2 gap-3">
                   {SECTIONS.map((s) => (
-                    <button key={s.id} onClick={() => setField("mostImpressive", s.id)}
-                      className={`py-4 px-5 border rounded-sm text-left font-noto transition-all duration-200 text-sm ${form.mostImpressive === s.id ? "border-[#A6192E] bg-white shadow-sm text-[#A6192E]" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]/50"}`}>
+                    <button key={s.id} onClick={() => toggleSection(s.id)}
+                      className={`py-4 px-5 border rounded-sm text-left font-noto transition-all duration-200 text-sm ${form.mostImpressive.includes(s.id) ? "border-[#A6192E] bg-white shadow-sm text-[#A6192E]" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]/50"}`}>
                       {s.label}
                     </button>
                   ))}

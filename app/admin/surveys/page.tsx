@@ -33,6 +33,10 @@ export default async function SurveysPage() {
       <section>
         <div className="flex items-center justify-between mb-6">
           <h1 className="font-noto text-2xl text-[#1A1A1A]">参观前问卷 <span className="text-[#A6192E] font-light">({pre.length})</span></h1>
+          <a href="/api/admin/export?type=pre-surveys" download
+            className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E0D5C8] bg-white px-4 py-2 text-[#8B7D72] hover:border-[#A6192E] hover:text-[#A6192E] transition-colors">
+            下载 CSV
+          </a>
         </div>
 
         {preSorted.length === 0 ? (
@@ -91,6 +95,10 @@ export default async function SurveysPage() {
       <section>
         <div className="flex items-center justify-between mb-6">
           <h1 className="font-noto text-2xl text-[#1A1A1A]">参观后问卷 <span className="text-[#A6192E] font-light">({post.length})</span></h1>
+          <a href="/api/admin/export?type=post-surveys" download
+            className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E0D5C8] bg-white px-4 py-2 text-[#8B7D72] hover:border-[#A6192E] hover:text-[#A6192E] transition-colors">
+            下载 CSV
+          </a>
         </div>
 
         {postSorted.length === 0 ? (
@@ -124,7 +132,7 @@ export default async function SurveysPage() {
                   {[
                     { label: "讲解清晰度", val: r.ratings.clarity },
                     { label: "导览节奏",   val: r.ratings.pacing },
-                    { label: "最深刻部分", val: r.mostImpressive },
+                    { label: "最深刻部分", val: Array.isArray(r.mostImpressive) ? r.mostImpressive.join("、") : r.mostImpressive },
                   ].map((item) => (
                     <div key={item.label} className="bg-[#F8F5F0] px-3 py-2">
                       <p className="font-sans-ui text-[10px] tracking-wider text-[#8B7D72] uppercase mb-1">{item.label}</p>

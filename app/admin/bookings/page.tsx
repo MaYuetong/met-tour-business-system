@@ -29,12 +29,16 @@ export default async function BookingsPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-noto text-2xl text-[#1A1A1A]">预约记录</h1>
-        <div className="flex gap-3 text-sm font-noto">
+        <div className="flex items-center gap-3 text-sm font-noto">
           <span className="text-[#8B7D72]">合计：{bookings.length}</span>
           <span className="text-[#8B7D72]">·</span>
           <span className="text-green-700">已确认：{bookings.filter(b => b.status === "confirmed").length}</span>
           <span className="text-[#8B7D72]">·</span>
           <span className="text-[#C9A84C]">收入：${bookings.filter(b => b.status !== "cancelled").reduce((s, b) => s + b.amount, 0)}</span>
+          <a href="/api/admin/export?type=bookings" download
+            className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E0D5C8] bg-white px-4 py-2 text-[#8B7D72] hover:border-[#A6192E] hover:text-[#A6192E] transition-colors">
+            下载 CSV
+          </a>
         </div>
       </div>
 
