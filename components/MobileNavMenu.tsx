@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import MetLogo from "@/components/MetLogo";
 
 const NAV_ITEMS = [
   { href: "#route",      label: "导览路线" },
@@ -31,11 +32,8 @@ export default function MobileNavMenu() {
         <div className="fixed inset-0 z-[100] bg-white flex flex-col">
           {/* Overlay header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-[#E0D5C8]">
-            <div className="flex items-end gap-3">
-              <div className="flex flex-col leading-[0.8]">
-                <span className="font-sans-ui font-black text-[20px] tracking-[-0.03em] text-[#A6192E] uppercase">THE</span>
-                <span className="font-sans-ui font-black text-[20px] tracking-[-0.03em] text-[#A6192E] uppercase">MET</span>
-              </div>
+            <div className="flex items-center gap-3">
+              <MetLogo className="h-9 w-auto text-[#A6192E]" />
               <div className="pb-0.5">
                 <p className="font-noto text-[8px] tracking-[0.2em] uppercase text-[#8B7D72] leading-tight">欧洲艺术史</p>
                 <p className="font-noto text-[8px] tracking-[0.2em] uppercase text-[#8B7D72] leading-tight">私人导览</p>

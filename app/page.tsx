@@ -3,6 +3,8 @@ import { getAnalytics } from "@/lib/db";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import MobileNavMenu from "@/components/MobileNavMenu";
 import MetLogo from "@/components/MetLogo";
+import MobileBookingBar from "@/components/MobileBookingBar";
+import FAQAccordion from "@/components/FAQAccordion";
 
 export const dynamic = "force-dynamic";
 
@@ -65,7 +67,9 @@ export default async function LandingPage() {
   } catch { /* use static */ }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0]">
+    <div className="min-h-screen bg-[#F8F5F0] overflow-x-hidden">
+
+      <MobileBookingBar />
 
       {/* ── Announcement Bar ─────────────────────────────────────────── */}
       <AnnouncementBar />
@@ -155,7 +159,7 @@ export default async function LandingPage() {
               </div>
 
               {/* Key stats */}
-              <div className="flex items-center gap-10 pt-8 border-t border-white/10">
+              <div className="grid grid-cols-2 sm:flex sm:items-center sm:gap-10 gap-5 pt-8 border-t border-white/10">
                 {[
                   { val: "3.5 小时", label: "深度导览" },
                   { val: "4 展区", label: "精选路线" },
@@ -167,6 +171,19 @@ export default async function LandingPage() {
                     <p className="font-sans-ui text-[11px] text-white/40 tracking-widest uppercase mt-0.5">{s.label}</p>
                   </div>
                 ))}
+              </div>
+
+              {/* Mobile-only: next date strip */}
+              <div className="lg:hidden mt-8 border border-white/10 p-5 flex items-center justify-between">
+                <div>
+                  <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#C9A84C]/70 mb-1">下一场导览</p>
+                  <p className="font-noto text-white text-xl font-[200]">5月12日 · 周日</p>
+                  <p className="font-sans-ui text-[11px] text-white/40 tracking-wider mt-1">10:00 · 14:00 两场</p>
+                </div>
+                <Link href="/book"
+                  className="bg-[#A6192E] text-white px-5 py-3 font-sans-ui text-xs tracking-widest uppercase whitespace-nowrap">
+                  预约 →
+                </Link>
               </div>
             </div>
 
@@ -241,23 +258,23 @@ export default async function LandingPage() {
 
             <div className="space-y-0 divide-y divide-[#E0D5C8]">
               {TOUR_ROUTE.map((stop, idx) => (
-                <div key={stop.num} className="py-10 group flex gap-8 items-start">
-                  <div className="flex-shrink-0 pt-1">
-                    <p className="font-noto text-[64px] font-[200] text-[#E0D5C8] leading-none group-hover:text-[#A6192E]/20 transition-colors">
+                <div key={stop.num} className="py-7 sm:py-10 group flex gap-5 sm:gap-8 items-start">
+                  <div className="flex-shrink-0 pt-1 w-8 sm:w-auto">
+                    <p className="font-noto text-[36px] sm:text-[64px] font-[200] text-[#E0D5C8] leading-none group-hover:text-[#A6192E]/20 transition-colors">
                       {idx + 1}
                     </p>
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-4 mb-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-3 mb-2 sm:mb-3">
                       <div>
-                        <p className="section-caps text-[#C9A84C] mb-1">{stop.en}</p>
-                        <h3 className="font-noto text-2xl text-[#1A1A1A] font-[300]">{stop.title}</h3>
+                        <p className="section-caps text-[#C9A84C] mb-1 hidden sm:block">{stop.en}</p>
+                        <h3 className="font-noto text-xl sm:text-2xl text-[#1A1A1A] font-[300]">{stop.title}</h3>
                       </div>
-                      <span className="flex-shrink-0 font-sans-ui text-xs text-[#C9A84C] bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-3 py-1.5 tracking-wide">
+                      <span className="flex-shrink-0 font-sans-ui text-[11px] text-[#C9A84C] bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-2.5 py-1 tracking-wide">
                         {stop.duration}
                       </span>
                     </div>
-                    <p className="font-noto text-[#6B5E52] leading-relaxed">{stop.desc}</p>
+                    <p className="font-noto text-[#6B5E52] leading-relaxed text-sm sm:text-base">{stop.desc}</p>
                   </div>
                 </div>
               ))}
@@ -328,16 +345,23 @@ export default async function LandingPage() {
             <div className="w-12 h-px bg-[#C9A84C]/40" />
           </div>
 
-          <div className="grid md:grid-cols-3 gap-px bg-white/5">
+          {/* Mobile: horizontal scroll cards. Desktop: grid */}
+          <div className="flex md:grid md:grid-cols-3 gap-3 md:gap-px md:bg-white/5 overflow-x-auto snap-x snap-mandatory pb-2 md:pb-0 -mx-6 md:mx-0 px-6 md:px-0">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-[#111111] p-10 hover:bg-[#161616] transition-colors group">
-                <div className="text-[#C9A84C]/40 text-5xl font-noto font-[200] leading-none mb-6 group-hover:text-[#C9A84C]/70 transition-colors">"</div>
-                <p className="font-noto text-white/70 leading-relaxed mb-8 text-[15px]">{t.quote}</p>
-                <div className="border-t border-white/10 pt-6">
+              <div key={i} className="flex-shrink-0 w-[82vw] sm:w-[60vw] md:w-auto snap-center bg-[#111111] border border-white/5 md:border-0 p-8 md:p-10 hover:bg-[#161616] transition-colors group">
+                <div className="text-[#C9A84C]/40 text-5xl font-noto font-[200] leading-none mb-5 group-hover:text-[#C9A84C]/70 transition-colors">"</div>
+                <p className="font-noto text-white/70 leading-relaxed mb-7 text-[15px]">{t.quote}</p>
+                <div className="border-t border-white/10 pt-5">
                   <p className="font-noto text-white/90 text-sm font-[400]">{t.name}</p>
                   <p className="font-sans-ui text-[11px] text-white/40 tracking-wider mt-1 uppercase">{t.detail}</p>
                 </div>
               </div>
+            ))}
+          </div>
+          {/* Scroll indicator dots — mobile only */}
+          <div className="flex justify-center gap-1.5 mt-5 md:hidden">
+            {testimonials.map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />
             ))}
           </div>
         </div>
@@ -482,25 +506,12 @@ export default async function LandingPage() {
             <span className="gold-rule mx-auto mb-6 block" />
             <h2 className="font-noto text-3xl text-[#1A1A1A] font-[300]">常见问题</h2>
           </div>
-          <div className="divide-y divide-[#E0D5C8]">
-            {[
-              { q: "需要艺术史基础吗？", a: "我们会根据您的情况设计适合您的讲解内容，导览专门设计为对任何背景的访客都有真实的启发，无论是第一次进博物馆还是第一百次。" },
-              { q: "大都会门票包含在内吗？", a: "不包含。大都会的建议成人门票为 $30，需另行购买。我们提供当日有效的折扣票价，可以多次出入。" },
-              { q: "每组最多几人？", a: "最多 6 位访客。保持亲密的团队规模，确保每位访客都能自由提问。" },
-              { q: "预约后会发生什么？", a: "您将收到包含参观前问卷链接的确认邮件，帮助我们为您个性化本次体验。" },
-              { q: "可以用中文导览吗？", a: "可以。中文或英文均可，预约时请在备注中说明。" },
-            ].map((faq) => (
-              <div key={faq.q} className="py-7">
-                <h3 className="font-noto text-[#1A1A1A] font-[400] mb-3 text-lg">{faq.q}</h3>
-                <p className="font-noto text-[#6B5E52] leading-relaxed">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+          <FAQAccordion />
         </div>
       </section>
 
       {/* ── Final CTA ────────────────────────────────────────────────── */}
-      <section className="py-32 bg-[#A6192E] text-white relative overflow-hidden">
+      <section className="py-32 pb-48 md:pb-32 bg-[#A6192E] text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: `repeating-linear-gradient(45deg,white 0px,transparent 1px,transparent 40px),
