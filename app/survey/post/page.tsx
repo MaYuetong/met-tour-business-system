@@ -17,10 +17,10 @@ const SECTIONS = [
 ];
 
 const PRICE_OPTIONS = [
-  { id: "<50",    label: "$50 以下"  },
-  { id: "50-75",  label: "$50 – $75" },
-  { id: "75-100", label: "$75 – $100" },
-  { id: "100+",   label: "$100 以上" },
+  { id: "80-100",  label: "$80 – $100" },
+  { id: "100-120", label: "$100 – $120" },
+  { id: "120-150", label: "$120 – $150" },
+  { id: "150+",    label: "$150 以上"   },
 ];
 
 type RatingsKey = "overall" | "clarity" | "pacing";
