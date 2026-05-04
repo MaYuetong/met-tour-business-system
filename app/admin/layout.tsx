@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Noto_Serif_SC } from "next/font/google";
 import "../globals.css";
+import AdminLogout from "@/components/AdminLogout";
 
 const notoSerifSC = Noto_Serif_SC({
   weight: ["200", "300", "400", "500", "700"],
@@ -35,10 +36,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </Link>
               ))}
             </nav>
-            <div className="px-6 py-5 border-t border-white/10">
-              <Link href="/" className="text-xs text-white/40 hover:text-white/70 transition-colors font-noto">
+            <div className="px-6 py-5 border-t border-white/10 space-y-2">
+              <Link href="/" className="block text-xs text-white/40 hover:text-white/70 transition-colors font-noto">
                 ← 返回前台
               </Link>
+              <AdminLogout />
             </div>
           </aside>
 
