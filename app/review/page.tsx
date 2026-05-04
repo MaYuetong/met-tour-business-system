@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import MetLogo from "@/components/MetLogo";
 
 const SECTIONS = [
   { id: "architecture",  label: "建筑与雕塑" },
@@ -82,9 +83,8 @@ export default function ReviewPage() {
       <div className="min-h-screen bg-white flex flex-col">
         <header className="bg-[#A6192E]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 h-14 flex items-center">
-            <Link href="/" className="flex flex-col leading-[0.8]">
-              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">THE</span>
-              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">MET</span>
+            <Link href="/" className="text-white">
+              <MetLogo className="h-8 w-auto text-white" />
             </Link>
           </div>
         </header>
@@ -120,10 +120,7 @@ export default function ReviewPage() {
       <header className="bg-[#A6192E] sticky top-0 z-40">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-end gap-2.5">
-            <div className="flex flex-col leading-[0.8]">
-              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">THE</span>
-              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">MET</span>
-            </div>
+            <MetLogo className="h-8 w-auto text-white" />
             <p className="font-noto text-[8px] tracking-[0.2em] uppercase text-white/60 pb-0.5 leading-tight hidden sm:block">欧洲艺术史导览</p>
           </Link>
           <Link href="/"

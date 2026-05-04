@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAnalytics } from "@/lib/db";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import MobileNavMenu from "@/components/MobileNavMenu";
+import MetLogo from "@/components/MetLogo";
 
 export const dynamic = "force-dynamic";
 
@@ -81,10 +82,7 @@ export default async function LandingPage() {
 
             {/* Logo mark */}
             <Link href="/" className="flex items-end gap-3 group">
-              <div className="flex flex-col leading-[0.8] select-none">
-                <span className="font-sans-ui font-black text-[22px] tracking-[-0.03em] text-[#A6192E] uppercase">THE</span>
-                <span className="font-sans-ui font-black text-[22px] tracking-[-0.03em] text-[#A6192E] uppercase">MET</span>
-              </div>
+              <MetLogo className="h-10 w-auto text-[#A6192E]" />
               <div className="pb-0.5">
                 <p className="font-noto text-[9px] tracking-[0.22em] uppercase text-[#8B7D72] leading-tight">欧洲艺术史</p>
                 <p className="font-noto text-[9px] tracking-[0.22em] uppercase text-[#8B7D72] leading-tight">私人导览</p>
@@ -539,10 +537,7 @@ export default async function LandingPage() {
           <div className="grid md:grid-cols-3 gap-8 pb-10 border-b border-white/10">
             <div>
               <div className="flex items-end gap-3 mb-4">
-                <div className="flex flex-col leading-[0.8]">
-                  <span className="font-sans-ui font-black text-[18px] tracking-[-0.03em] text-[#A6192E] uppercase">THE</span>
-                  <span className="font-sans-ui font-black text-[18px] tracking-[-0.03em] text-[#A6192E] uppercase">MET</span>
-                </div>
+                <MetLogo className="h-9 w-auto text-white/60" />
                 <div className="pb-0.5">
                   <p className="font-noto text-[8px] tracking-[0.2em] uppercase text-white/30 leading-tight">欧洲艺术史私人导览</p>
                 </div>

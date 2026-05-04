@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import MetLogo from "@/components/MetLogo";
 
 const TIME_SLOTS = [
   { id: "10:00", label: "上午 10:00", note: "上午场 · 人流最少" },
@@ -118,10 +119,7 @@ function BookingForm() {
       <header className="bg-[#A6192E] sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-end gap-2.5 group">
-            <div className="flex flex-col leading-[0.8]">
-              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">THE</span>
-              <span className="font-sans-ui font-black text-[17px] tracking-[-0.03em] text-white uppercase">MET</span>
-            </div>
+            <MetLogo className="h-8 w-auto text-white" />
             <p className="font-noto text-[8px] tracking-[0.2em] uppercase text-white/60 pb-0.5 leading-tight hidden sm:block">
               欧洲艺术史导览
             </p>
