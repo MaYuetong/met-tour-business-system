@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { getBookings, getPostSurveys, getPreSurveys, getAnalytics } from "@/lib/db";
+import { getBookings, getPostSurveys, getPreSurveys, getAnalytics, getReviews } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminOverview() {
-  const [bookings, pre, post, analytics] = await Promise.all([
-    getBookings(), getPreSurveys(), getPostSurveys(), getAnalytics(),
+  const [bookings, pre, post, analytics, reviews] = await Promise.all([
+    getBookings(), getPreSurveys(), getPostSurveys(), getAnalytics(), getReviews(),
   ]);
 
   const confirmed = bookings.filter((b) => b.status === "confirmed" || b.status === "completed");
@@ -34,7 +34,8 @@ export default async function AdminOverview() {
       <div className="grid md:grid-cols-3 gap-4 mb-10">
         {[
           { href: "/admin/bookings",  label: "预约记录", count: bookings.length,  desc: "查看所有预约" },
-          { href: "/admin/crm",       label: "访客管理", count: confirmed.length, desc: "CRM · 兴趣标签" },
+          { href: "/admin/surveys",   label: "问卷数据", count: pre.length + post.length, desc: `前置 ${pre.length} · 后置 ${post.length}` },
+          { href: "/admin/reviews",   label: "访客评价", count: reviews.length,   desc: "星级评分 · 文字评语" },
           { href: "/admin/analytics", label: "数据分析", count: post.length,      desc: "评分、NPS、趋势" },
         ].map((item) => (
           <Link key={item.href} href={item.href}
@@ -87,21 +88,31 @@ export default async function AdminOverview() {
         )}
       </div>
 
-      {/* 近期评语 */}
-      {analytics.testimonials && analytics.testimonials.length > 0 && (
-        <div>
-          <h2 className="font-noto text-xl text-[#1A1A1A] mb-5">近期评语</h2>
+      {/* 近期访客评价 */}
+      <div>
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="font-noto text-xl text-[#1A1A1A]">近期访客评价</h2>
+          <Link href="/admin/reviews" className="text-xs text-[#A6192E] font-noto hover:underline">查看全部 →</Link>
+        </div>
+        {reviews.length === 0 ? (
+          <div className="bg-white border border-[#E0D5C8] p-8 text-center">
+            <p className="font-noto text-[#8B7D72]">暂无评价。导览结束后将 <Link href="/review" className="text-[#A6192E] hover:underline">/review</Link> 链接发给访客。</p>
+          </div>
+        ) : (
           <div className="grid md:grid-cols-2 gap-4">
-            {analytics.testimonials.slice(0, 4).map((t: { text: string; date: string }, i: number) => (
-              <div key={i} className="bg-white border border-[#E0D5C8] rounded-sm p-5">
-                <p className="text-[#C9A84C] font-noto text-2xl mb-2">"</p>
-                <p className="font-noto text-[#6B5E52] leading-relaxed text-sm mb-3">{t.text}</p>
-                <p className="text-xs text-[#8B7D72] font-noto">{new Date(t.date).toLocaleDateString("zh-CN")}</p>
+            {[...reviews].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 4).map((r) => (
+              <div key={r.id} className="bg-white border border-[#E0D5C8] p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-noto text-[#1A1A1A] font-medium">{r.name}</p>
+                  <p className="font-noto text-[#A6192E] text-lg font-light">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</p>
+                </div>
+                <p className="font-noto text-[#6B5E52] text-sm leading-relaxed border-l-2 border-[#A6192E] pl-3">「{r.review}」</p>
+                <p className="text-xs text-[#8B7D72] font-noto mt-3">{new Date(r.createdAt).toLocaleDateString("zh-CN")}</p>
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
