@@ -525,11 +525,11 @@ export default async function LandingPage() {
         <div className="relative z-10 max-w-2xl mx-auto px-6 text-center">
           <span className="inline-block w-12 h-px bg-white/30 mb-10" />
           <h2 className="font-noto text-5xl md:text-6xl font-[200] mb-6 leading-tight">
-            博物馆一直都在。<br />
-            <span className="text-white/50">是时候真正看懂它了。</span>
+            从古罗马到印象派，<br />
+            <span className="text-white/50">一条时间线，五个世纪。</span>
           </h2>
           <p className="font-noto text-white/60 text-lg leading-relaxed mb-12 max-w-md mx-auto">
-            预约一场私人导览，踏入欧洲最重要的艺术收藏之一。
+            沿着欧洲艺术史最自然的脉络走一遍——看懂每个时代如何孕育下一个时代，看见艺术如何一步步走到今天。
           </p>
           <Link href="/book"
             className="inline-flex items-center gap-4 bg-white text-[#A6192E] px-14 py-5 font-sans-ui text-sm tracking-widest uppercase hover:bg-[#F8F5F0] transition-colors shadow-2xl font-[500]">
