@@ -97,6 +97,7 @@ export default async function LandingPage() {
                 { href: "#experience", label: "体验" },
                 { href: "#pricing",  label: "价格" },
                 { href: "#faq",      label: "常见问题" },
+                { href: "#tip",      label: "扫码打赏" },
               ].map((item) => (
                 <a key={item.href} href={item.href}
                   className="font-sans-ui text-[13px] text-[#1A1A1A] hover:text-[#A6192E] transition-colors tracking-wide">
@@ -432,7 +433,7 @@ export default async function LandingPage() {
           </div>
 
           {/* Ticket-only option */}
-          <div className="mt-14 pt-14 border-t border-[#E0D5C8]">
+          <div id="tip" className="mt-14 pt-14 border-t border-[#E0D5C8]">
             <div className="flex items-center gap-6 justify-center mb-10">
               <div className="w-10 h-px bg-[#E0D5C8]" />
               <p className="section-caps">另有选项</p>
