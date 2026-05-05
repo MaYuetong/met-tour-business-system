@@ -68,6 +68,7 @@ export type Booking = {
   stripeSessionId?: string;
   referralCode?: string;
   profileTag?: string;
+  bookingCode?: string;
 };
 
 export type PreSurveyRecord = {
@@ -129,11 +130,13 @@ export type ReferralRecord = {
 
 // ─── Bookings ────────────────────────────────────────────────────────────────
 
-export async function createBooking(data: Omit<Booking, "id" | "createdAt">): Promise<Booking> {
+export async function createBooking(data: Omit<Booking, "id" | "createdAt" | "bookingCode">): Promise<Booking> {
   const records = await read<Booking>("bookings.json");
+  const bookingCode = Math.random().toString(36).slice(2, 8).toUpperCase();
   const entry: Booking = {
     id: `bk_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
     createdAt: new Date().toISOString(),
+    bookingCode,
     ...data,
   };
   records.push(entry);

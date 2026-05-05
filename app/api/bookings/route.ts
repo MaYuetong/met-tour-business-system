@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
       tourDate: booking.tourDate,
       amount: booking.amount,
       paymentType: booking.paymentType,
+      bookingCode: booking.bookingCode,
     }).catch(console.error);
 
     return NextResponse.json({ ok: true, booking }, { status: 201 });

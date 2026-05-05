@@ -66,9 +66,27 @@ function SuccessContent() {
 
         <p className="font-noto text-[#6B5E52] leading-relaxed mb-8">
           您在大都会艺术博物馆欧洲艺术史私人导览的名额已成功预留。
-          {paymentType === "deposit" && " 尾款 $55 将于导览当天结清。"}
+          {paymentType === "deposit" && " 尾款 $59 将于导览当天结清。"}
           {" "}确认邮件已发送至 <strong className="text-[#1A1A1A] font-[400]">{email}</strong>。
         </p>
+
+        {/* Booking code */}
+        <div className="bg-[#1A1A1A] p-6 mb-6 text-center">
+          <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#C9A84C] mb-2">当日专属入场码</p>
+          <p className="font-noto text-3xl font-[200] tracking-[0.3em] text-white mb-2">
+            {params.get("bookingCode") ?? "—"}
+          </p>
+          <p className="font-sans-ui text-[10px] text-white/40 tracking-wider">请妥善保存，导览当天出示给讲解员</p>
+        </div>
+
+        {/* WeChat */}
+        <div className="flex items-center gap-4 border border-green-200 bg-green-50 px-5 py-4 mb-8">
+          <span className="text-2xl">💬</span>
+          <div>
+            <p className="font-noto text-sm text-green-800 leading-relaxed">请添加讲解员微信，方便导览前沟通行程细节。</p>
+            <p className="font-noto font-[500] text-green-900 text-base mt-0.5">Yuti_9999</p>
+          </div>
+        </div>
 
         {/* Booking summary */}
         <div className="border border-[#E0D5C8] mb-8">
@@ -79,8 +97,7 @@ function SuccessContent() {
             {[
               { label: "姓名",     value: name },
               { label: "邮箱",     value: email },
-              { label: "支付方式", value: paymentType === "full" ? `全额 — $79` : paymentType === "deposit" ? `定金 — $${paidAmount}（+ $55 尾款）` : "已于其他方式支付" },
-              { label: "导览时长", value: "3.5 小时" },
+              { label: "支付方式", value: paymentType === "full" ? `全额 — $79` : paymentType === "deposit" ? `定金 — $${paidAmount}（+ $59 尾款）` : "已于其他方式支付" },
               { label: "地点",     value: "大都会艺术博物馆，纽约" },
             ].map((row) => (
               <div key={row.label} className="flex justify-between items-start px-5 py-3.5 gap-4">

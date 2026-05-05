@@ -82,7 +82,7 @@ function BookingForm() {
         });
         const bookData = await bookRes.json();
         if (bookData.ok) {
-          window.location.href = `/book/success?name=${encodeURIComponent(form.name)}&email=${encodeURIComponent(form.email)}&paymentType=paid&amount=0&mock=1&bookingId=${bookData.booking.id}`;
+          window.location.href = `/book/success?name=${encodeURIComponent(form.name)}&email=${encodeURIComponent(form.email)}&paymentType=paid&amount=0&mock=1&bookingId=${bookData.booking.id}&bookingCode=${bookData.booking.bookingCode ?? ""}`;
           return;
         }
         setError("预约失败，请重试。");
@@ -107,7 +107,7 @@ function BookingForm() {
           const bookData = await bookRes.json();
           if (bookData.ok) {
             window.location.href =
-              `/book/success?name=${encodeURIComponent(form.name)}&email=${encodeURIComponent(form.email)}&paymentType=${form.paymentType}&amount=${amount * 100}&mock=1&bookingId=${bookData.booking.id}`;
+              `/book/success?name=${encodeURIComponent(form.name)}&email=${encodeURIComponent(form.email)}&paymentType=${form.paymentType}&amount=${amount * 100}&mock=1&bookingId=${bookData.booking.id}&bookingCode=${bookData.booking.bookingCode ?? ""}`;
             return;
           }
         }
@@ -503,7 +503,7 @@ function BookingForm() {
                       <div className="space-y-3">
                         {[
                           { id: "full",    price: "$79", sub: "今日全额支付 · 完整体验", tag: "推荐" },
-                          { id: "deposit", price: "$20", sub: "先付定金，导览当天补 $55 尾款", tag: "" },
+                          { id: "deposit", price: "$20", sub: "先付定金，导览当天补 $59 尾款", tag: "" },
                           { id: "paid",    price: "✓",   sub: "已于其他方式支付（微信 / 支付宝 / Zelle）", tag: "" },
                         ].map((opt) => (
                           <button key={opt.id} type="button" onClick={() => set("paymentType", opt.id)}

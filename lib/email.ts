@@ -1,4 +1,4 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://met-tour-business-system.vercel.app";
 
 type BookingEmailData = {
   id: string;
@@ -7,20 +7,21 @@ type BookingEmailData = {
   tourDate?: string;
   amount: number;
   paymentType: "full" | "deposit" | "paid";
+  bookingCode?: string;
 };
 
 function buildHtml(booking: BookingEmailData): string {
   const preSurveyUrl = `${SITE_URL}/survey/pre?bookingId=${booking.id}&name=${encodeURIComponent(booking.name)}&email=${encodeURIComponent(booking.email)}`;
+  const code = booking.bookingCode ?? "—";
 
   const tourDateRow = booking.tourDate
-    ? `<tr><td class="label">导览日期</td><td class="value">${new Date(booking.tourDate).toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" })}</td></tr>`
+    ? `<tr><td class="label">导览日期</td><td class="value">${new Date(booking.tourDate + "T12:00:00").toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" })}</td></tr>`
     : "";
 
-  const paymentText = booking.paymentType === "full"
-    ? `全额支付 $79`
-    : booking.paymentType === "paid"
-    ? `已于其他方式支付（微信 / 支付宝 / Zelle）`
-    : `定金 $${booking.amount}（导览当天补 $59 尾款）`;
+  const paymentText =
+    booking.paymentType === "full"    ? `全额支付 $79` :
+    booking.paymentType === "deposit" ? `定金 $20（导览当天补 $59 尾款）` :
+                                        `已于其他方式支付（微信 / 支付宝 / Zelle）`;
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -40,6 +41,14 @@ function buildHtml(booking: BookingEmailData): string {
   .greeting{font-size:26px;color:#1A1A1A;font-weight:300;margin:0 0 12px}
   .intro{font-size:15px;color:#6B5E52;line-height:1.9;margin:0 0 32px}
   .section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#8B7D72;margin:0 0 12px}
+  .code-block{background:#1A1A1A;padding:24px;text-align:center;margin:0 0 32px}
+  .code-block p.code-label{margin:0 0 8px;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:#C9A84C}
+  .code-block p.code-value{margin:0;font-size:36px;font-weight:300;letter-spacing:0.3em;color:white}
+  .code-block p.code-hint{margin:8px 0 0;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em}
+  .wechat-block{background:#F0FAF0;border:1px solid #C6E6C6;padding:20px 24px;margin:0 0 32px;display:flex;align-items:center;gap:16px}
+  .wechat-block .wechat-icon{font-size:28px;flex-shrink:0}
+  .wechat-block p{margin:0;font-size:14px;color:#2D6A2D;line-height:1.7}
+  .wechat-block strong{font-size:17px;letter-spacing:0.05em;color:#1A4A1A}
   .detail-table{width:100%;border-collapse:collapse;margin:0 0 32px}
   .detail-table .label{padding:10px 0;font-size:13px;color:#8B7D72;border-bottom:1px solid #F0EBE3;width:40%}
   .detail-table .value{padding:10px 0;font-size:13px;color:#1A1A1A;border-bottom:1px solid #F0EBE3;text-align:right}
@@ -64,24 +73,40 @@ function buildHtml(booking: BookingEmailData): string {
   <div class="body">
     <h2 class="greeting">${booking.name}，欢迎。</h2>
     <p class="intro">您在大都会艺术博物馆欧洲艺术史私人导览的名额已成功预留。感谢您的信任，期待与您相聚于这场穿越五个世纪的艺术之旅。</p>
+
+    <p class="section-label">您的当日专属码</p>
+    <div class="code-block">
+      <p class="code-label">入场验证码</p>
+      <p class="code-value">${code}</p>
+      <p class="code-hint">请妥善保存，导览当天出示给讲解员</p>
+    </div>
+
+    <p class="section-label">添加讲解员微信</p>
+    <div class="wechat-block">
+      <div class="wechat-icon">💬</div>
+      <div>
+        <p>请扫码或搜索微信号添加讲解员，方便导览前沟通行程细节。</p>
+        <p><strong>Yuti_9999</strong></p>
+      </div>
+    </div>
+
     <p class="section-label">预约详情</p>
     <table class="detail-table">
       <tr><td class="label">姓名</td><td class="value">${booking.name}</td></tr>
       <tr><td class="label">邮箱</td><td class="value">${booking.email}</td></tr>
       <tr><td class="label">支付方式</td><td class="value">${paymentText}</td></tr>
       ${tourDateRow}
-      <tr><td class="label">导览时长</td><td class="value">3.5 小时</td></tr>
       <tr><td class="label">地点</td><td class="value">大都会艺术博物馆，纽约</td></tr>
     </table>
   </div>
   <div class="cta-block">
     <h2>下一步：完成参观前问卷</h2>
-    <p>请点击下方按钮完成一份约 3 分钟的简短问卷。<br>您的回答将帮助我们为本次导览个性化定制内容。</p>
+    <p>请点击下方按钮完成一份约 3 分钟的问卷。<br>您的回答将帮助我们为本次导览个性化定制内容。</p>
     <a href="${preSurveyUrl}" class="cta-btn">开始参观前问卷 →</a>
     <p class="note">如果按钮无法点击，请复制以下链接至浏览器：<br><a href="${preSurveyUrl}" style="color:#A6192E">${preSurveyUrl}</a></p>
   </div>
   <div class="footer">
-    <p>大都会艺术博物馆 · 欧洲艺术史私人导览<br>如有任何问题，请直接回复此邮件。<br>© 2026 · 版权所有</p>
+    <p>大都会艺术博物馆 · 欧洲艺术史私人导览<br>如有任何问题，请直接回复此邮件或微信联系 Yuti_9999。<br>© 2026 · 版权所有</p>
   </div>
 </div>
 </body>
@@ -90,7 +115,10 @@ function buildHtml(booking: BookingEmailData): string {
 
 export async function sendBookingConfirmation(booking: BookingEmailData): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return;
+  if (!apiKey) {
+    console.warn("RESEND_API_KEY not set — skipping email");
+    return;
+  }
 
   const adminEmail = process.env.ADMIN_EMAIL ?? "yuetongma0107@gmail.com";
 
