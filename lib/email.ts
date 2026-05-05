@@ -144,7 +144,11 @@ async function notifyAdminFormspree(booking: BookingEmailData): Promise<void> {
 async function sendCustomerEmail(booking: BookingEmailData): Promise<void> {
   const user = process.env.GMAIL_USER;
   const pass = process.env.GMAIL_APP_PASSWORD;
-  if (!user || !pass) return;
+  if (!user || !pass) {
+    console.warn("[email] GMAIL_USER or GMAIL_APP_PASSWORD not set — skipping customer email");
+    return;
+  }
+  console.log(`[email] Sending confirmation to ${booking.email} via ${user}`);
   try {
     const nodemailer = await import("nodemailer");
     const transporter = nodemailer.createTransport({
@@ -157,8 +161,9 @@ async function sendCustomerEmail(booking: BookingEmailData): Promise<void> {
       subject: "【预约确认】大都会艺术博物馆 欧洲艺术史私人导览",
       html: buildHtml(booking),
     });
+    console.log(`[email] Confirmation sent to ${booking.email} ✓`);
   } catch (e) {
-    console.error("Gmail send error:", e);
+    console.error("[email] Gmail send error:", e);
   }
 }
 
