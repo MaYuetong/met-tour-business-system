@@ -175,12 +175,12 @@ function PreSurveyForm() {
                 <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的姓名（选填）</label>
                 <input type="text" value={form.name} onChange={(e) => setField("name", e.target.value)}
                   placeholder="例如：李雷"
-                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                  className="w-full bg-white border border-[#E0D5C8] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
               </div>
               <div>
                 <label className="block font-noto text-xs text-[#8B7D72] mb-3">参观日期（选填）</label>
                 <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
-                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                  className="w-full bg-white border border-[#E0D5C8] px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors [&::-webkit-date-and-time-value]:text-left [&::-webkit-calendar-picker-indicator]:opacity-40 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
               </div>
               <div>
                 <p className="font-noto text-xs text-[#8B7D72] mb-3">性别 <span className="text-[#A6192E]">*</span></p>
@@ -201,7 +201,7 @@ function PreSurveyForm() {
                 <div>
                   <label className="block font-noto text-xs text-[#8B7D72] mb-3">来自城市（选填）</label>
                   <input type="text" value={form.city} onChange={(e) => setField("city", e.target.value)}
-                    placeholder="例如：上海"
+                    placeholder="例如：北京"
                     className="w-full bg-white border border-[#E0D5C8] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
                 </div>
                 <div>
