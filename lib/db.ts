@@ -75,6 +75,10 @@ export type PreSurveyRecord = {
   bookingId?: string;
   createdAt: string;
   name?: string;
+  visitDate?: string;
+  gender?: string;
+  city?: string;
+  country?: string;
   firstVisit: string;
   knowledgeLevel: string;
   interests: string[];
@@ -87,6 +91,10 @@ export type PostSurveyRecord = {
   id: string;
   bookingId?: string;
   createdAt: string;
+  visitDate?: string;
+  gender?: string;
+  city?: string;
+  country?: string;
   ratings: { overall: number; clarity: number; pacing: number };
   mostImpressive: string | string[];
   improvement: string;

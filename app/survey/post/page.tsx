@@ -54,6 +54,10 @@ function PostSurveyForm() {
   const [done, setDone]             = useState(false);
   const [codeCopied, setCodeCopied] = useState(false);
   const [form, setForm] = useState({
+    visitDate: "",
+    gender: "",
+    city: "",
+    country: "",
     ratings: { overall: 0, clarity: 0, pacing: 0 },
     mostImpressive: [] as string[],
     improvement: "",
@@ -186,19 +190,56 @@ function PostSurveyForm() {
         <div key={step} className="step-transition">
           {step === 1 && (
             <div className="space-y-6">
-              <p className="text-[#8B7D72] font-noto leading-relaxed text-sm">请对体验的各个方面进行评分。</p>
-              {(["overall","clarity","pacing"] as RatingsKey[]).map((key) => (
-                <div key={key} className="bg-white border border-[#E0D5C8] rounded-sm p-6">
-                  <div className="mb-4">
-                    <div className="font-noto text-[#1A1A1A]">{ratingLabels[key].label}</div>
-                    <div className="text-sm text-[#8B7D72] font-noto mt-0.5">{ratingLabels[key].desc}</div>
-                  </div>
-                  <StarRating value={form.ratings[key]} onChange={(v) => setField("ratings", { ...form.ratings, [key]: v })} />
-                  {form.ratings[key] > 0 && (
-                    <p className="text-xs text-[#A6192E] font-noto mt-2">{starLabels[form.ratings[key]]}</p>
-                  )}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-noto text-xs text-[#8B7D72] mb-3">参观日期（选填）</label>
+                  <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
+                    className="w-full bg-white border border-[#E0D5C8] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors" />
                 </div>
-              ))}
+                <div>
+                  <p className="font-noto text-xs text-[#8B7D72] mb-3">性别（选填）</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[{ id: "male", label: "男" }, { id: "female", label: "女" }, { id: "undisclosed", label: "略" }].map((opt) => (
+                      <button key={opt.id} onClick={() => setField("gender", opt.id)}
+                        className={`py-3 border rounded-sm font-noto text-sm transition-all duration-200 ${form.gender === opt.id ? "border-[#A6192E] bg-[#A6192E] text-white" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"}`}>
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-noto text-xs text-[#8B7D72] mb-3">来自城市（选填）</label>
+                  <input type="text" value={form.city} onChange={(e) => setField("city", e.target.value)}
+                    placeholder="例如：上海"
+                    className="w-full bg-white border border-[#E0D5C8] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                </div>
+                <div>
+                  <label className="block font-noto text-xs text-[#8B7D72] mb-3">来自国家（选填）</label>
+                  <input type="text" value={form.country} onChange={(e) => setField("country", e.target.value)}
+                    placeholder="例如：中国"
+                    className="w-full bg-white border border-[#E0D5C8] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                </div>
+              </div>
+              <div className="border-t border-[#E0D5C8] pt-5 space-y-4">
+                <p className="text-[#8B7D72] font-noto leading-relaxed text-sm">请对体验的各个方面进行评分。</p>
+                {(["overall","clarity","pacing"] as RatingsKey[]).map((key) => (
+                  <div key={key} className="bg-white border border-[#E0D5C8] rounded-sm p-6">
+                    <div className="mb-4">
+                      <div className="font-noto text-[#1A1A1A]">{ratingLabels[key].label}</div>
+                      <div className="text-sm text-[#8B7D72] font-noto mt-0.5">{ratingLabels[key].desc}</div>
+                    </div>
+                    <StarRating value={form.ratings[key]} onChange={(v) => setField("ratings", { ...form.ratings, [key]: v })} />
+                    {form.ratings[key] > 0 && (
+                      <p className="text-xs text-[#A6192E] font-noto mt-2">{starLabels[form.ratings[key]]}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <p className="font-sans-ui text-[10px] text-[#B0A49A] leading-relaxed tracking-wide border-t border-[#E0D5C8] pt-4">
+                本次问卷调查所收集的信息仅用于提升导览体验质量及学术研究用途，所有数据严格保密，不作任何商业用途。
+              </p>
             </div>
           )}
 

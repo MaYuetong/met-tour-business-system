@@ -42,6 +42,10 @@ function PreSurveyForm() {
   const [profileTag, setProfileTag] = useState("");
   const [form, setForm] = useState({
     name: paramName,
+    visitDate: "",
+    gender: "",
+    city: "",
+    country: "",
     firstVisit: "",
     knowledgeLevel: "",
     interests: [] as string[],
@@ -165,12 +169,42 @@ function PreSurveyForm() {
 
         <div key={step} className="step-transition">
           {step === 1 && (
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div>
                 <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的姓名（选填）</label>
                 <input type="text" value={form.name} onChange={(e) => setField("name", e.target.value)}
                   placeholder="例如：李雷"
-                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors text-lg" />
+                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+              </div>
+              <div>
+                <label className="block font-noto text-xs text-[#8B7D72] mb-3">参观日期（选填）</label>
+                <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
+                  className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors" />
+              </div>
+              <div>
+                <p className="font-noto text-xs text-[#8B7D72] mb-3">性别（选填）</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {[{ id: "male", label: "男" }, { id: "female", label: "女" }, { id: "undisclosed", label: "不便透露" }].map((opt) => (
+                    <button key={opt.id} onClick={() => setField("gender", opt.id)}
+                      className={`py-3 border rounded-sm font-noto text-sm transition-all duration-200 ${form.gender === opt.id ? "border-[#A6192E] bg-[#A6192E] text-white" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"}`}>
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-noto text-xs text-[#8B7D72] mb-3">来自城市（选填）</label>
+                  <input type="text" value={form.city} onChange={(e) => setField("city", e.target.value)}
+                    placeholder="例如：上海"
+                    className="w-full bg-white border border-[#E0D5C8] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                </div>
+                <div>
+                  <label className="block font-noto text-xs text-[#8B7D72] mb-3">来自国家（选填）</label>
+                  <input type="text" value={form.country} onChange={(e) => setField("country", e.target.value)}
+                    placeholder="例如：中国"
+                    className="w-full bg-white border border-[#E0D5C8] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                </div>
               </div>
               <div>
                 <p className="font-noto text-xs text-[#8B7D72] mb-5">这是您第一次参观大都会艺术博物馆吗？</p>
@@ -183,6 +217,9 @@ function PreSurveyForm() {
                   ))}
                 </div>
               </div>
+              <p className="font-sans-ui text-[10px] text-[#B0A49A] leading-relaxed tracking-wide border-t border-[#E0D5C8] pt-4">
+                本次问卷调查所收集的信息仅用于提升导览体验质量及学术研究用途，所有数据严格保密，不作任何商业用途。
+              </p>
             </div>
           )}
 
