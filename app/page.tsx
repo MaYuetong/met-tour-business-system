@@ -473,7 +473,7 @@ export default async function LandingPage() {
 
               <div className="border-t border-[#E0D5C8] pt-8">
                 <p className="section-caps text-center mb-6">扫码支付预约</p>
-                <div className="grid grid-cols-2 gap-8 max-w-[260px] mx-auto">
+                <div className="grid grid-cols-3 gap-6 max-w-[360px] mx-auto">
                   <div className="text-center">
                     <div className="aspect-square bg-[#F8F5F0] border border-[#E0D5C8] overflow-hidden mb-3 flex items-center justify-center">
                       <img src="/qr-wechat.png" alt="微信收款码" className="w-full h-full object-cover" />
@@ -485,6 +485,12 @@ export default async function LandingPage() {
                       <img src="/qr-alipay.png" alt="支付宝收款码" className="w-full h-full object-cover" />
                     </div>
                     <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wider uppercase">支付宝</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="aspect-square bg-[#F8F5F0] border border-[#E0D5C8] overflow-hidden mb-3 flex items-center justify-center">
+                      <img src="/qr-zelle.png" alt="Zelle收款码" className="w-full h-full object-cover" />
+                    </div>
+                    <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wider uppercase">Zelle</p>
                   </div>
                 </div>
               </div>

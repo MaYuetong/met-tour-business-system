@@ -501,7 +501,7 @@ function BookingForm() {
                         {[
                           { id: "full",    price: "$75", sub: "今日全额支付 · 完整体验", tag: "推荐" },
                           { id: "deposit", price: "$20", sub: "先付定金，导览当天补 $55 尾款", tag: "" },
-                          { id: "paid",    price: "✓",   sub: "已于其他方式支付（微信 / 支付宝）", tag: "" },
+                          { id: "paid",    price: "✓",   sub: "已于其他方式支付（微信 / 支付宝 / Zelle）", tag: "" },
                         ].map((opt) => (
                           <button key={opt.id} type="button" onClick={() => set("paymentType", opt.id)}
                             className={`w-full flex items-center justify-between p-5 border text-left transition-all ${
