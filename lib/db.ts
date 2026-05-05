@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { unstable_noStore as noStore } from "next/cache";
 
 // ─── Storage abstraction ───────────────────────────────────────────────────────
 // Development → local JSON files in /data
@@ -27,6 +28,7 @@ async function writeJSON<T>(filename: string, data: T[]): Promise<void> {
 
 // --- Vercel KV (prod) ---
 async function readKV<T>(key: string): Promise<T[]> {
+  noStore();
   const { kv } = await import("@vercel/kv");
   const data = await kv.get<T[]>(key);
   return data ?? [];

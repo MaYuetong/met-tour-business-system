@@ -21,6 +21,7 @@ export default function DeleteButton({ id, type, label = "删除" }: Props) {
       const result = await deleteRecord(id, type, code);
       if (result.ok) {
         setOpen(false);
+        window.location.href = window.location.pathname;
       } else {
         setError(result.error ?? "删除失败");
       }
