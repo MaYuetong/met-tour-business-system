@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "#experience", label: "体验介绍" },
   { href: "#pricing",    label: "价格" },
   { href: "#faq",        label: "常见问题" },
+  { href: "#tip",        label: "扫码打赏" },
 ];
 
 export default function MobileNavMenu() {
