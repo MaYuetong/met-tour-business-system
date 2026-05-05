@@ -23,8 +23,7 @@ export async function POST(req: NextRequest) {
 
     await createReferral(email, name);
 
-    // Fire email in background — non-blocking, doesn't affect booking response
-    sendBookingConfirmation({
+    await sendBookingConfirmation({
       id: booking.id,
       name: booking.name,
       email: booking.email,
@@ -32,7 +31,7 @@ export async function POST(req: NextRequest) {
       amount: booking.amount,
       paymentType: booking.paymentType,
       bookingCode: booking.bookingCode,
-    }).catch(console.error);
+    });
 
     return NextResponse.json({ ok: true, booking }, { status: 201 });
   } catch (e) {
