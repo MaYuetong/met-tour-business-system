@@ -184,13 +184,17 @@ function PreSurveyForm() {
               </div>
               <div>
                 <p className="font-noto text-xs text-[#8B7D72] mb-3">性别 <span className="text-[#A6192E]">*</span></p>
-                <div className="grid grid-cols-3 gap-3">
-                  {[{ id: "male", label: "男" }, { id: "female", label: "女" }, { id: "undisclosed", label: "不便透露" }].map((opt) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[{ id: "male", label: "男" }, { id: "female", label: "女" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("gender", opt.id)}
                       className={`py-3 border rounded-sm font-noto text-sm transition-all duration-200 ${form.gender === opt.id ? "border-[#A6192E] bg-[#A6192E] text-white" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"}`}>
                       {opt.label}
                     </button>
                   ))}
+                  <button onClick={() => setField("gender", "undisclosed")}
+                    className={`col-span-2 sm:col-span-1 py-3 border rounded-sm font-noto text-sm transition-all duration-200 ${form.gender === "undisclosed" ? "border-[#A6192E] bg-[#A6192E] text-white" : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"}`}>
+                    不便透露
+                  </button>
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
