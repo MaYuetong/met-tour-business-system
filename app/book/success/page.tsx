@@ -10,7 +10,7 @@ function SuccessContent() {
   const name        = params.get("name")        ?? "访客";
   const email       = params.get("email")       ?? "";
   const paymentType = params.get("paymentType") ?? "full";
-  const amount      = params.get("amount")      ?? "7500";
+  const amount      = params.get("amount")      ?? "8600";
   const sessionId   = params.get("session_id");
   const isMock      = params.get("mock") === "1";
   const bookingId   = params.get("bookingId");
@@ -66,7 +66,7 @@ function SuccessContent() {
 
         <p className="font-noto text-[#6B5E52] leading-relaxed mb-8">
           您在大都会艺术博物馆欧洲艺术史私人导览的名额已成功预留。
-          {paymentType === "deposit" && " 尾款 $59 将于导览当天结清。"}
+          {paymentType === "deposit" && " 尾款 $66 将于导览当天结清。"}
           {" "}确认邮件已发送至 <strong className="text-[#1A1A1A] font-[400]">{email}</strong>。
         </p>
 
@@ -97,7 +97,7 @@ function SuccessContent() {
             {[
               { label: "姓名",     value: name },
               { label: "邮箱",     value: email },
-              { label: "支付方式", value: paymentType === "full" ? `全额 — $79` : paymentType === "deposit" ? `定金 — $${paidAmount}（+ $59 尾款）` : "已于其他方式支付" },
+              { label: "支付方式", value: paymentType === "full" ? `全额 — $86` : paymentType === "deposit" ? `定金 — $${paidAmount}（+ $66 尾款）` : "已于其他方式支付" },
               { label: "地点",     value: "大都会艺术博物馆，纽约" },
             ].map((row) => (
               <div key={row.label} className="flex justify-between items-start px-5 py-3.5 gap-4">

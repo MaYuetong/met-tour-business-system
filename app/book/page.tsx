@@ -98,7 +98,7 @@ function BookingForm() {
 
       if (!data.ok) {
         if (data.error?.includes("not configured")) {
-          const amount = form.paymentType === "full" ? 79 : 20;
+          const amount = form.paymentType === "full" ? 86 : 20;
           const bookRes  = await fetch("/api/bookings", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -502,8 +502,8 @@ function BookingForm() {
                       <p className="font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-3">选择票价</p>
                       <div className="space-y-3">
                         {[
-                          { id: "full",    price: "$79", sub: "今日全额支付 · 完整体验", tag: "推荐" },
-                          { id: "deposit", price: "$20", sub: "先付定金，导览当天补 $59 尾款", tag: "" },
+                          { id: "full",    price: "$86", sub: "今日全额支付 · 完整体验", tag: "推荐" },
+                          { id: "deposit", price: "$20", sub: "先付定金，导览当天补 $66 尾款", tag: "" },
                           { id: "paid",    price: "✓",   sub: "已于其他方式支付（微信 / 支付宝 / Zelle）", tag: "" },
                         ].map((opt) => (
                           <button key={opt.id} type="button" onClick={() => set("paymentType", opt.id)}
@@ -549,7 +549,7 @@ function BookingForm() {
                             ? "bg-[#A6192E] text-white hover:bg-[#8B1525]"
                             : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
                         }`}>
-                        {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$79" : "$20"} →`}
+                        {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$86" : "$20"} →`}
                       </button>
                       <p className="font-sans-ui text-[10px] text-center text-[#8B7D72] tracking-wider mt-3">
                         由 Stripe 加密保护 · 我们不储存您的支付信息
@@ -639,7 +639,7 @@ function BookingForm() {
 
                 <div className="pt-2 border-t border-[#E0D5C8]">
                   <p className="font-noto text-sm text-[#8B7D72]">价格从</p>
-                  <p className="font-noto text-3xl text-[#A6192E] font-[200]">$79<span className="text-base text-[#8B7D72]"> / 人</span></p>
+                  <p className="font-noto text-3xl text-[#A6192E] font-[200]">$86<span className="text-base text-[#8B7D72]"> / 人</span></p>
                 </div>
               </div>
             </div>
@@ -677,7 +677,7 @@ function BookingForm() {
                   ? "bg-[#A6192E] text-white active:bg-[#8B1525]"
                   : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
               }`}>
-              {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$79" : "$20"} →`}
+              {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$86" : "$20"} →`}
             </button>
           )}
         </div>

@@ -19,8 +19,8 @@ function buildHtml(booking: BookingEmailData): string {
     : "";
 
   const paymentText =
-    booking.paymentType === "full"    ? `全额支付 $79` :
-    booking.paymentType === "deposit" ? `定金 $20（导览当天补 $59 尾款）` :
+    booking.paymentType === "full"    ? `全额支付 $86` :
+    booking.paymentType === "deposit" ? `定金 $20（导览当天补 $66 尾款）` :
                                         `已于其他方式支付（微信 / 支付宝 / Zelle）`;
 
   return `<!DOCTYPE html>
@@ -118,8 +118,8 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xbdwojzk";
 // Notify admin via Formspree (always runs, no API key needed)
 async function notifyAdminFormspree(booking: BookingEmailData): Promise<void> {
   const paymentText =
-    booking.paymentType === "full"    ? "全额 $79" :
-    booking.paymentType === "deposit" ? "定金 $20（补 $59）" :
+    booking.paymentType === "full"    ? "全额 $86" :
+    booking.paymentType === "deposit" ? "定金 $20（补 $66）" :
                                         "已于其他方式支付";
   try {
     await fetch(FORMSPREE_ENDPOINT, {

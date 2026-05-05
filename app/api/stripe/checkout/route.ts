@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
             unit_amount: amount,
             product_data: {
               name: paymentType === "full"
-                ? "MET Art Tour — Full Payment ($75)"
+                ? "MET Art Tour — Full Payment ($86)"
                 : "MET Art Tour — Deposit ($20)",
               description: "European Art History guided tour at the Metropolitan Museum of Art, including Raphael Exhibition",
             },

@@ -12,6 +12,6 @@ export function getStripe(): Stripe {
 }
 
 export const PRICES = {
-  full: 7500,    // $75.00 in cents
+  full: 8600,    // $86.00 in cents
   deposit: 2000, // $20.00 in cents
 } as const;
