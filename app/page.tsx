@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAnalytics } from "@/lib/db";
+import { getNextAvailableDate } from "@/lib/availability";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import MobileNavMenu from "@/components/MobileNavMenu";
 import MetLogo from "@/components/MetLogo";
@@ -53,6 +54,7 @@ const STATIC_TESTIMONIALS = [
 ];
 
 export default async function LandingPage() {
+  const nextTour = getNextAvailableDate();
   let testimonials = STATIC_TESTIMONIALS;
   try {
     const analytics = await getAnalytics();
@@ -175,7 +177,7 @@ export default async function LandingPage() {
               <div className="lg:hidden mt-8 border border-white/10 p-5 flex items-center justify-between">
                 <div>
                   <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#C9A84C]/70 mb-1">下一场导览</p>
-                  <p className="font-noto text-white text-xl font-[200]">5月12日 · 周日</p>
+                  <p className="font-noto text-white text-xl font-[200]">{nextTour.label} · {nextTour.weekday}</p>
                   <p className="font-sans-ui text-[11px] text-white/40 tracking-wider mt-1">10:00 · 14:00 两场</p>
                 </div>
                 <Link href="/book"
@@ -191,8 +193,8 @@ export default async function LandingPage() {
                 <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
                 <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
                 <p className="section-caps text-[#C9A84C]/60 mb-8">下一场导览</p>
-                <p className="font-noto text-white/20 text-[68px] font-[200] leading-none tracking-tighter mb-2">5月12日</p>
-                <p className="font-noto text-white/70 text-lg font-[300] mb-8">周日 · 名额有限</p>
+                <p className="font-noto text-white/20 text-[68px] font-[200] leading-none tracking-tighter mb-2">{nextTour.label}</p>
+                <p className="font-noto text-white/70 text-lg font-[300] mb-8">{nextTour.weekday} · 名额有限</p>
                 <div className="space-y-3 mb-8">
                   {[
                     { time: "10:00", note: "上午场 · 人流最少" },

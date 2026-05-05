@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import MetLogo from "@/components/MetLogo";
+import { isBlocked } from "@/lib/availability";
 
 const TIME_SLOTS = [
   { id: "10:00", label: "上午 10:00", note: "上午场 · 人流最少" },
@@ -63,7 +64,7 @@ function BookingForm() {
 
   const canNext = () => {
     if (step === 1) return !!(form.name.trim() && form.email.trim());
-    if (step === 2) return !!(form.tourDate && form.timeSlot && form.groupSize);
+    if (step === 2) return !!(form.tourDate && form.timeSlot && form.groupSize && !isBlocked(form.tourDate));
     return true;
   };
 
@@ -282,9 +283,15 @@ function BookingForm() {
                       </label>
                       <input type="date" required value={form.tourDate} min={today}
                         onChange={(e) => set("tourDate", e.target.value)}
-                        className="w-full bg-white border border-[#E0D5C8] px-4 py-4 font-noto text-base text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                        className={`w-full bg-white border px-4 py-4 font-noto text-base text-[#1A1A1A] focus:outline-none transition-colors ${form.tourDate && isBlocked(form.tourDate) ? "border-red-400 focus:border-red-500" : "border-[#E0D5C8] focus:border-[#A6192E]"}`} />
+                      {form.tourDate && isBlocked(form.tourDate) && (
+                        <p className="font-noto text-sm text-red-600 mt-2">
+                          该日期暂不开放预约，请选择其他日期。<br />
+                          <span className="text-xs text-[#8B7D72]">不可用区间：5月15–19日、6月3–4日</span>
+                        </p>
+                      )}
                       <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-2 tracking-wide">
-                        导览于周六、周日举行，我们将以邮件确认可用场次。
+                        我们将以邮件确认可用场次。
                       </p>
                     </div>
 
