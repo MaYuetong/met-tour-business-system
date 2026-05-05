@@ -448,7 +448,7 @@ export default async function LandingPage() {
                   <p className="font-noto text-sm text-[#8B7D72] mt-1">不含导览讲解服务</p>
                 </div>
                 <div className="sm:text-right">
-                  <p className="font-noto text-4xl text-[#A6192E] font-[200]">$6</p>
+                  <p className="font-noto text-4xl text-[#A6192E] font-[200]">$8</p>
                   <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-widest uppercase mt-0.5">每人</p>
                 </div>
               </div>
