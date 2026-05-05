@@ -192,8 +192,10 @@ function PostSurveyForm() {
             <div className="space-y-5">
               <div>
                 <label className="block font-noto text-xs text-[#8B7D72] mb-3">参观日期（选填）</label>
-                <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
-                  className="w-full bg-white border border-[#E0D5C8] px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors [&::-webkit-date-and-time-value]:text-left [&::-webkit-calendar-picker-indicator]:opacity-40 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
+                <div className="w-full overflow-hidden border border-[#E0D5C8] focus-within:border-[#A6192E] transition-colors bg-white">
+                  <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
+                    className="w-full bg-transparent px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none [&::-webkit-calendar-picker-indicator]:opacity-40 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
+                </div>
               </div>
               <div>
                 <p className="font-noto text-xs text-[#8B7D72] mb-3">性别 <span className="text-[#A6192E]">*</span></p>
