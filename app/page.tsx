@@ -164,7 +164,7 @@ export default async function LandingPage() {
               <div className="grid grid-cols-2 sm:flex sm:items-center sm:gap-10 gap-5 pt-8 border-t border-white/10">
                 {[
                   { val: "4 展区", label: "精选路线" },
-                  { val: "$75", label: "每人起" },
+                  { val: "$79", label: "每人起" },
                   { val: "≤ 6 人", label: "私享小团" },
                 ].map((s) => (
                   <div key={s.label}>
@@ -382,7 +382,7 @@ export default async function LandingPage() {
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-black/10 -translate-y-12 translate-x-12" />
               <p className="section-caps text-[#C9A84C]/80 mb-6">全额支付</p>
               <div className="flex items-end gap-2 mb-1">
-                <span className="font-noto text-6xl text-white font-[200]">$75</span>
+                <span className="font-noto text-6xl text-white font-[200]">$79</span>
               </div>
               <p className="font-sans-ui text-[12px] text-white/60 tracking-wider mb-8">每人 · 全包价格</p>
               <ul className="space-y-3 mb-10">
@@ -537,7 +537,7 @@ export default async function LandingPage() {
             立即预约 →
           </Link>
           <p className="font-sans-ui text-[11px] text-white/30 tracking-widest uppercase mt-8">
-            $75 · 每组最多 6 人 · 周末场次
+            $79 · 每组最多 6 人 · 周末场次
           </p>
         </div>
       </section>
