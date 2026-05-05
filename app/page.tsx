@@ -372,8 +372,7 @@ export default async function LandingPage() {
           <div className="text-center mb-16">
             <span className="gold-rule mx-auto mb-6 block" />
             <p className="section-caps mb-4">预约导览</p>
-            <h2 className="font-noto text-4xl text-[#1A1A1A] font-[300] mb-4">一个价格，完整体验</h2>
-            <p className="font-noto text-[#8B7D72] text-lg">不含隐藏费用。大都会门票需另行购买（建议票价 $30）。</p>
+            <p className="font-noto text-[#8B7D72] text-lg">不含隐藏费用。大都会门票需另行购买（建议票价 $30），<span className="text-[#A6192E]">可代为预约</span>。</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-0 border border-[#E0D5C8] mb-8">
@@ -411,7 +410,7 @@ export default async function LandingPage() {
               <div className="flex items-end gap-2 mb-1">
                 <span className="font-noto text-6xl text-[#1A1A1A] font-[200]">$20</span>
               </div>
-              <p className="font-sans-ui text-[12px] text-[#8B7D72] tracking-wider mb-8">定金 · 当天补 $55 尾款</p>
+              <p className="font-sans-ui text-[12px] text-[#8B7D72] tracking-wider mb-8">定金 · 当天补 $59 尾款</p>
               <ul className="space-y-3 mb-10">
                 {[
                   "先锁定名额",

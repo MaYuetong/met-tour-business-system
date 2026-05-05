@@ -113,15 +113,37 @@ function buildHtml(booking: BookingEmailData): string {
 </html>`;
 }
 
-export async function sendBookingConfirmation(booking: BookingEmailData): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.warn("RESEND_API_KEY not set — skipping email");
-    return;
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xbdwojzk";
+
+// Notify admin via Formspree (always runs, no API key needed)
+async function notifyAdminFormspree(booking: BookingEmailData): Promise<void> {
+  const paymentText =
+    booking.paymentType === "full"    ? "全额 $79" :
+    booking.paymentType === "deposit" ? "定金 $20（补 $59）" :
+                                        "已于其他方式支付";
+  try {
+    await fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: `【新预约】${booking.name} · ${paymentText}`,
+        姓名: booking.name,
+        邮箱: booking.email,
+        导览日期: booking.tourDate ?? "待定",
+        支付方式: paymentText,
+        当日入场码: booking.bookingCode ?? "—",
+        金额: `$${booking.amount}`,
+      }),
+    });
+  } catch (e) {
+    console.error("Formspree notify error:", e);
   }
+}
 
-  const adminEmail = process.env.ADMIN_EMAIL ?? "yuetongma0107@gmail.com";
-
+// Send confirmation email to customer via Resend (requires RESEND_API_KEY)
+async function sendCustomerEmail(booking: BookingEmailData): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -132,15 +154,19 @@ export async function sendBookingConfirmation(booking: BookingEmailData): Promis
       body: JSON.stringify({
         from: "大都会艺术史导览 <onboarding@resend.dev>",
         to: [booking.email],
-        bcc: [adminEmail],
         subject: "【预约确认】大都会艺术博物馆 欧洲艺术史私人导览",
         html: buildHtml(booking),
       }),
     });
-    if (!res.ok) {
-      console.error("Resend email failed:", await res.text());
-    }
+    if (!res.ok) console.error("Resend email failed:", await res.text());
   } catch (e) {
-    console.error("Email send error:", e);
+    console.error("Resend error:", e);
   }
+}
+
+export async function sendBookingConfirmation(booking: BookingEmailData): Promise<void> {
+  await Promise.allSettled([
+    notifyAdminFormspree(booking),
+    sendCustomerEmail(booking),
+  ]);
 }

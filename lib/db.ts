@@ -132,7 +132,9 @@ export type ReferralRecord = {
 
 export async function createBooking(data: Omit<Booking, "id" | "createdAt" | "bookingCode">): Promise<Booking> {
   const records = await read<Booking>("bookings.json");
-  const bookingCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+  const dateStr = (data.tourDate ?? new Date().toISOString().slice(0, 10)).replace(/-/g, "");
+  const letters = Array.from({ length: 3 }, () => "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)]).join("");
+  const bookingCode = dateStr + letters;
   const entry: Booking = {
     id: `bk_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
     createdAt: new Date().toISOString(),

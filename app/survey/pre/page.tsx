@@ -63,6 +63,7 @@ function PreSurveyForm() {
     }));
 
   const canProceed = () => {
+    if (step === 1) return !!form.gender;
     if (step === 2) return !!form.knowledgeLevel;
     if (step === 3) return form.interests.length > 0;
     if (step === 4) return !!form.experiencePreference;
@@ -182,7 +183,7 @@ function PreSurveyForm() {
                   className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors" />
               </div>
               <div>
-                <p className="font-noto text-xs text-[#8B7D72] mb-3">性别（选填）</p>
+                <p className="font-noto text-xs text-[#8B7D72] mb-3">性别 <span className="text-[#A6192E]">*</span></p>
                 <div className="grid grid-cols-3 gap-3">
                   {[{ id: "male", label: "男" }, { id: "female", label: "女" }, { id: "undisclosed", label: "不便透露" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("gender", opt.id)}
@@ -192,7 +193,7 @@ function PreSurveyForm() {
                   ))}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-noto text-xs text-[#8B7D72] mb-3">来自城市（选填）</label>
                   <input type="text" value={form.city} onChange={(e) => setField("city", e.target.value)}
