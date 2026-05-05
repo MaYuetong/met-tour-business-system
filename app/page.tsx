@@ -47,7 +47,7 @@ const STATIC_TESTIMONIALS = [
     detail: "来自深圳",
   },
   {
-    quote: "Brought my 16-year-old daughter who usually tunes out at museums. She asked more questions than I did. We never felt rushed, there was always time to stop and really look. Genuinely one of the best things we did in New York.",
+    quote: "带着16岁的女儿一起来，她平时在博物馆容易走神，这次却一路问个不停，问题比我还多。全程节奏舒适，随时可以驻足细看。这是我们在纽约做过最值得的一件事。",
     name: "Cathy Wong",
     detail: "来自西雅图",
   },
@@ -339,12 +339,12 @@ export default async function LandingPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
           <div className="flex items-center gap-6 justify-center mb-16">
             <div className="w-12 h-px bg-[#C9A84C]/40" />
-            <p className="section-caps text-[#C9A84C]/70">访客评语</p>
+            <p className="section-caps text-[#C9A84C]/70">节选访客评语</p>
             <div className="w-12 h-px bg-[#C9A84C]/40" />
           </div>
 
           {/* Mobile: horizontal scroll cards. Desktop: grid */}
-          <div className="flex md:grid md:grid-cols-3 gap-3 md:gap-px md:bg-white/5 overflow-x-auto snap-x snap-mandatory pb-2 md:pb-0 -mx-6 md:mx-0 px-6 md:px-0">
+          <div className="flex md:grid md:grid-cols-2 gap-3 md:gap-px md:bg-white/5 overflow-x-auto snap-x snap-mandatory pb-2 md:pb-0 -mx-6 md:mx-0 px-6 md:px-0">
             {testimonials.map((t, i) => (
               <div key={i} className="flex-shrink-0 w-[82vw] sm:w-[60vw] md:w-auto snap-center bg-[#111111] border border-white/5 md:border-0 p-8 md:p-10 hover:bg-[#161616] transition-colors group">
                 <div className="text-[#C9A84C]/40 text-5xl font-noto font-[200] leading-none mb-5 group-hover:text-[#C9A84C]/70 transition-colors">"</div>
