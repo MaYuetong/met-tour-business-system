@@ -135,6 +135,11 @@ export async function getBookings(): Promise<Booking[]> {
   return read<Booking>("bookings.json");
 }
 
+export async function deleteBooking(id: string): Promise<void> {
+  const records = await read<Booking>("bookings.json");
+  await write("bookings.json", records.filter((r) => r.id !== id));
+}
+
 export async function updateBookingStatus(id: string, status: Booking["status"]): Promise<void> {
   const records = await read<Booking>("bookings.json");
   const idx = records.findIndex((b) => b.id === id);
@@ -174,6 +179,11 @@ export async function getPreSurveys(): Promise<PreSurveyRecord[]> {
   return read<PreSurveyRecord>("pre-surveys.json");
 }
 
+export async function deletePreSurvey(id: string): Promise<void> {
+  const records = await read<PreSurveyRecord>("pre-surveys.json");
+  await write("pre-surveys.json", records.filter((r) => r.id !== id));
+}
+
 // ─── Post Survey ─────────────────────────────────────────────────────────────
 
 export async function addPostSurvey(data: Omit<PostSurveyRecord, "id" | "createdAt">): Promise<PostSurveyRecord> {
@@ -192,6 +202,11 @@ export async function getPostSurveys(): Promise<PostSurveyRecord[]> {
   return read<PostSurveyRecord>("post-surveys.json");
 }
 
+export async function deletePostSurvey(id: string): Promise<void> {
+  const records = await read<PostSurveyRecord>("post-surveys.json");
+  await write("post-surveys.json", records.filter((r) => r.id !== id));
+}
+
 // ─── Reviews ─────────────────────────────────────────────────────────────────
 
 export async function addReview(data: Omit<ReviewRecord, "id" | "createdAt">): Promise<ReviewRecord> {
@@ -208,6 +223,11 @@ export async function addReview(data: Omit<ReviewRecord, "id" | "createdAt">): P
 
 export async function getReviews(): Promise<ReviewRecord[]> {
   return read<ReviewRecord>("reviews.json");
+}
+
+export async function deleteReview(id: string): Promise<void> {
+  const records = await read<ReviewRecord>("reviews.json");
+  await write("reviews.json", records.filter((r) => r.id !== id));
 }
 
 // ─── CRM ─────────────────────────────────────────────────────────────────────

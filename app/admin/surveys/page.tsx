@@ -1,4 +1,5 @@
 import { getPreSurveys, getPostSurveys } from "@/lib/db";
+import DeleteButton from "@/components/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -55,9 +56,12 @@ export default async function SurveysPage() {
                       {r.bookingId && ` · 预约 #${r.bookingId.slice(0, 6)}`}
                     </p>
                   </div>
-                  <span className="flex-shrink-0 text-xs bg-[#A6192E]/10 text-[#A6192E] border border-[#A6192E]/20 px-2.5 py-1 font-noto">
-                    {r.profileTag}
-                  </span>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className="text-xs bg-[#A6192E]/10 text-[#A6192E] border border-[#A6192E]/20 px-2.5 py-1 font-noto">
+                      {r.profileTag}
+                    </span>
+                    <DeleteButton id={r.id} type="pre-survey" />
+                  </div>
                 </div>
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-[#F8F5F0] px-3 py-2">
@@ -122,9 +126,10 @@ export default async function SurveysPage() {
                       {r.contactEmail && ` · ${r.contactEmail}`}
                     </p>
                   </div>
-                  <div className="text-right text-xs font-noto text-[#8B7D72]">
+                  <div className="text-right text-xs font-noto text-[#8B7D72] flex flex-col items-end gap-1">
                     <p>价格感知：{PRICE[r.pricePerception] ?? r.pricePerception}</p>
                     <p className="mt-0.5">再次参加：{r.interestedInFuture === "yes" ? "是" : "否"}</p>
+                    <DeleteButton id={r.id} type="post-survey" />
                   </div>
                 </div>
 

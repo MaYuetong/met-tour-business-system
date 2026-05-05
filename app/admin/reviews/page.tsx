@@ -1,4 +1,5 @@
 import { getReviews } from "@/lib/db";
+import DeleteButton from "@/components/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -87,11 +88,12 @@ export default async function AdminReviewsPage() {
                     「{r.review}」
                   </p>
                 </div>
-                <div className="text-right flex-shrink-0">
+                <div className="text-right flex-shrink-0 flex flex-col items-end gap-1">
                   <p className="font-noto text-3xl text-[#A6192E] font-light">{r.rating}/5</p>
                   <p className="text-xs text-[#8B7D72] font-noto mt-1">
                     {new Date(r.createdAt).toLocaleDateString("zh-CN", { month: "short", day: "numeric", year: "numeric" })}
                   </p>
+                  <DeleteButton id={r.id} type="review" />
                 </div>
               </div>
             </div>
