@@ -140,27 +140,25 @@ async function notifyAdminFormspree(booking: BookingEmailData): Promise<void> {
   }
 }
 
-// Send confirmation email to customer via Resend (requires RESEND_API_KEY)
+// Send confirmation email to customer via Gmail SMTP (requires GMAIL_USER + GMAIL_APP_PASSWORD)
 async function sendCustomerEmail(booking: BookingEmailData): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return;
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  if (!user || !pass) return;
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "大都会艺术史导览 <onboarding@resend.dev>",
-        to: [booking.email],
-        subject: "【预约确认】大都会艺术博物馆 欧洲艺术史私人导览",
-        html: buildHtml(booking),
-      }),
+    const nodemailer = await import("nodemailer");
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user, pass },
     });
-    if (!res.ok) console.error("Resend email failed:", await res.text());
+    await transporter.sendMail({
+      from: `"大都会艺术史导览" <${user}>`,
+      to: booking.email,
+      subject: "【预约确认】大都会艺术博物馆 欧洲艺术史私人导览",
+      html: buildHtml(booking),
+    });
   } catch (e) {
-    console.error("Resend error:", e);
+    console.error("Gmail send error:", e);
   }
 }
 
