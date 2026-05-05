@@ -472,7 +472,7 @@ export default async function LandingPage() {
               </p>
 
               <div className="border-t border-[#E0D5C8] pt-8">
-                <p className="section-caps text-center mb-6">扫码支付预约</p>
+                <p className="section-caps text-center mb-6">扫码打赏</p>
                 <div className="grid grid-cols-3 gap-6 max-w-[360px] mx-auto">
                   <div className="text-center">
                     <div className="aspect-square bg-[#F8F5F0] border border-[#E0D5C8] overflow-hidden mb-3 flex items-center justify-center">
