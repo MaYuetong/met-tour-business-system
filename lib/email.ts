@@ -6,7 +6,7 @@ type BookingEmailData = {
   email: string;
   tourDate?: string;
   amount: number;
-  paymentType: "full" | "deposit";
+  paymentType: "full" | "deposit" | "paid";
 };
 
 function buildHtml(booking: BookingEmailData): string {
@@ -17,8 +17,10 @@ function buildHtml(booking: BookingEmailData): string {
     : "";
 
   const paymentText = booking.paymentType === "full"
-    ? `全额支付 $75`
-    : `定金 $${booking.amount}（导览当天补 $55 尾款）`;
+    ? `全额支付 $79`
+    : booking.paymentType === "paid"
+    ? `已于其他方式支付（微信 / 支付宝 / Zelle）`
+    : `定金 $${booking.amount}（导览当天补 $59 尾款）`;
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">

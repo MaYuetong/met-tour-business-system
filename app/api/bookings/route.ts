@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, email, tourDate, paymentType, amount, referralCode } = body;
 
-    if (!name || !email || !paymentType || !amount) {
+    if (!name || !email || !paymentType || amount == null) {
       return NextResponse.json({ ok: false, error: "Missing required fields" }, { status: 400 });
     }
 

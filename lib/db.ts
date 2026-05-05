@@ -62,7 +62,7 @@ export type Booking = {
   timeSlot?: string;
   groupSize?: number;
   notes?: string;
-  paymentType: "full" | "deposit";
+  paymentType: "full" | "deposit" | "paid";
   amount: number;
   status: "pending" | "confirmed" | "completed" | "cancelled";
   stripeSessionId?: string;
