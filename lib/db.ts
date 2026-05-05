@@ -295,6 +295,69 @@ export async function useReferral(code: string, bookingId: string): Promise<bool
   return true;
 }
 
+// ─── Guides ───────────────────────────────────────────────────────────────────
+
+export type GuideRecord = {
+  id: string;
+  name: string;
+  wechatId: string;
+  email?: string;
+  isActive: boolean;
+  availableDates: string[]; // YYYY-MM-DD
+  createdAt: string;
+};
+
+export async function getGuides(): Promise<GuideRecord[]> {
+  const records = await read<GuideRecord>("guides.json");
+  if (records.length === 0) {
+    const entry: GuideRecord = {
+      id: "guide_default",
+      createdAt: new Date().toISOString(),
+      name: "Yuti",
+      wechatId: "Yuti_9999",
+      isActive: true,
+      availableDates: [],
+    };
+    await write("guides.json", [entry]);
+    return [entry];
+  }
+  return records;
+}
+
+export async function findGuideForDate(date?: string): Promise<GuideRecord | null> {
+  const guides = await getGuides();
+  const active = guides.filter((g) => g.isActive);
+  if (!active.length) return null;
+  if (!date) return active[0];
+  return active.find((g) => g.availableDates.includes(date)) ?? active[0];
+}
+
+export async function addGuide(data: Omit<GuideRecord, "id" | "createdAt">): Promise<GuideRecord> {
+  const records = await getGuides();
+  const entry: GuideRecord = {
+    id: `guide_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
+    createdAt: new Date().toISOString(),
+    ...data,
+  };
+  records.push(entry);
+  await write("guides.json", records);
+  return entry;
+}
+
+export async function updateGuide(id: string, patch: Partial<Omit<GuideRecord, "id" | "createdAt">>): Promise<GuideRecord | null> {
+  const records = await read<GuideRecord>("guides.json");
+  const idx = records.findIndex((g) => g.id === id);
+  if (idx === -1) return null;
+  records[idx] = { ...records[idx], ...patch };
+  await write("guides.json", records);
+  return records[idx];
+}
+
+export async function deleteGuide(id: string): Promise<void> {
+  const records = await read<GuideRecord>("guides.json");
+  await write("guides.json", records.filter((g) => g.id !== id));
+}
+
 // ─── Analytics ────────────────────────────────────────────────────────────────
 
 export async function getAnalytics() {

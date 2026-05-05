@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createBooking, getBookings, createReferral, useReferral } from "@/lib/db";
+import { createBooking, getBookings, createReferral, useReferral, findGuideForDate } from "@/lib/db";
 import { sendBookingConfirmation } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
 
     await createReferral(email, name);
 
+    const guide = await findGuideForDate(tourDate);
+
     await sendBookingConfirmation({
       id: booking.id,
       name: booking.name,
@@ -31,6 +33,7 @@ export async function POST(req: NextRequest) {
       amount: booking.amount,
       paymentType: booking.paymentType,
       bookingCode: booking.bookingCode,
+      guideWechat: guide?.wechatId,
     });
 
     return NextResponse.json({ ok: true, booking }, { status: 201 });

@@ -17,6 +17,7 @@ const NAV = [
   { href: "/admin/reviews",    label: "访客评价" },
   { href: "/admin/crm",        label: "访客 / CRM" },
   { href: "/admin/analytics",  label: "数据分析" },
+  { href: "/admin/guides",     label: "讲解员管理" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -8,6 +8,7 @@ type BookingEmailData = {
   amount: number;
   paymentType: "full" | "deposit" | "paid";
   bookingCode?: string;
+  guideWechat?: string;
 };
 
 function buildHtml(booking: BookingEmailData): string {
@@ -86,7 +87,7 @@ function buildHtml(booking: BookingEmailData): string {
       <div class="wechat-icon">💬</div>
       <div>
         <p>请扫码或搜索微信号添加讲解员，方便导览前沟通行程细节。</p>
-        <p><strong>Yuti_9999</strong></p>
+        <p><strong>${booking.guideWechat ?? "Yuti_9999"}</strong></p>
       </div>
     </div>
 
