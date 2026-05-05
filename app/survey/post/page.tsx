@@ -321,15 +321,13 @@ function PostSurveyForm() {
                     </button>
                   ))}
                 </div>
-                {form.interestedInFuture === "yes" && (
-                  <div className="animate-fade-in">
-                    <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的邮箱（选填）</label>
-                    <input type="email" value={form.contactEmail} onChange={(e) => setField("contactEmail", e.target.value)}
-                      placeholder="your@email.com"
-                      className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
-                    <p className="text-xs text-[#8B7D72] font-noto mt-2">我们还会为您生成专属推荐链接，分享给朋友后双方都可获得优惠。</p>
-                  </div>
-                )}
+                <div>
+                  <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的邮箱（选填）</label>
+                  <input type="email" value={form.contactEmail} onChange={(e) => setField("contactEmail", e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full bg-white border border-[#E0D5C8] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                  <p className="text-xs text-[#8B7D72] font-noto mt-2">留下邮箱，即可收到本次问卷内容回顾，以及专属推荐码——分享给朋友预约成功后双方各享优惠。</p>
+                </div>
               </div>
             </div>
           )}

@@ -173,3 +173,106 @@ export async function sendBookingConfirmation(booking: BookingEmailData): Promis
     sendCustomerEmail(booking),
   ]);
 }
+
+export type SurveyEmailData = {
+  name: string;
+  email: string;
+  referralCode: string;
+  type: "pre" | "post";
+  rows: Array<{ label: string; value: string }>;
+};
+
+function buildSurveyEmailHtml(data: SurveyEmailData): string {
+  const typeLabel = data.type === "pre" ? "参观前问卷" : "参观后问卷";
+  const rowsHtml = data.rows
+    .map((r) => `<tr><td class="label">${r.label}</td><td class="value">${r.value}</td></tr>`)
+    .join("\n");
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{margin:0;padding:0;background:#F8F5F0;font-family:"Noto Serif SC",Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;background:#F8F5F0}
+  .top-bar{background:#A6192E;padding:6px 40px;text-align:center}
+  .top-bar p{margin:0;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+  .header{background:#A6192E;padding:36px 40px 32px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.15)}
+  .header h1{margin:0;color:white;font-size:28px;font-weight:300;letter-spacing:0.05em}
+  .header p{margin:8px 0 0;color:rgba(255,255,255,0.7);font-size:12px;letter-spacing:0.15em}
+  .gold-rule{width:40px;height:1px;background:#C9A84C;margin:16px auto 0}
+  .body{background:white;padding:40px;border-left:1px solid #E0D5C8;border-right:1px solid #E0D5C8}
+  .greeting{font-size:26px;color:#1A1A1A;font-weight:300;margin:0 0 12px}
+  .intro{font-size:15px;color:#6B5E52;line-height:1.9;margin:0 0 32px}
+  .section-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#8B7D72;margin:0 0 12px}
+  .code-block{background:#1A1A1A;padding:24px;text-align:center;margin:0 0 32px}
+  .code-block p.code-label{margin:0 0 8px;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:#C9A84C}
+  .code-block p.code-value{margin:0;font-size:36px;font-weight:300;letter-spacing:0.3em;color:white}
+  .code-block p.code-hint{margin:8px 0 0;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.05em}
+  .detail-table{width:100%;border-collapse:collapse;margin:0 0 32px}
+  .detail-table .label{padding:10px 0;font-size:13px;color:#8B7D72;border-bottom:1px solid #F0EBE3;width:40%}
+  .detail-table .value{padding:10px 0;font-size:13px;color:#1A1A1A;border-bottom:1px solid #F0EBE3;text-align:right}
+  .footer{padding:28px 40px;text-align:center}
+  .footer p{font-size:11px;color:#8B7D72;line-height:1.8;margin:0}
+  .footer a{color:#A6192E;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar"><p>大都会艺术博物馆 · 欧洲艺术史私人导览</p></div>
+  <div class="header">
+    <h1>问卷已提交</h1>
+    <p>${typeLabel.toUpperCase()}</p>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="body">
+    <h2 class="greeting">${data.name}，感谢您的反馈。</h2>
+    <p class="intro">您的${typeLabel}已成功提交。以下是您的专属推荐码——分享给朋友，对方预约成功后您将获得 <strong>$3 返现</strong>，对方也可享受优惠。</p>
+
+    <p class="section-label">您的专属推荐码</p>
+    <div class="code-block">
+      <p class="code-label">分享给朋友</p>
+      <p class="code-value">${data.referralCode}</p>
+      <p class="code-hint">对方预约时填入此码，双方各享优惠</p>
+    </div>
+
+    <p class="section-label">您填写的内容</p>
+    <table class="detail-table">
+      ${rowsHtml}
+    </table>
+  </div>
+  <div class="footer">
+    <p>大都会艺术博物馆 · 欧洲艺术史私人导览<br>如有任何问题，请直接回复此邮件或微信联系 Yuti_9999。<br>© 2026 · 版权所有</p>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+export async function sendSurveyConfirmation(data: SurveyEmailData): Promise<void> {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  if (!user || !pass) {
+    console.warn("[email] GMAIL credentials not set — skipping survey email");
+    return;
+  }
+  const typeLabel = data.type === "pre" ? "参观前问卷" : "参观后问卷";
+  console.log(`[email] Sending survey confirmation to ${data.email}`);
+  try {
+    const nodemailer = await import("nodemailer");
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user, pass },
+    });
+    await transporter.sendMail({
+      from: `"大都会艺术史导览" <${user}>`,
+      to: data.email,
+      subject: `【${typeLabel}已提交】大都会艺术博物馆 欧洲艺术史私人导览`,
+      html: buildSurveyEmailHtml(data),
+    });
+    console.log(`[email] Survey confirmation sent to ${data.email} ✓`);
+  } catch (e) {
+    console.error("[email] Survey email error:", e);
+  }
+}

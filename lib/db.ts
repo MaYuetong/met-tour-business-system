@@ -75,6 +75,7 @@ export type PreSurveyRecord = {
   id: string;
   bookingId?: string;
   createdAt: string;
+  email?: string;
   name?: string;
   visitDate?: string;
   gender?: string;

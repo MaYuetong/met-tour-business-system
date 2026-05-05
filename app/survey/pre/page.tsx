@@ -35,6 +35,7 @@ function PreSurveyForm() {
   const params     = useSearchParams();
   const bookingId  = params.get("bookingId") ?? "";
   const paramName  = params.get("name")      ?? "";
+  const paramEmail = params.get("email")     ?? "";
 
   const [step, setStep]           = useState(1);
   const [submitting, setSubmitting] = useState(false);
@@ -42,6 +43,7 @@ function PreSurveyForm() {
   const [profileTag, setProfileTag] = useState("");
   const [form, setForm] = useState({
     name: paramName,
+    email: paramEmail,
     visitDate: "",
     gender: "",
     city: "",
@@ -176,6 +178,13 @@ function PreSurveyForm() {
                 <input type="text" value={form.name} onChange={(e) => setField("name", e.target.value)}
                   placeholder="例如：李雷"
                   className="w-full bg-white border border-[#E0D5C8] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+              </div>
+              <div>
+                <label className="block font-noto text-xs text-[#8B7D72] mb-3">您的邮箱（选填）</label>
+                <input type="email" value={form.email} onChange={(e) => setField("email", e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full bg-white border border-[#E0D5C8] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                <p className="text-xs text-[#8B7D72] font-noto mt-2">留下邮箱，即可收到问卷内容回顾及专属推荐码。</p>
               </div>
               <div>
                 <label className="block font-noto text-xs text-[#8B7D72] mb-3">参观日期（选填）</label>
