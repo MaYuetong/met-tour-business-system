@@ -4,7 +4,7 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import MetLogo from "@/components/MetLogo";
-import { isBlocked } from "@/lib/availability";
+import { isBlocked, isWednesday } from "@/lib/availability";
 
 const TIME_SLOTS = [
   { id: "10:00", label: "上午 10:00", note: "上午场 · 人流最少" },
@@ -286,12 +286,15 @@ function BookingForm() {
                         className={`w-full bg-white border px-4 py-4 font-noto text-base text-[#1A1A1A] focus:outline-none transition-colors ${form.tourDate && isBlocked(form.tourDate) ? "border-red-400 focus:border-red-500" : "border-[#E0D5C8] focus:border-[#A6192E]"}`} />
                       {form.tourDate && isBlocked(form.tourDate) && (
                         <p className="font-noto text-sm text-red-600 mt-2">
-                          该日期暂不开放预约，请选择其他日期。<br />
-                          <span className="text-xs text-[#8B7D72]">不可用区间：5月15–19日、6月3–4日</span>
+                          {isWednesday(form.tourDate)
+                            ? "大都会博物馆每周三闭馆，请选择其他日期。"
+                            : "该日期暂不开放预约，请选择其他日期。"}
+                          <br />
+                          <span className="text-xs text-[#8B7D72]">不可用：每周三（博物馆闭馆）· 5月15–19日 · 6月3–4日</span>
                         </p>
                       )}
                       <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-2 tracking-wide">
-                        我们将以邮件确认可用场次。
+                        每周三博物馆闭馆，不开放预约。我们将以邮件确认可用场次。
                       </p>
                     </div>
 

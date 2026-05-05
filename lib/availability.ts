@@ -4,7 +4,12 @@ export const BLOCKED_RANGES = [
   { start: "2026-06-03", end: "2026-06-04" },
 ];
 
+export function isWednesday(dateStr: string): boolean {
+  return new Date(dateStr + "T12:00:00").getDay() === 3;
+}
+
 export function isBlocked(dateStr: string): boolean {
+  if (isWednesday(dateStr)) return true;
   return BLOCKED_RANGES.some(({ start, end }) => dateStr >= start && dateStr <= end);
 }
 
