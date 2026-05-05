@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 type Props = {
   id: string;
@@ -10,7 +9,6 @@ type Props = {
 };
 
 export default function DeleteButton({ id, type, label = "删除" }: Props) {
-  const router = useRouter();
   const [open, setOpen]       = useState(false);
   const [code, setCode]       = useState("");
   const [error, setError]     = useState("");
@@ -28,7 +26,7 @@ export default function DeleteButton({ id, type, label = "删除" }: Props) {
       const data = await res.json();
       if (data.ok) {
         setOpen(false);
-        router.refresh();
+        window.location.reload();
       } else {
         setError(data.error ?? "删除失败");
       }
