@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { deleteRecord } from "@/app/actions/delete";
 
 type Props = {
   id: string;
@@ -9,32 +10,21 @@ type Props = {
 };
 
 export default function DeleteButton({ id, type, label = "删除" }: Props) {
-  const [open, setOpen]       = useState(false);
-  const [code, setCode]       = useState("");
-  const [error, setError]     = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [open,  setOpen]  = useState(false);
+  const [code,  setCode]  = useState("");
+  const [error, setError] = useState("");
 
-  const handleDelete = async () => {
-    setLoading(true);
+  const handleDelete = () => {
     setError("");
-    try {
-      const res  = await fetch("/api/admin/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, type, code }),
-      });
-      const data = await res.json();
-      if (data.ok) {
+    startTransition(async () => {
+      const result = await deleteRecord(id, type, code);
+      if (result.ok) {
         setOpen(false);
-        window.location.reload();
       } else {
-        setError(data.error ?? "删除失败");
+        setError(result.error ?? "删除失败");
       }
-    } catch {
-      setError("网络错误，请重试");
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (
@@ -74,9 +64,9 @@ export default function DeleteButton({ id, type, label = "删除" }: Props) {
                 </button>
                 <button
                   onClick={handleDelete}
-                  disabled={loading || !code}
+                  disabled={isPending || !code}
                   className="flex-1 bg-red-600 text-white py-2.5 font-sans-ui text-[11px] tracking-widest uppercase hover:bg-red-700 transition-colors disabled:opacity-40">
-                  {loading ? "删除中..." : "确认删除"}
+                  {isPending ? "删除中..." : "确认删除"}
                 </button>
               </div>
             </div>
