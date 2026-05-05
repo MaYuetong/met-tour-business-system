@@ -123,6 +123,7 @@ function BookingForm() {
   };
 
   const today = new Date().toISOString().split("T")[0];
+  const minDate = today >= "2026-05-09" ? today : "2026-05-09";
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -281,7 +282,7 @@ function BookingForm() {
                       <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-2">
                         参观日期 <span className="text-[#A6192E]">*</span>
                       </label>
-                      <input type="date" required value={form.tourDate} min={today}
+                      <input type="date" required value={form.tourDate} min={minDate}
                         onChange={(e) => set("tourDate", e.target.value)}
                         className={`w-full bg-white border px-4 py-4 font-noto text-base text-[#1A1A1A] focus:outline-none transition-colors ${form.tourDate && isBlocked(form.tourDate) ? "border-red-400 focus:border-red-500" : "border-[#E0D5C8] focus:border-[#A6192E]"}`} />
                       {form.tourDate && isBlocked(form.tourDate) && (
