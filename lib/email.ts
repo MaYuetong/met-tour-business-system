@@ -116,6 +116,18 @@ function buildHtml(booking: BookingEmailData): string {
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xbdwojzk";
 
+export async function notifyAdminFormspreeRaw(subject: string, data: Record<string, string | number>): Promise<void> {
+  try {
+    await fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ _subject: subject, ...data }),
+    });
+  } catch (e) {
+    console.error("Formspree notify error:", e);
+  }
+}
+
 // Notify admin via Formspree (always runs, no API key needed)
 async function notifyAdminFormspree(booking: BookingEmailData): Promise<void> {
   const paymentText =

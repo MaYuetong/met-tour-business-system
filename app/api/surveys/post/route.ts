@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addPostSurvey, getPostSurveys, createReferral } from "@/lib/db";
-import { sendSurveyConfirmation } from "@/lib/email";
+import { sendSurveyConfirmation, notifyAdminFormspreeRaw } from "@/lib/email";
 
 const GENDER_MAP: Record<string, string> = { male: "男", female: "女", undisclosed: "不便透露" };
 const SECTION_MAP: Record<string, string> = {
@@ -16,10 +16,32 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const record = await addPostSurvey(body);
 
+    const sections = (Array.isArray(body.mostImpressive) ? body.mostImpressive : [body.mostImpressive])
+      .map((s: string) => SECTION_MAP[s] ?? s).join("、");
+
+    await notifyAdminFormspreeRaw(
+      `【参观后问卷】整体 ${body.ratings?.overall ?? 0}/5 · NPS ${body.nps ?? "—"}`,
+      {
+        性别:       GENDER_MAP[body.gender] ?? body.gender ?? "未填写",
+        参观日期:   body.visitDate  ?? "未填写",
+        来自城市:   body.city       ?? "未填写",
+        来自国家:   body.country    ?? "未填写",
+        整体评分:   `${body.ratings?.overall ?? 0} / 5`,
+        讲解清晰度: `${body.ratings?.clarity ?? 0} / 5`,
+        导览节奏:   `${body.ratings?.pacing ?? 0} / 5`,
+        最深刻部分: sections || "未填写",
+        改进建议:   body.improvement || "无",
+        合理价位:   PRICE_MAP[body.pricePerception] ?? body.pricePerception ?? "未填写",
+        推荐指数:   `${body.nps ?? "—"} / 10`,
+        评语:       body.testimonial || "无",
+        未来兴趣:   body.interestedInFuture === "yes" ? "非常有兴趣" : "暂时不需要",
+        联系邮箱:   body.contactEmail || "未填写",
+      },
+    );
+
     const contactEmail: string | undefined = body.contactEmail?.trim() || undefined;
     if (contactEmail) {
       const referral = await createReferral(contactEmail, contactEmail);
-      const sections = Array.isArray(body.mostImpressive) ? body.mostImpressive : [body.mostImpressive];
       const rows = [
         body.gender         && { label: "性别",       value: GENDER_MAP[body.gender] ?? body.gender },
         body.visitDate      && { label: "参观日期",   value: body.visitDate },
@@ -28,7 +50,7 @@ export async function POST(req: NextRequest) {
         body.ratings?.overall > 0 && { label: "整体体验",   value: `${body.ratings.overall} / 5 星` },
         body.ratings?.clarity > 0 && { label: "讲解清晰度", value: `${body.ratings.clarity} / 5 星` },
         body.ratings?.pacing  > 0 && { label: "导览节奏",   value: `${body.ratings.pacing} / 5 星` },
-        sections.length > 0       && { label: "最深刻部分", value: sections.map((s: string) => SECTION_MAP[s] ?? s).join("、") },
+        sections.length > 0       && { label: "最深刻部分", value: sections },
         body.improvement    && { label: "改进建议",   value: body.improvement },
         body.pricePerception && { label: "合理价位",  value: PRICE_MAP[body.pricePerception] ?? body.pricePerception },
         body.nps >= 0        && { label: "推荐指数",  value: `${body.nps} / 10` },
