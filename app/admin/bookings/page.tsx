@@ -1,4 +1,5 @@
 import { getBookings, getPreSurveys } from "@/lib/db";
+import DeleteButton from "@/components/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -85,17 +86,18 @@ export default async function BookingsPage() {
                     )}
                   </div>
 
-                  <div className="text-right flex-shrink-0">
+                  <div className="text-right flex-shrink-0 flex flex-col items-end gap-1">
                     <p className="font-noto text-2xl text-[#A6192E] font-light">${b.amount}</p>
-                    <p className="text-xs text-[#8B7D72] font-noto mt-0.5">{PAYMENT_LABELS[b.paymentType] ?? b.paymentType}</p>
+                    <p className="text-xs text-[#8B7D72] font-noto">{PAYMENT_LABELS[b.paymentType] ?? b.paymentType}</p>
                     {b.tourDate && (
-                      <p className="text-sm font-noto text-[#C9A84C] mt-2">
+                      <p className="text-sm font-noto text-[#C9A84C]">
                         {new Date(b.tourDate).toLocaleDateString("zh-CN", { weekday: "short", month: "short", day: "numeric" })}
                       </p>
                     )}
-                    <p className="text-xs text-[#8B7D72] font-noto mt-2">
+                    <p className="text-xs text-[#8B7D72] font-noto">
                       {new Date(b.createdAt).toLocaleDateString("zh-CN")}
                     </p>
+                    <DeleteButton id={b.id} type="booking" />
                   </div>
                 </div>
               </div>
