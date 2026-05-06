@@ -58,13 +58,13 @@ function SuccessContent() {
           <div>
             <div className="flex items-center gap-3 mb-1">
               <div className="w-5 h-px bg-[#999999]" />
-              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999]">预约已确认</p>
+              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#555555]">预约已确认</p>
             </div>
             <h1 className="font-noto text-3xl sm:text-4xl text-[#1A1A1A] font-[300]">{name}，欢迎。</h1>
           </div>
         </div>
 
-        <p className="font-noto text-[#666666] leading-relaxed mb-8">
+        <p className="font-noto text-[#444444] leading-relaxed mb-8">
           您在大都会艺术博物馆欧洲艺术史私人导览的名额已成功预留。
           {paymentType === "deposit" && " 尾款 $66 将于导览当天结清。"}
           {" "}确认邮件已发送至 <strong className="text-[#1A1A1A] font-[400]">{email}</strong>。
@@ -72,7 +72,7 @@ function SuccessContent() {
 
         {/* Booking code */}
         <div className="bg-[#1A1A1A] p-6 mb-6 text-center">
-          <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999] mb-2">当日专属入场码</p>
+          <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#555555] mb-2">当日专属入场码</p>
           <p className="font-noto text-3xl font-[200] tracking-[0.3em] text-white mb-2">
             {params.get("bookingCode") ?? "—"}
           </p>
@@ -91,7 +91,7 @@ function SuccessContent() {
         {/* Booking summary */}
         <div className="border border-[#E5E5E5] mb-8">
           <div className="bg-[#F5F5F5] px-5 py-3 border-b border-[#E5E5E5]">
-            <p className="font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase">预约详情</p>
+            <p className="font-sans-ui text-[11px] tracking-wider text-[#444444] uppercase">预约详情</p>
           </div>
           <div className="divide-y divide-[#F0EBE3]">
             {[
@@ -101,7 +101,7 @@ function SuccessContent() {
               { label: "地点",     value: "大都会艺术博物馆，纽约" },
             ].map((row) => (
               <div key={row.label} className="flex justify-between items-start px-5 py-3.5 gap-4">
-                <span className="font-sans-ui text-[12px] tracking-wide text-[#767676] flex-shrink-0">{row.label}</span>
+                <span className="font-sans-ui text-[12px] tracking-wide text-[#444444] flex-shrink-0">{row.label}</span>
                 <span className="font-noto text-sm text-[#1A1A1A] text-right">{row.value}</span>
               </div>
             ))}
@@ -111,7 +111,7 @@ function SuccessContent() {
         {/* Pre-survey CTA */}
         <div className="border-l-4 border-[#E51B23] pl-5 mb-8">
           <p className="font-noto text-[#E51B23] font-[400] mb-1.5">下一步：参观前问卷</p>
-          <p className="font-noto text-sm text-[#666666] leading-relaxed">
+          <p className="font-noto text-sm text-[#444444] leading-relaxed">
             请完成一份约 3 分钟的问卷，帮助我们为您个性化定制导览内容。
           </p>
         </div>
@@ -122,7 +122,7 @@ function SuccessContent() {
         </Link>
 
         <div className="mt-2">
-          <Link href="/" className="font-sans-ui text-[11px] text-[#767676] tracking-wider hover:text-[#E51B23] transition-colors">
+          <Link href="/" className="font-sans-ui text-[11px] text-[#444444] tracking-wider hover:text-[#E51B23] transition-colors">
             ← 返回首页
           </Link>
         </div>
@@ -137,7 +137,7 @@ export default function SuccessPage() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-[#E51B23] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="font-sans-ui text-[11px] tracking-widest text-[#767676] uppercase">加载中</p>
+          <p className="font-sans-ui text-[11px] tracking-widest text-[#444444] uppercase">加载中</p>
         </div>
       </div>
     }>

@@ -116,10 +116,10 @@ function PostSurveyForm() {
         <main className="flex-1 max-w-lg mx-auto w-full px-4 sm:px-6 py-12">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-6 h-px bg-[#999999]" />
-            <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999]">参观后问卷</p>
+            <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#555555]">参观后问卷</p>
           </div>
           <h2 className="font-noto text-3xl text-[#1A1A1A] font-[300] mb-4">衷心感谢</h2>
-          <p className="font-noto text-[#666666] text-base leading-relaxed mb-8">
+          <p className="font-noto text-[#444444] text-base leading-relaxed mb-8">
             您的反馈对我们极为珍贵，将影响每一次未来的导览。
           </p>
           <div className="border border-[#E51B23]/30 mb-8">
@@ -128,7 +128,7 @@ function PostSurveyForm() {
             </div>
             <div className="p-5 bg-[#FDF8F8]">
               <p className="font-noto text-[#1A1A1A] mb-1.5">推荐他人预约，获得 <strong className="text-[#E51B23]">$3 返现</strong></p>
-              <p className="font-noto text-sm text-[#666666] mb-5 leading-relaxed">
+              <p className="font-noto text-sm text-[#444444] mb-5 leading-relaxed">
                 将以下专属码分享给朋友，对方成功预约导览后，您将获得 $3 返现。
               </p>
               <div className="flex items-center gap-3">
@@ -175,7 +175,7 @@ function PostSurveyForm() {
       {/* Progress */}
       <div className="bg-[#F5F5F5] border-b border-[#E5E5E5]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
-          <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#999999] mb-2">参观后问卷</p>
+          <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#555555] mb-2">参观后问卷</p>
           <div className="w-full bg-[#E5E5E5] h-1">
             <div className="bg-[#E51B23] h-1 transition-all duration-500" style={{ width: `${(step / TOTAL_STEPS) * 100}%` }} />
           </div>
@@ -191,14 +191,14 @@ function PostSurveyForm() {
           {step === 1 && (
             <div className="space-y-5">
               <div>
-                <label className="block font-noto text-xs text-[#767676] mb-3">参观日期（选填）</label>
+                <label className="block font-noto text-xs text-[#444444] mb-3">参观日期（选填）</label>
                 <div className="w-full overflow-hidden border border-[#E5E5E5] focus-within:border-[#E51B23] transition-colors bg-white">
                   <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
                     className="w-full bg-transparent px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none [&::-webkit-calendar-picker-indicator]:opacity-40 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
                 </div>
               </div>
               <div>
-                <p className="font-noto text-xs text-[#767676] mb-3">性别 <span className="text-[#E51B23]">*</span></p>
+                <p className="font-noto text-xs text-[#444444] mb-3">性别 <span className="text-[#E51B23]">*</span></p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[{ id: "male", label: "男" }, { id: "female", label: "女" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("gender", opt.id)}
@@ -214,25 +214,25 @@ function PostSurveyForm() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-noto text-xs text-[#767676] mb-3">来自城市（选填）</label>
+                  <label className="block font-noto text-xs text-[#444444] mb-3">来自城市（选填）</label>
                   <input type="text" value={form.city} onChange={(e) => setField("city", e.target.value)}
                     placeholder="例如：北京"
-                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
                 </div>
                 <div>
-                  <label className="block font-noto text-xs text-[#767676] mb-3">来自国家（选填）</label>
+                  <label className="block font-noto text-xs text-[#444444] mb-3">来自国家（选填）</label>
                   <input type="text" value={form.country} onChange={(e) => setField("country", e.target.value)}
                     placeholder="例如：中国"
-                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
                 </div>
               </div>
               <div className="border-t border-[#E5E5E5] pt-5 space-y-4">
-                <p className="text-[#767676] font-noto leading-relaxed text-sm">请对体验的各个方面进行评分。</p>
+                <p className="text-[#444444] font-noto leading-relaxed text-sm">请对体验的各个方面进行评分。</p>
                 {(["overall","clarity","pacing"] as RatingsKey[]).map((key) => (
                   <div key={key} className="bg-white border border-[#E5E5E5] rounded-sm p-6">
                     <div className="mb-4">
                       <div className="font-noto text-[#1A1A1A]">{ratingLabels[key].label}</div>
-                      <div className="text-sm text-[#767676] font-noto mt-0.5">{ratingLabels[key].desc}</div>
+                      <div className="text-sm text-[#444444] font-noto mt-0.5">{ratingLabels[key].desc}</div>
                     </div>
                     <StarRating value={form.ratings[key]} onChange={(v) => setField("ratings", { ...form.ratings, [key]: v })} />
                     {form.ratings[key] > 0 && (
@@ -241,7 +241,7 @@ function PostSurveyForm() {
                   </div>
                 ))}
               </div>
-              <p className="font-sans-ui text-[10px] text-[#B0A49A] leading-relaxed tracking-wide border-t border-[#E5E5E5] pt-4">
+              <p className="font-sans-ui text-[10px] text-[#666666] leading-relaxed tracking-wide border-t border-[#E5E5E5] pt-4">
                 本次问卷调查所收集的信息仅用于提升导览体验质量及学术研究用途，所有数据严格保密，不作任何商业用途。
               </p>
             </div>
@@ -250,7 +250,7 @@ function PostSurveyForm() {
           {step === 2 && (
             <div className="space-y-8">
               <div>
-                <p className="font-noto text-[#767676] mb-5 leading-relaxed text-sm">哪个部分给您留下了最深刻的印象？（可多选）</p>
+                <p className="font-noto text-[#444444] mb-5 leading-relaxed text-sm">哪个部分给您留下了最深刻的印象？（可多选）</p>
                 <div className="grid grid-cols-2 gap-3">
                   {SECTIONS.map((s) => (
                     <button key={s.id} onClick={() => toggleSection(s.id)}
@@ -261,17 +261,17 @@ function PostSurveyForm() {
                 </div>
               </div>
               <div>
-                <label className="block font-noto text-xs text-[#767676] mb-3">您有什么改进建议？（选填）</label>
+                <label className="block font-noto text-xs text-[#444444] mb-3">您有什么改进建议？（选填）</label>
                 <textarea value={form.improvement} onChange={(e) => setField("improvement", e.target.value)}
                   placeholder="欢迎任何建议..." rows={4}
-                  className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors resize-none" />
+                  className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors resize-none" />
               </div>
             </div>
           )}
 
           {step === 3 && (
             <div>
-              <p className="text-[#767676] font-noto mb-6 leading-relaxed text-sm">根据今天的体验，您认为合理的价格是多少？</p>
+              <p className="text-[#444444] font-noto mb-6 leading-relaxed text-sm">根据今天的体验，您认为合理的价格是多少？</p>
               <div className="grid grid-cols-2 gap-4">
                 {PRICE_OPTIONS.map((opt) => (
                   <button key={opt.id} onClick={() => setField("pricePerception", opt.id)}
@@ -285,8 +285,8 @@ function PostSurveyForm() {
 
           {step === 4 && (
             <div>
-              <p className="text-[#767676] font-noto mb-2 text-lg leading-relaxed">您有多大可能向他人推荐这次导览？</p>
-              <p className="text-xs text-[#767676] font-noto mb-8">0 = 完全不可能 · 10 = 极有可能</p>
+              <p className="text-[#444444] font-noto mb-2 text-lg leading-relaxed">您有多大可能向他人推荐这次导览？</p>
+              <p className="text-xs text-[#444444] font-noto mb-8">0 = 完全不可能 · 10 = 极有可能</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {Array.from({ length: 11 }, (_, i) => (
                   <button key={i} onClick={() => setField("nps", i)}
@@ -296,7 +296,7 @@ function PostSurveyForm() {
                 ))}
               </div>
               {form.nps >= 0 && (
-                <p className="text-sm font-noto text-[#767676] mt-2">
+                <p className="text-sm font-noto text-[#444444] mt-2">
                   {form.nps >= 9 ? "推荐者——谢谢您！" : form.nps >= 7 ? "被动者——感谢您的诚实。" : "批评者——我们会努力改进。"}
                 </p>
               )}
@@ -306,13 +306,13 @@ function PostSurveyForm() {
           {step === 5 && (
             <div className="space-y-8">
               <div>
-                <label className="block font-noto text-xs text-[#767676] mb-3">评语（选填）</label>
+                <label className="block font-noto text-xs text-[#444444] mb-3">评语（选填）</label>
                 <textarea value={form.testimonial} onChange={(e) => setField("testimonial", e.target.value)}
                   placeholder="请用几句话分享您的体验..." rows={5}
-                  className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed" />
+                  className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed" />
               </div>
               <div>
-                <p className="font-noto text-[#767676] mb-5 text-sm">有兴趣参加未来的导览或特别展览吗？</p>
+                <p className="font-noto text-[#444444] mb-5 text-sm">有兴趣参加未来的导览或特别展览吗？</p>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   {[{ id: "yes", label: "非常有兴趣" }, { id: "no", label: "暂时不需要" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("interestedInFuture", opt.id)}
@@ -322,11 +322,11 @@ function PostSurveyForm() {
                   ))}
                 </div>
                 <div>
-                  <label className="block font-noto text-xs text-[#767676] mb-3">您的邮箱（选填）</label>
+                  <label className="block font-noto text-xs text-[#444444] mb-3">您的邮箱（选填）</label>
                   <input type="email" value={form.contactEmail} onChange={(e) => setField("contactEmail", e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
-                  <p className="text-xs text-[#767676] font-noto mt-2">留下邮箱，即可收到本次问卷内容回顾，以及专属推荐码——分享给朋友预约成功后双方各享优惠。</p>
+                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                  <p className="text-xs text-[#444444] font-noto mt-2">留下邮箱，即可收到本次问卷内容回顾，以及专属推荐码——分享给朋友预约成功后双方各享优惠。</p>
                 </div>
               </div>
             </div>
@@ -337,14 +337,14 @@ function PostSurveyForm() {
         <div className="hidden md:flex items-center justify-between mt-12 pt-8 border-t border-[#E5E5E5]">
           {step > 1 ? (
             <button onClick={() => setStep((s) => s - 1)}
-              className="font-sans-ui text-sm text-[#767676] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
+              className="font-sans-ui text-sm text-[#444444] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
               上一步
             </button>
           ) : <div />}
           {step < TOTAL_STEPS ? (
             <button onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}
-              className={`px-10 py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white hover:bg-[#C01018]" : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"}`}>
+              className={`px-10 py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white hover:bg-[#C01018]" : "bg-[#E5E5E5] text-[#444444] cursor-not-allowed"}`}>
               下一步 →
             </button>
           ) : (
@@ -361,13 +361,13 @@ function PostSurveyForm() {
         <div className="flex items-center gap-3">
           {step > 1 && (
             <button onClick={() => setStep((s) => s - 1)}
-              className="flex-shrink-0 w-12 h-12 border border-[#E5E5E5] flex items-center justify-center text-[#767676]">
+              className="flex-shrink-0 w-12 h-12 border border-[#E5E5E5] flex items-center justify-center text-[#444444]">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </button>
           )}
           {step < TOTAL_STEPS ? (
             <button onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}
-              className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white" : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"}`}>
+              className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white" : "bg-[#E5E5E5] text-[#444444] cursor-not-allowed"}`}>
               下一步 →
             </button>
           ) : (
@@ -388,7 +388,7 @@ export default function PostSurveyPage() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-[#E51B23] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="font-sans-ui text-[11px] tracking-widest text-[#767676] uppercase">加载中</p>
+          <p className="font-sans-ui text-[11px] tracking-widest text-[#444444] uppercase">加载中</p>
         </div>
       </div>
     }>

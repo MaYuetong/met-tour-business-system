@@ -117,7 +117,7 @@ function PreSurveyForm() {
             </div>
             <div className="flex items-center gap-3 justify-center mb-4">
               <div className="w-6 h-px bg-[#999999]" />
-              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999]">参观前问卷</p>
+              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#555555]">参观前问卷</p>
               <div className="w-6 h-px bg-[#999999]" />
             </div>
             <h2 className="font-noto text-3xl text-[#1A1A1A] font-[300] mb-4">个人画像已生成</h2>
@@ -127,7 +127,7 @@ function PreSurveyForm() {
                 <p className="font-noto text-white text-xl font-[300]">{tagLabels[profileTag] ?? profileTag}</p>
               </div>
             )}
-            <p className="font-noto text-[#666666] text-base leading-relaxed mb-8">
+            <p className="font-noto text-[#444444] text-base leading-relaxed mb-8">
               我们已记录您的偏好。导览将根据您的兴趣量身定制。
             </p>
             <div className="w-10 h-px bg-[#999999] mx-auto mb-8" />
@@ -158,7 +158,7 @@ function PreSurveyForm() {
       {/* Progress bar */}
       <div className="bg-[#F5F5F5] border-b border-[#E5E5E5]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
-          <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#999999] mb-2">参观前问卷</p>
+          <p className="font-sans-ui text-[10px] tracking-[0.2em] uppercase text-[#555555] mb-2">参观前问卷</p>
           <div className="w-full bg-[#E5E5E5] h-1">
             <div className="bg-[#E51B23] h-1 transition-all duration-500" style={{ width: `${(step / TOTAL_STEPS) * 100}%` }} />
           </div>
@@ -174,27 +174,27 @@ function PreSurveyForm() {
           {step === 1 && (
             <div className="space-y-6">
               <div>
-                <label className="block font-noto text-xs text-[#767676] mb-3">您的姓名（选填）</label>
+                <label className="block font-noto text-xs text-[#444444] mb-3">您的姓名（选填）</label>
                 <input type="text" value={form.name} onChange={(e) => setField("name", e.target.value)}
                   placeholder="例如：李雷"
-                  className="w-full bg-white border border-[#E5E5E5] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                  className="w-full bg-white border border-[#E5E5E5] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
               </div>
               <div>
-                <label className="block font-noto text-xs text-[#767676] mb-3">您的邮箱（选填）</label>
+                <label className="block font-noto text-xs text-[#444444] mb-3">您的邮箱（选填）</label>
                 <input type="email" value={form.email} onChange={(e) => setField("email", e.target.value)}
                   placeholder="your@email.com"
-                  className="w-full bg-white border border-[#E5E5E5] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
-                <p className="text-xs text-[#767676] font-noto mt-2">留下邮箱，即可收到问卷内容回顾及专属推荐码。</p>
+                  className="w-full bg-white border border-[#E5E5E5] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                <p className="text-xs text-[#444444] font-noto mt-2">留下邮箱，即可收到问卷内容回顾及专属推荐码。</p>
               </div>
               <div>
-                <label className="block font-noto text-xs text-[#767676] mb-3">参观日期（选填）</label>
+                <label className="block font-noto text-xs text-[#444444] mb-3">参观日期（选填）</label>
                 <div className="w-full overflow-hidden border border-[#E5E5E5] focus-within:border-[#E51B23] transition-colors bg-white">
                   <input type="date" value={form.visitDate} onChange={(e) => setField("visitDate", e.target.value)}
                     className="w-full bg-transparent px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none [&::-webkit-calendar-picker-indicator]:opacity-40 [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
                 </div>
               </div>
               <div>
-                <p className="font-noto text-xs text-[#767676] mb-3">性别 <span className="text-[#E51B23]">*</span></p>
+                <p className="font-noto text-xs text-[#444444] mb-3">性别 <span className="text-[#E51B23]">*</span></p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[{ id: "male", label: "男" }, { id: "female", label: "女" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("gender", opt.id)}
@@ -210,20 +210,20 @@ function PreSurveyForm() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-noto text-xs text-[#767676] mb-3">来自城市（选填）</label>
+                  <label className="block font-noto text-xs text-[#444444] mb-3">来自城市（选填）</label>
                   <input type="text" value={form.city} onChange={(e) => setField("city", e.target.value)}
                     placeholder="例如：北京"
-                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
                 </div>
                 <div>
-                  <label className="block font-noto text-xs text-[#767676] mb-3">来自国家（选填）</label>
+                  <label className="block font-noto text-xs text-[#444444] mb-3">来自国家（选填）</label>
                   <input type="text" value={form.country} onChange={(e) => setField("country", e.target.value)}
                     placeholder="例如：中国"
-                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                    className="w-full bg-white border border-[#E5E5E5] rounded-sm px-4 py-3 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
                 </div>
               </div>
               <div>
-                <p className="font-noto text-xs text-[#767676] mb-5">这是您第一次参观大都会艺术博物馆吗？</p>
+                <p className="font-noto text-xs text-[#444444] mb-5">这是您第一次参观大都会艺术博物馆吗？</p>
                 <div className="grid grid-cols-2 gap-4">
                   {[{ id: "yes", label: "是，第一次" }, { id: "no", label: "来过" }].map((opt) => (
                     <button key={opt.id} onClick={() => setField("firstVisit", opt.id)}
@@ -233,7 +233,7 @@ function PreSurveyForm() {
                   ))}
                 </div>
               </div>
-              <p className="font-sans-ui text-[10px] text-[#B0A49A] leading-relaxed tracking-wide border-t border-[#E5E5E5] pt-4">
+              <p className="font-sans-ui text-[10px] text-[#666666] leading-relaxed tracking-wide border-t border-[#E5E5E5] pt-4">
                 本次问卷调查所收集的信息仅用于提升导览体验质量及学术研究用途，所有数据严格保密，不作任何商业用途。
               </p>
             </div>
@@ -241,7 +241,7 @@ function PreSurveyForm() {
 
           {step === 2 && (
             <div className="space-y-4">
-              <p className="text-[#767676] font-noto mb-6 leading-relaxed text-sm">没有对错之分，这有助于我们调整导览的深度与重点。</p>
+              <p className="text-[#444444] font-noto mb-6 leading-relaxed text-sm">没有对错之分，这有助于我们调整导览的深度与重点。</p>
               {KNOWLEDGE_LEVELS.map((opt) => (
                 <button key={opt.id} onClick={() => setField("knowledgeLevel", opt.id)}
                   className={`w-full text-left border rounded-sm p-6 transition-all duration-200 ${form.knowledgeLevel === opt.id ? "border-[#E51B23] bg-white" : "border-[#E5E5E5] bg-white hover:border-[#E51B23]/50"}`}>
@@ -249,7 +249,7 @@ function PreSurveyForm() {
                     <input type="radio" className="met-radio" readOnly checked={form.knowledgeLevel === opt.id} />
                     <div>
                       <div className="font-noto text-[#1A1A1A]">{opt.label}</div>
-                      <div className="text-sm text-[#767676] font-noto mt-0.5">{opt.desc}</div>
+                      <div className="text-sm text-[#444444] font-noto mt-0.5">{opt.desc}</div>
                     </div>
                   </div>
                 </button>
@@ -259,7 +259,7 @@ function PreSurveyForm() {
 
           {step === 3 && (
             <div>
-              <p className="text-[#767676] font-noto mb-6 leading-relaxed text-sm">可多选。导览将重点介绍您感兴趣的领域。</p>
+              <p className="text-[#444444] font-noto mb-6 leading-relaxed text-sm">可多选。导览将重点介绍您感兴趣的领域。</p>
               <div className="space-y-3">
                 {INTERESTS.map((opt) => (
                   <button key={opt.id} onClick={() => toggleInterest(opt.id)}
@@ -276,7 +276,7 @@ function PreSurveyForm() {
 
           {step === 4 && (
             <div className="space-y-4">
-              <p className="text-[#767676] font-noto mb-6 leading-relaxed text-sm">您希望以何种方式体验艺术？</p>
+              <p className="text-[#444444] font-noto mb-6 leading-relaxed text-sm">您希望以何种方式体验艺术？</p>
               {EXPERIENCE_PREFS.map((opt) => (
                 <button key={opt.id} onClick={() => setField("experiencePreference", opt.id)}
                   className={`w-full text-left border rounded-sm p-6 transition-all duration-200 ${form.experiencePreference === opt.id ? "border-[#E51B23] bg-white" : "border-[#E5E5E5] bg-white hover:border-[#E51B23]/50"}`}>
@@ -284,7 +284,7 @@ function PreSurveyForm() {
                     <input type="radio" className="met-radio" readOnly checked={form.experiencePreference === opt.id} />
                     <div>
                       <div className="font-noto text-[#1A1A1A]">{opt.label}</div>
-                      <div className="text-sm text-[#767676] font-noto mt-0.5">{opt.desc}</div>
+                      <div className="text-sm text-[#444444] font-noto mt-0.5">{opt.desc}</div>
                     </div>
                   </div>
                 </button>
@@ -294,14 +294,14 @@ function PreSurveyForm() {
 
           {step === 5 && (
             <div>
-              <p className="text-[#767676] font-noto mb-6 leading-relaxed">
+              <p className="text-[#444444] font-noto mb-6 leading-relaxed">
                 今天您最希望看到或理解什么？
               </p>
               <textarea value={form.openQuestion} onChange={(e) => setField("openQuestion", e.target.value)}
                 placeholder="某件特定的作品、与艺术的个人情缘、某段历史时期……"
                 rows={6}
-                className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed" />
-              <p className="text-xs text-[#767676] font-noto mt-3">选填——但我们非常感谢您的分享。</p>
+                className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed" />
+              <p className="text-xs text-[#444444] font-noto mt-3">选填——但我们非常感谢您的分享。</p>
             </div>
           )}
         </div>
@@ -310,14 +310,14 @@ function PreSurveyForm() {
         <div className="hidden md:flex items-center justify-between mt-12 pt-8 border-t border-[#E5E5E5]">
           {step > 1 ? (
             <button onClick={() => setStep((s) => s - 1)}
-              className="font-sans-ui text-sm text-[#767676] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
+              className="font-sans-ui text-sm text-[#444444] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
               上一步
             </button>
           ) : <div />}
           {step < TOTAL_STEPS ? (
             <button onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}
-              className={`px-10 py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white hover:bg-[#C01018]" : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"}`}>
+              className={`px-10 py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white hover:bg-[#C01018]" : "bg-[#E5E5E5] text-[#444444] cursor-not-allowed"}`}>
               下一步 →
             </button>
           ) : (
@@ -334,13 +334,13 @@ function PreSurveyForm() {
         <div className="flex items-center gap-3">
           {step > 1 && (
             <button onClick={() => setStep((s) => s - 1)}
-              className="flex-shrink-0 w-12 h-12 border border-[#E5E5E5] flex items-center justify-center text-[#767676]">
+              className="flex-shrink-0 w-12 h-12 border border-[#E5E5E5] flex items-center justify-center text-[#444444]">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </button>
           )}
           {step < TOTAL_STEPS ? (
             <button onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}
-              className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white" : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"}`}>
+              className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${canProceed() ? "bg-[#E51B23] text-white" : "bg-[#E5E5E5] text-[#444444] cursor-not-allowed"}`}>
               下一步 →
             </button>
           ) : (
@@ -361,7 +361,7 @@ export default function PreSurveyPage() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-[#E51B23] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="font-sans-ui text-[11px] tracking-widest text-[#767676] uppercase">加载中</p>
+          <p className="font-sans-ui text-[11px] tracking-widest text-[#444444] uppercase">加载中</p>
         </div>
       </div>
     }>

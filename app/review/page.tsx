@@ -97,11 +97,11 @@ export default function ReviewPage() {
             </div>
             <div className="flex items-center gap-3 justify-center mb-4">
               <div className="w-6 h-px bg-[#999999]" />
-              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999]">感谢您</p>
+              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#555555]">感谢您</p>
               <div className="w-6 h-px bg-[#999999]" />
             </div>
             <h2 className="font-noto text-3xl text-[#1A1A1A] font-[300] mb-4">您的文字意义重大。</h2>
-            <p className="font-noto text-[#666666] leading-relaxed mb-10">
+            <p className="font-noto text-[#444444] leading-relaxed mb-10">
               每一条评语都会影响下一位访客的体验。感谢您花时间分享。
             </p>
             <Link href="/"
@@ -135,12 +135,12 @@ export default function ReviewPage() {
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-5 h-px bg-[#999999]" />
-            <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999]">访客评语</p>
+            <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#555555]">访客评语</p>
           </div>
           <h1 className="font-noto text-3xl sm:text-4xl text-[#1A1A1A] font-[300] leading-tight mb-3">
             您的体验<span className="text-[#E51B23]">如何？</span>
           </h1>
-          <p className="font-noto text-[#767676] leading-relaxed">
+          <p className="font-noto text-[#444444] leading-relaxed">
             您诚实的反馈帮助我们改进，并给未来的访客提供参考。
           </p>
         </div>
@@ -148,33 +148,33 @@ export default function ReviewPage() {
         <form onSubmit={handleSubmit} className="space-y-8">
 
           <div>
-            <label className="block font-noto text-xs text-[#767676] mb-4">总体评分 *</label>
+            <label className="block font-noto text-xs text-[#444444] mb-4">总体评分 *</label>
             <StarPicker value={form.rating} onChange={(v) => setField("rating", v)} />
           </div>
 
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block font-noto text-xs text-[#767676] mb-3">您的姓名 *</label>
+              <label className="block font-noto text-xs text-[#444444] mb-3">您的姓名 *</label>
               <input type="text" required value={form.name} onChange={(e) => setField("name", e.target.value)}
                 placeholder="例如：李雷"
-                className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
             </div>
             <div>
-              <label className="block font-noto text-xs text-[#767676] mb-3">邮箱（选填）</label>
+              <label className="block font-noto text-xs text-[#444444] mb-3">邮箱（选填）</label>
               <input type="email" value={form.email} onChange={(e) => setField("email", e.target.value)}
                 placeholder="your@email.com"
-                className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
+                className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors" />
             </div>
           </div>
 
           <div>
-            <label className="block font-noto text-xs text-[#767676] mb-3">导览日期（选填）</label>
+            <label className="block font-noto text-xs text-[#444444] mb-3">导览日期（选填）</label>
             <input type="date" value={form.tourDate} onChange={(e) => setField("tourDate", e.target.value)}
               className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] focus:outline-none focus:border-[#E51B23] transition-colors" />
           </div>
 
           <div>
-            <label className="block font-noto text-xs text-[#767676] mb-4">印象最深的部分 *</label>
+            <label className="block font-noto text-xs text-[#444444] mb-4">印象最深的部分 *</label>
             <div className="grid grid-cols-2 gap-3">
               {SECTIONS.map((s) => (
                 <button key={s.id} type="button" onClick={() => setField("section", s.id)}
@@ -188,18 +188,18 @@ export default function ReviewPage() {
           </div>
 
           <div>
-            <label className="block font-noto text-xs text-[#767676] mb-3">您的评语 *</label>
+            <label className="block font-noto text-xs text-[#444444] mb-3">您的评语 *</label>
             <textarea value={form.review} onChange={(e) => setField("review", e.target.value)}
               placeholder="分享您的体验——什么打动了您，什么让您惊喜，什么令您难忘……"
               rows={6}
-              className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed text-lg" />
-            <p className="text-xs text-[#767676] font-noto mt-2">
+              className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed text-lg" />
+            <p className="text-xs text-[#444444] font-noto mt-2">
               {form.review.length < 10 ? `还需 ${10 - form.review.length} 个字符` : `${form.review.length} 字符`}
             </p>
           </div>
 
           <div>
-            <p className="font-noto text-xs text-[#767676] mb-4">您会推荐这次导览吗？ *</p>
+            <p className="font-noto text-xs text-[#444444] mb-4">您会推荐这次导览吗？ *</p>
             <div className="grid grid-cols-2 gap-4">
               {[{ id: "yes", label: "强烈推荐" }, { id: "no", label: "不确定" }].map((opt) => (
                 <button key={opt.id} type="button" onClick={() => setField("wouldRecommend", opt.id)}
@@ -214,7 +214,7 @@ export default function ReviewPage() {
 
           <div className="bg-white border border-[#E5E5E5] rounded-sm p-6">
             <p className="font-noto text-[#1A1A1A] mb-2 font-medium">我们可以分享您的评语吗？</p>
-            <p className="font-noto text-sm text-[#767676] mb-5 leading-relaxed">
+            <p className="font-noto text-sm text-[#444444] mb-5 leading-relaxed">
               经您许可，我们希望在网站上分享您的评语，以激励未来的访客。
             </p>
             <div className="grid grid-cols-2 gap-3">
@@ -240,11 +240,11 @@ export default function ReviewPage() {
               className={`w-full py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${
                 canSubmit && !submitting
                   ? "bg-[#E51B23] text-white hover:bg-[#C01018]"
-                  : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"
+                  : "bg-[#E5E5E5] text-[#444444] cursor-not-allowed"
               }`}>
               {submitting ? "提交中..." : "提交评语"}
             </button>
-            <p className="font-sans-ui text-[10px] text-center text-[#767676] tracking-wider mt-3">
+            <p className="font-sans-ui text-[10px] text-center text-[#444444] tracking-wider mt-3">
               您的评语已安全保存。导览员将收到通知。
             </p>
           </div>
