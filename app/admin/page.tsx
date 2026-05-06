@@ -17,15 +17,15 @@ export default async function AdminOverview() {
       {/* 数据概览 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         {[
-          { label: "总预约数", value: bookings.length,  note: `${confirmed.length} 已确认`, color: "text-[#A6192E]" },
-          { label: "总收入",   value: `$${revenue}`,    note: "来自已确认预约",              color: "text-[#C9A84C]" },
-          { label: "平均评分", value: analytics.responseCount > 0 ? analytics.avgRatings.overall.toFixed(1) + " / 5" : "—", note: `${post.length} 份反馈`, color: "text-[#A6192E]" },
-          { label: "NPS 分数", value: analytics.responseCount > 0 ? analytics.nps : "—", note: analytics.nps >= 50 ? "优秀" : analytics.nps >= 0 ? "良好" : "—", color: analytics.nps >= 50 ? "text-green-700" : "text-[#C9A84C]" },
+          { label: "总预约数", value: bookings.length,  note: `${confirmed.length} 已确认`, color: "text-[#E51B23]" },
+          { label: "总收入",   value: `$${revenue}`,    note: "来自已确认预约",              color: "text-[#999999]" },
+          { label: "平均评分", value: analytics.responseCount > 0 ? analytics.avgRatings.overall.toFixed(1) + " / 5" : "—", note: `${post.length} 份反馈`, color: "text-[#E51B23]" },
+          { label: "NPS 分数", value: analytics.responseCount > 0 ? analytics.nps : "—", note: analytics.nps >= 50 ? "优秀" : analytics.nps >= 0 ? "良好" : "—", color: analytics.nps >= 50 ? "text-green-700" : "text-[#999999]" },
         ].map((s) => (
-          <div key={s.label} className="bg-white border border-[#E0D5C8] rounded-sm p-6">
-            <p className="text-xs text-[#8B7D72] font-noto mb-2">{s.label}</p>
+          <div key={s.label} className="bg-white border border-[#E5E5E5] rounded-sm p-6">
+            <p className="text-xs text-[#767676] font-noto mb-2">{s.label}</p>
             <p className={`font-noto text-3xl font-light ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-[#8B7D72] font-noto mt-1">{s.note}</p>
+            <p className="text-xs text-[#767676] font-noto mt-1">{s.note}</p>
           </div>
         ))}
       </div>
@@ -39,13 +39,13 @@ export default async function AdminOverview() {
           { href: "/admin/analytics", label: "数据分析", count: post.length,      desc: "评分、NPS、趋势" },
         ].map((item) => (
           <Link key={item.href} href={item.href}
-            className="bg-white border border-[#E0D5C8] rounded-sm p-6 hover:border-[#A6192E] transition-colors group">
+            className="bg-white border border-[#E5E5E5] rounded-sm p-6 hover:border-[#E51B23] transition-colors group">
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-noto text-[#1A1A1A]">{item.label}</h3>
-              <span className="font-noto text-[#A6192E] text-xl font-light">{item.count}</span>
+              <span className="font-noto text-[#E51B23] text-xl font-light">{item.count}</span>
             </div>
-            <p className="text-sm font-noto text-[#8B7D72]">{item.desc}</p>
-            <p className="text-xs text-[#A6192E] font-noto mt-3 group-hover:underline">查看 →</p>
+            <p className="text-sm font-noto text-[#767676]">{item.desc}</p>
+            <p className="text-xs text-[#E51B23] font-noto mt-3 group-hover:underline">查看 →</p>
           </Link>
         ))}
       </div>
@@ -54,32 +54,32 @@ export default async function AdminOverview() {
       <div className="mb-10">
         <h2 className="font-noto text-xl text-[#1A1A1A] mb-5">即将到来的导览</h2>
         {upcoming.length === 0 ? (
-          <div className="bg-white border border-[#E0D5C8] rounded-sm p-8 text-center">
-            <p className="text-[#8B7D72] font-noto">暂无已安排的导览。</p>
+          <div className="bg-white border border-[#E5E5E5] rounded-sm p-8 text-center">
+            <p className="text-[#767676] font-noto">暂无已安排的导览。</p>
           </div>
         ) : (
           <div className="space-y-3">
             {upcoming.slice(0, 5).map((b) => {
               const preSurvey = pre.find((s) => s.bookingId === b.id);
               return (
-                <div key={b.id} className="bg-white border border-[#E0D5C8] rounded-sm p-5 flex items-center justify-between">
+                <div key={b.id} className="bg-white border border-[#E5E5E5] rounded-sm p-5 flex items-center justify-between">
                   <div>
                     <p className="font-noto text-[#1A1A1A]">{b.name}</p>
-                    <p className="text-sm font-noto text-[#8B7D72]">{b.email}</p>
+                    <p className="text-sm font-noto text-[#767676]">{b.email}</p>
                     {preSurvey && (
                       <div className="flex flex-wrap gap-1.5 mt-2">
-                        <span className="text-xs bg-[#A6192E]/10 text-[#A6192E] px-2 py-0.5 rounded-sm font-noto">
+                        <span className="text-xs bg-[#E51B23]/10 text-[#E51B23] px-2 py-0.5 rounded-sm font-noto">
                           {b.profileTag ?? preSurvey.profileTag}
                         </span>
                         {(preSurvey.interests ?? []).slice(0, 2).map((i) => (
-                          <span key={i} className="text-xs bg-[#F8F5F0] border border-[#E0D5C8] text-[#8B7D72] px-2 py-0.5 rounded-sm font-noto">{i}</span>
+                          <span key={i} className="text-xs bg-[#F5F5F5] border border-[#E5E5E5] text-[#767676] px-2 py-0.5 rounded-sm font-noto">{i}</span>
                         ))}
                       </div>
                     )}
                   </div>
                   <div className="text-right">
-                    <p className="font-noto text-[#C9A84C]">{new Date(b.tourDate!).toLocaleDateString("zh-CN", { month: "long", day: "numeric" })}</p>
-                    <p className="text-xs text-[#8B7D72] font-noto mt-0.5">${b.amount}</p>
+                    <p className="font-noto text-[#999999]">{new Date(b.tourDate!).toLocaleDateString("zh-CN", { month: "long", day: "numeric" })}</p>
+                    <p className="text-xs text-[#767676] font-noto mt-0.5">${b.amount}</p>
                   </div>
                 </div>
               );
@@ -92,22 +92,22 @@ export default async function AdminOverview() {
       <div>
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-noto text-xl text-[#1A1A1A]">近期访客评价</h2>
-          <Link href="/admin/reviews" className="text-xs text-[#A6192E] font-noto hover:underline">查看全部 →</Link>
+          <Link href="/admin/reviews" className="text-xs text-[#E51B23] font-noto hover:underline">查看全部 →</Link>
         </div>
         {reviews.length === 0 ? (
-          <div className="bg-white border border-[#E0D5C8] p-8 text-center">
-            <p className="font-noto text-[#8B7D72]">暂无评价。导览结束后将 <Link href="/review" className="text-[#A6192E] hover:underline">/review</Link> 链接发给访客。</p>
+          <div className="bg-white border border-[#E5E5E5] p-8 text-center">
+            <p className="font-noto text-[#767676]">暂无评价。导览结束后将 <Link href="/review" className="text-[#E51B23] hover:underline">/review</Link> 链接发给访客。</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-4">
             {[...reviews].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 4).map((r) => (
-              <div key={r.id} className="bg-white border border-[#E0D5C8] p-5">
+              <div key={r.id} className="bg-white border border-[#E5E5E5] p-5">
                 <div className="flex items-center justify-between mb-2">
                   <p className="font-noto text-[#1A1A1A] font-medium">{r.name}</p>
-                  <p className="font-noto text-[#A6192E] text-lg font-light">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</p>
+                  <p className="font-noto text-[#E51B23] text-lg font-light">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</p>
                 </div>
-                <p className="font-noto text-[#6B5E52] text-sm leading-relaxed border-l-2 border-[#A6192E] pl-3">「{r.review}」</p>
-                <p className="text-xs text-[#8B7D72] font-noto mt-3">{new Date(r.createdAt).toLocaleDateString("zh-CN")}</p>
+                <p className="font-noto text-[#666666] text-sm leading-relaxed border-l-2 border-[#E51B23] pl-3">「{r.review}」</p>
+                <p className="text-xs text-[#767676] font-noto mt-3">{new Date(r.createdAt).toLocaleDateString("zh-CN")}</p>
               </div>
             ))}
           </div>

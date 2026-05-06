@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --met-red:      #A6192E;
-  --met-red-dark: #8B1525;
-  --met-bg:       #F8F5F0;
+  --met-red:      #E51B23;
+  --met-red-dark: #C01018;
+  --met-bg:       #FFFFFF;
   --met-text:     #1A1A1A;
-  --met-gold:     #C9A84C;
-  --met-border:   #E0D5C8;
-  --met-muted:    #8B7D72;
+  --met-gold:     #767676;
+  --met-border:   #E5E5E5;
+  --met-muted:    #767676;
   --met-dark:     #111111;
 }
 
@@ -62,9 +62,9 @@ p, span, label, button { letter-spacing: 0.02em; }
   content: ""; flex: 1; height: 1px; background: var(--met-border);
 }
 
-/* ── Gold horizontal rule ── */
+/* ── Section rule ── */
 .gold-rule {
-  width: 48px; height: 1px; background: var(--met-gold); display: block;
+  width: 32px; height: 2px; background: var(--met-red); display: block;
 }
 
 /* ── Met-style section caps label ── */

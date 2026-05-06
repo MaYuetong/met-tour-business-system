@@ -23,11 +23,11 @@ const NAV = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
-      <body className={`${notoSerifSC.variable} antialiased bg-[#F8F5F0]`}>
+      <body className={`${notoSerifSC.variable} antialiased bg-[#F5F5F5]`}>
         <div className="min-h-screen flex">
           <aside className="w-60 bg-[#1A1A1A] text-white flex-shrink-0 flex flex-col">
             <div className="px-6 py-6 border-b border-white/10">
-              <p className="text-[10px] tracking-[0.2em] text-[#C9A84C] font-noto">后台管理</p>
+              <p className="text-[10px] tracking-[0.2em] text-[#999999] font-noto">后台管理</p>
               <p className="font-noto text-white mt-0.5">大都会艺术导览</p>
             </div>
             <nav className="flex-1 px-4 py-6 space-y-1">
@@ -47,8 +47,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </aside>
 
           <main className="flex-1 min-w-0">
-            <div className="border-b border-[#E0D5C8] bg-white/60 backdrop-blur-sm px-8 py-4">
-              <p className="font-noto text-sm text-[#8B7D72]">欧洲艺术史导览 · 管理后台</p>
+            <div className="border-b border-[#E5E5E5] bg-white/60 backdrop-blur-sm px-8 py-4">
+              <p className="font-noto text-sm text-[#767676]">欧洲艺术史导览 · 管理后台</p>
             </div>
             <div className="p-8">{children}</div>
           </main>

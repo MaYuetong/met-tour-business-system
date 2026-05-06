@@ -32,19 +32,19 @@ export default function DeleteButton({ id, type, label = "删除" }: Props) {
     <>
       <button
         onClick={() => { setOpen(true); setCode(""); setError(""); }}
-        className="font-sans-ui text-[10px] tracking-widest uppercase text-[#8B7D72] hover:text-red-600 transition-colors px-2 py-1 border border-transparent hover:border-red-200 rounded-sm">
+        className="font-sans-ui text-[10px] tracking-widest uppercase text-[#767676] hover:text-red-600 transition-colors px-2 py-1 border border-transparent hover:border-red-200 rounded-sm">
         {label}
       </button>
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
           onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}>
-          <div className="bg-white border border-[#E0D5C8] w-full max-w-sm shadow-xl">
+          <div className="bg-white border border-[#E5E5E5] w-full max-w-sm">
             <div className="bg-[#1A1A1A] px-5 py-4">
-              <p className="font-sans-ui text-[11px] tracking-[0.2em] text-[#C9A84C] uppercase">确认删除</p>
+              <p className="font-sans-ui text-[11px] tracking-[0.2em] text-[#999999] uppercase">确认删除</p>
             </div>
             <div className="p-5 space-y-4">
-              <p className="font-noto text-sm text-[#6B5E52] leading-relaxed">
+              <p className="font-noto text-sm text-[#666666] leading-relaxed">
                 此操作不可撤销。请输入管理员安全码以继续：
               </p>
               <input
@@ -54,13 +54,13 @@ export default function DeleteButton({ id, type, label = "删除" }: Props) {
                 onKeyDown={(e) => e.key === "Enter" && handleDelete()}
                 placeholder="安全码"
                 autoFocus
-                className="w-full border border-[#E0D5C8] px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none focus:border-[#A6192E] transition-colors"
+                className="w-full border border-[#E5E5E5] px-4 py-3 font-noto text-sm text-[#1A1A1A] focus:outline-none focus:border-[#E51B23] transition-colors"
               />
               {error && <p className="font-noto text-xs text-red-600">{error}</p>}
               <div className="flex gap-3">
                 <button
                   onClick={() => setOpen(false)}
-                  className="flex-1 border border-[#E0D5C8] py-2.5 font-sans-ui text-[11px] tracking-widest uppercase text-[#8B7D72] hover:border-[#A6192E] transition-colors">
+                  className="flex-1 border border-[#E5E5E5] py-2.5 font-sans-ui text-[11px] tracking-widest uppercase text-[#767676] hover:border-[#E51B23] transition-colors">
                   取消
                 </button>
                 <button

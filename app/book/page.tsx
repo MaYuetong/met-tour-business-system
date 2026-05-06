@@ -129,7 +129,7 @@ function BookingForm() {
     <div className="min-h-screen bg-white flex flex-col">
 
       {/* ── Met-style Red Header ─────────────────────────────────────── */}
-      <header className="bg-[#A6192E] sticky top-0 z-40">
+      <header className="bg-[#E51B23] sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-end gap-2.5 group">
             <MetLogo className="h-8 w-auto text-white" />
@@ -151,11 +151,11 @@ function BookingForm() {
       </header>
 
       {/* ── Breadcrumb + Step indicator ──────────────────────────────── */}
-      <div className="bg-[#F8F5F0] border-b border-[#E0D5C8]">
+      <div className="bg-[#F5F5F5] border-b border-[#E5E5E5]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3">
           {/* Breadcrumb */}
-          <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wide mb-3">
-            <Link href="/" className="hover:text-[#A6192E] transition-colors underline underline-offset-2">首页</Link>
+          <p className="font-sans-ui text-[11px] text-[#767676] tracking-wide mb-3">
+            <Link href="/" className="hover:text-[#E51B23] transition-colors underline underline-offset-2">首页</Link>
             <span className="mx-2 text-[#C8BDB5]">/</span>
             <span>预约导览</span>
           </p>
@@ -167,10 +167,10 @@ function BookingForm() {
                 <div className={`flex items-center gap-2 ${step === s.num ? "opacity-100" : step > s.num ? "opacity-70" : "opacity-40"}`}>
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-sans-ui font-bold transition-colors ${
                     step > s.num
-                      ? "bg-[#A6192E] text-white"
+                      ? "bg-[#E51B23] text-white"
                       : step === s.num
-                      ? "bg-[#A6192E] text-white"
-                      : "bg-[#E0D5C8] text-[#8B7D72]"
+                      ? "bg-[#E51B23] text-white"
+                      : "bg-[#E5E5E5] text-[#767676]"
                   }`}>
                     {step > s.num ? (
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
@@ -181,7 +181,7 @@ function BookingForm() {
                   <span className="font-sans-ui text-[11px] tracking-wide hidden sm:block">{s.label}</span>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <div className={`h-px w-8 sm:w-16 mx-2 sm:mx-3 transition-colors ${step > s.num ? "bg-[#A6192E]" : "bg-[#E0D5C8]"}`} />
+                  <div className={`h-px w-8 sm:w-16 mx-2 sm:mx-3 transition-colors ${step > s.num ? "bg-[#E51B23]" : "bg-[#E5E5E5]"}`} />
                 )}
               </div>
             ))}
@@ -205,19 +205,19 @@ function BookingForm() {
           <div>
             {/* Step hero — mirrors Met event page heading style */}
             <div className="mb-8">
-              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#C9A84C] mb-2">
+              <p className="font-sans-ui text-[10px] tracking-[0.25em] uppercase text-[#999999] mb-2">
                 步骤 {step} / {STEPS.length}
               </p>
               <h1 className="font-noto text-3xl sm:text-4xl text-[#1A1A1A] font-[300] leading-tight">
                 {["填写您的信息", "选择参观日期", "确认并支付"][step - 1]}
               </h1>
               {step === 1 && (
-                <p className="font-noto text-[#8B7D72] mt-3 text-sm leading-relaxed">
+                <p className="font-noto text-[#767676] mt-3 text-sm leading-relaxed">
                   大都会艺术博物馆 · 欧洲艺术史私人导览 · 最多 6 人
                 </p>
               )}
               {step === 2 && (
-                <p className="font-noto text-[#8B7D72] mt-3 text-sm leading-relaxed">
+                <p className="font-noto text-[#767676] mt-3 text-sm leading-relaxed">
                   导览于每周末举行，我们将在 24 小时内以邮件确认您的预约。
                 </p>
               )}
@@ -231,41 +231,41 @@ function BookingForm() {
                   <div className="space-y-5">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-2">
-                          姓名 <span className="text-[#A6192E]">*</span>
+                        <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-2">
+                          姓名 <span className="text-[#E51B23]">*</span>
                         </label>
                         <input type="text" required value={form.name}
                           onChange={(e) => set("name", e.target.value)}
                           placeholder="例如：李雷"
-                          className="w-full bg-white border border-[#E0D5C8] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                          className="w-full bg-white border border-[#E5E5E5] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
                       </div>
                       <div>
-                        <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-2">
-                          电子邮箱 <span className="text-[#A6192E]">*</span>
+                        <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-2">
+                          电子邮箱 <span className="text-[#E51B23]">*</span>
                         </label>
                         <input type="email" required value={form.email}
                           onChange={(e) => set("email", e.target.value)}
                           placeholder="your@email.com"
-                          className="w-full bg-white border border-[#E0D5C8] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                          className="w-full bg-white border border-[#E5E5E5] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-2">
+                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-2">
                         联系电话 <span className="text-[#C8BDB5]">选填</span>
                       </label>
                       <input type="tel" value={form.phone}
                         onChange={(e) => set("phone", e.target.value)}
                         placeholder="+1 (212) 555-0000"
-                        className="w-full bg-white border border-[#E0D5C8] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                        className="w-full bg-white border border-[#E5E5E5] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
                     </div>
 
                     {referralCode && (
-                      <div className="flex items-center gap-3 bg-[#C9A84C]/10 border border-[#C9A84C]/30 p-4">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2.5">
+                      <div className="flex items-center gap-3 bg-[#999999]/10 border border-[#999999]/30 p-4">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999999" strokeWidth="2.5">
                           <polyline points="20 6 9 17 4 12"/>
                         </svg>
-                        <p className="font-noto text-sm text-[#6B5E52]">
+                        <p className="font-noto text-sm text-[#666666]">
                           推荐码 <strong>{referralCode}</strong> 已应用
                         </p>
                       </div>
@@ -279,49 +279,49 @@ function BookingForm() {
 
                     {/* Date picker */}
                     <div>
-                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-2">
-                        参观日期 <span className="text-[#A6192E]">*</span>
+                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-2">
+                        参观日期 <span className="text-[#E51B23]">*</span>
                       </label>
                       <input type="date" required value={form.tourDate} min={minDate}
                         onChange={(e) => set("tourDate", e.target.value)}
-                        className={`w-full bg-white border px-4 py-4 font-noto text-base text-[#1A1A1A] focus:outline-none transition-colors ${form.tourDate && isBlocked(form.tourDate) ? "border-red-400 focus:border-red-500" : "border-[#E0D5C8] focus:border-[#A6192E]"}`} />
+                        className={`w-full bg-white border px-4 py-4 font-noto text-base text-[#1A1A1A] focus:outline-none transition-colors ${form.tourDate && isBlocked(form.tourDate) ? "border-red-400 focus:border-red-500" : "border-[#E5E5E5] focus:border-[#E51B23]"}`} />
                       {form.tourDate && isBlocked(form.tourDate) && (
                         <p className="font-noto text-sm text-red-600 mt-2">
                           {isWednesday(form.tourDate)
                             ? "大都会博物馆每周三闭馆，请选择其他日期。"
                             : "该日期暂不开放预约，请选择其他日期。"}
                           <br />
-                          <span className="text-xs text-[#8B7D72]">不可用：每周三（博物馆闭馆）· 5月15–19日 · 6月3–4日</span>
+                          <span className="text-xs text-[#767676]">不可用：每周三（博物馆闭馆）· 5月15–19日 · 6月3–4日</span>
                         </p>
                       )}
-                      <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-2 tracking-wide">
+                      <p className="font-sans-ui text-[11px] text-[#767676] mt-2 tracking-wide">
                         每周三博物馆闭馆，不开放预约。我们将以邮件确认可用场次。
                       </p>
                     </div>
 
                     {/* Time slot */}
                     <div>
-                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-3">
-                        场次选择 <span className="text-[#A6192E]">*</span>
+                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-3">
+                        场次选择 <span className="text-[#E51B23]">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-3">
                         {TIME_SLOTS.map((slot) => (
                           <button key={slot.id} type="button" onClick={() => set("timeSlot", slot.id)}
                             className={`p-4 sm:p-5 border text-left transition-all ${
                               form.timeSlot === slot.id
-                                ? "border-[#A6192E] bg-white shadow-sm ring-1 ring-[#A6192E]/20"
-                                : "border-[#E0D5C8] bg-white hover:border-[#A6192E]/50"
+                                ? "border-[#E51B23] bg-white"
+                                : "border-[#E5E5E5] bg-white hover:border-[#E51B23]/50"
                             }`}>
                             <p className="font-noto text-[#1A1A1A] text-lg font-[400]">{slot.label}</p>
-                            <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-1 tracking-wide">{slot.note}</p>
+                            <p className="font-sans-ui text-[11px] text-[#767676] mt-1 tracking-wide">{slot.note}</p>
                             {form.timeSlot === slot.id && (
                               <div className="mt-2 flex items-center gap-1.5">
-                                <div className="w-3.5 h-3.5 rounded-full bg-[#A6192E] flex items-center justify-center">
+                                <div className="w-3.5 h-3.5 rounded-full bg-[#E51B23] flex items-center justify-center">
                                   <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
                                     <polyline points="20 6 9 17 4 12"/>
                                   </svg>
                                 </div>
-                                <span className="font-sans-ui text-[10px] text-[#A6192E] tracking-wider">已选择</span>
+                                <span className="font-sans-ui text-[10px] text-[#E51B23] tracking-wider">已选择</span>
                               </div>
                             )}
                           </button>
@@ -331,26 +331,26 @@ function BookingForm() {
 
                     {/* Group size */}
                     <div>
-                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-3">
-                        参观人数 <span className="text-[#A6192E]">*</span>
+                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-3">
+                        参观人数 <span className="text-[#E51B23]">*</span>
                       </label>
                       <div className="flex gap-2.5 flex-wrap">
                         {GROUP_SIZES.map((n) => (
                           <button key={n} type="button" onClick={() => set("groupSize", n)}
                             className={`w-14 h-14 border font-noto text-lg transition-all ${
                               form.groupSize === n
-                                ? "border-[#A6192E] bg-[#A6192E] text-white shadow-sm"
-                                : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"
+                                ? "border-[#E51B23] bg-[#E51B23] text-white"
+                                : "border-[#E5E5E5] bg-white text-[#1A1A1A] hover:border-[#E51B23]"
                             }`}>
                             {n}
                           </button>
                         ))}
                       </div>
-                      <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-2 tracking-wide">每场最多 6 人</p>
+                      <p className="font-sans-ui text-[11px] text-[#767676] mt-2 tracking-wide">每场最多 6 人</p>
                     </div>
 
                     {/* Elderly */}
-                    <div className="bg-[#F8F5F0] border border-[#E0D5C8] p-5">
+                    <div className="bg-[#F5F5F5] border border-[#E5E5E5] p-5">
                       <div className="flex items-center justify-between gap-4">
                         <p className="font-noto text-sm text-[#1A1A1A]">团队中有老年人吗？</p>
                         <div className="flex gap-2 flex-shrink-0">
@@ -359,23 +359,23 @@ function BookingForm() {
                               onClick={() => set("hasElderly", opt.val)}
                               className={`px-4 py-2 text-xs font-sans-ui tracking-wider border transition-all ${
                                 form.hasElderly === opt.val
-                                  ? "border-[#A6192E] bg-[#A6192E] text-white"
-                                  : "border-[#E0D5C8] bg-white text-[#8B7D72] hover:border-[#A6192E]/50"
+                                  ? "border-[#E51B23] bg-[#E51B23] text-white"
+                                  : "border-[#E5E5E5] bg-white text-[#767676] hover:border-[#E51B23]/50"
                               }`}>{opt.label}</button>
                           ))}
                         </div>
                       </div>
                       {form.hasElderly && (
-                        <div className="mt-4 pt-4 border-t border-[#E0D5C8] space-y-4">
+                        <div className="mt-4 pt-4 border-t border-[#E5E5E5] space-y-4">
                           <div>
-                            <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wider uppercase mb-3">老年人人数</p>
+                            <p className="font-sans-ui text-[11px] text-[#767676] tracking-wider uppercase mb-3">老年人人数</p>
                             <div className="flex gap-2 flex-wrap">
                               {[1,2,3,4,5,6].map(n => (
                                 <button key={n} type="button" onClick={() => setElderlyCount(n)}
                                   className={`w-12 h-12 border font-noto text-sm transition-all ${
                                     form.elderlyCount === n
-                                      ? "border-[#A6192E] bg-[#A6192E] text-white"
-                                      : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"
+                                      ? "border-[#E51B23] bg-[#E51B23] text-white"
+                                      : "border-[#E5E5E5] bg-white text-[#1A1A1A] hover:border-[#E51B23]"
                                   }`}>{n}</button>
                               ))}
                             </div>
@@ -383,13 +383,13 @@ function BookingForm() {
                           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             {form.elderlyAges.map((age, i) => (
                               <div key={i}>
-                                <label className="block font-sans-ui text-[10px] text-[#8B7D72] tracking-wider uppercase mb-1.5">
+                                <label className="block font-sans-ui text-[10px] text-[#767676] tracking-wider uppercase mb-1.5">
                                   第 {i + 1} 位 · 年龄（岁）
                                 </label>
                                 <input type="number" min="50" max="110" value={age}
                                   onChange={e => setElderlyAge(i, e.target.value)}
                                   placeholder="例如：68"
-                                  className="w-full bg-white border border-[#E0D5C8] px-3 py-3 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                                  className="w-full bg-white border border-[#E5E5E5] px-3 py-3 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
                               </div>
                             ))}
                           </div>
@@ -398,7 +398,7 @@ function BookingForm() {
                     </div>
 
                     {/* Children */}
-                    <div className="bg-[#F8F5F0] border border-[#E0D5C8] p-5">
+                    <div className="bg-[#F5F5F5] border border-[#E5E5E5] p-5">
                       <div className="flex items-center justify-between gap-4">
                         <p className="font-noto text-sm text-[#1A1A1A]">团队中有儿童或18岁以下少年吗？</p>
                         <div className="flex gap-2 flex-shrink-0">
@@ -407,23 +407,23 @@ function BookingForm() {
                               onClick={() => set("hasChildren", opt.val)}
                               className={`px-4 py-2 text-xs font-sans-ui tracking-wider border transition-all ${
                                 form.hasChildren === opt.val
-                                  ? "border-[#A6192E] bg-[#A6192E] text-white"
-                                  : "border-[#E0D5C8] bg-white text-[#8B7D72] hover:border-[#A6192E]/50"
+                                  ? "border-[#E51B23] bg-[#E51B23] text-white"
+                                  : "border-[#E5E5E5] bg-white text-[#767676] hover:border-[#E51B23]/50"
                               }`}>{opt.label}</button>
                           ))}
                         </div>
                       </div>
                       {form.hasChildren && (
-                        <div className="mt-4 pt-4 border-t border-[#E0D5C8] space-y-4">
+                        <div className="mt-4 pt-4 border-t border-[#E5E5E5] space-y-4">
                           <div>
-                            <p className="font-sans-ui text-[11px] text-[#8B7D72] tracking-wider uppercase mb-3">儿童人数</p>
+                            <p className="font-sans-ui text-[11px] text-[#767676] tracking-wider uppercase mb-3">儿童人数</p>
                             <div className="flex gap-2 flex-wrap">
                               {[1,2,3,4,5].map(n => (
                                 <button key={n} type="button" onClick={() => setChildrenCount(n)}
                                   className={`w-12 h-12 border font-noto text-sm transition-all ${
                                     form.childrenCount === n
-                                      ? "border-[#A6192E] bg-[#A6192E] text-white"
-                                      : "border-[#E0D5C8] bg-white text-[#1A1A1A] hover:border-[#A6192E]"
+                                      ? "border-[#E51B23] bg-[#E51B23] text-white"
+                                      : "border-[#E5E5E5] bg-white text-[#1A1A1A] hover:border-[#E51B23]"
                                   }`}>{n}</button>
                               ))}
                             </div>
@@ -431,13 +431,13 @@ function BookingForm() {
                           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             {form.childrenAges.map((age, i) => (
                               <div key={i}>
-                                <label className="block font-sans-ui text-[10px] text-[#8B7D72] tracking-wider uppercase mb-1.5">
+                                <label className="block font-sans-ui text-[10px] text-[#767676] tracking-wider uppercase mb-1.5">
                                   第 {i + 1} 位 · 年龄（岁）
                                 </label>
                                 <input type="number" min="0" max="17" value={age}
                                   onChange={e => setChildAge(i, e.target.value)}
                                   placeholder="例如：8"
-                                  className="w-full bg-white border border-[#E0D5C8] px-3 py-3 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors" />
+                                  className="w-full bg-white border border-[#E5E5E5] px-3 py-3 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors" />
                               </div>
                             ))}
                           </div>
@@ -446,21 +446,21 @@ function BookingForm() {
                     </div>
 
                     {/* Tip */}
-                    <div className="flex items-start gap-3 border-l-2 border-[#C9A84C] pl-4">
-                      <p className="font-noto text-sm text-[#6B5E52] leading-relaxed">
+                    <div className="flex items-start gap-3 border-l-2 border-[#999999] pl-4">
+                      <p className="font-noto text-sm text-[#666666] leading-relaxed">
                         <strong className="text-[#1A1A1A] font-[400]">填写信息越准确，导览越贴近您的需求</strong>——我们会根据团队情况调整讲解的深度、节奏与侧重点，让每位访客都有最好的体验。
                       </p>
                     </div>
 
                     {/* Notes */}
                     <div>
-                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-2">
+                      <label className="block font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-2">
                         特殊需求 <span className="text-[#C8BDB5]">选填</span>
                       </label>
                       <textarea value={form.notes} onChange={(e) => set("notes", e.target.value)}
                         placeholder="无障碍需求、语言偏好、希望重点介绍的内容..."
                         rows={3}
-                        className="w-full bg-white border border-[#E0D5C8] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#A6192E] transition-colors resize-none" />
+                        className="w-full bg-white border border-[#E5E5E5] px-4 py-4 font-noto text-base text-[#1A1A1A] placeholder:text-[#C8BDB5] focus:outline-none focus:border-[#E51B23] transition-colors resize-none" />
                     </div>
                   </div>
                 )}
@@ -470,9 +470,9 @@ function BookingForm() {
                   <div className="space-y-6">
 
                     {/* Summary */}
-                    <div className="border border-[#E0D5C8]">
-                      <div className="bg-[#F8F5F0] px-5 py-3 border-b border-[#E0D5C8]">
-                        <p className="font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase">预约信息确认</p>
+                    <div className="border border-[#E5E5E5]">
+                      <div className="bg-[#F5F5F5] px-5 py-3 border-b border-[#E5E5E5]">
+                        <p className="font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase">预约信息确认</p>
                       </div>
                       <div className="divide-y divide-[#F0EBE3]">
                         {[
@@ -485,14 +485,14 @@ function BookingForm() {
                           ...(form.hasChildren ? [{ label: "儿童", value: `${form.childrenCount} 位${form.childrenAges.some(a => a) ? `（${form.childrenAges.join("、")} 岁）` : ""}` }] : []),
                         ].map((row) => (
                           <div key={row.label} className="flex justify-between px-5 py-3.5">
-                            <span className="font-sans-ui text-[12px] tracking-wide text-[#8B7D72]">{row.label}</span>
+                            <span className="font-sans-ui text-[12px] tracking-wide text-[#767676]">{row.label}</span>
                             <span className="font-noto text-sm text-[#1A1A1A] text-right max-w-[60%]">{row.value}</span>
                           </div>
                         ))}
                         {form.notes && (
                           <div className="px-5 py-3.5">
-                            <span className="font-sans-ui text-[12px] tracking-wide text-[#8B7D72]">备注</span>
-                            <p className="font-noto text-sm text-[#6B5E52] mt-1 leading-relaxed">{form.notes}</p>
+                            <span className="font-sans-ui text-[12px] tracking-wide text-[#767676]">备注</span>
+                            <p className="font-noto text-sm text-[#666666] mt-1 leading-relaxed">{form.notes}</p>
                           </div>
                         )}
                       </div>
@@ -500,7 +500,7 @@ function BookingForm() {
 
                     {/* Payment option — Met ticket-style */}
                     <div>
-                      <p className="font-sans-ui text-[11px] tracking-wider text-[#8B7D72] uppercase mb-3">选择票价</p>
+                      <p className="font-sans-ui text-[11px] tracking-wider text-[#767676] uppercase mb-3">选择票价</p>
                       <div className="space-y-3">
                         {[
                           { id: "full",    price: "$86", sub: "今日全额支付 · 完整体验", tag: "推荐" },
@@ -510,27 +510,27 @@ function BookingForm() {
                           <button key={opt.id} type="button" onClick={() => set("paymentType", opt.id)}
                             className={`w-full flex items-center justify-between p-5 border text-left transition-all ${
                               form.paymentType === opt.id
-                                ? "border-[#A6192E] bg-white ring-1 ring-[#A6192E]/20"
-                                : "border-[#E0D5C8] bg-white hover:border-[#A6192E]/50"
+                                ? "border-[#E51B23] bg-white"
+                                : "border-[#E5E5E5] bg-white hover:border-[#E51B23]/50"
                             }`}>
                             <div className="flex items-center gap-4">
                               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                                form.paymentType === opt.id ? "border-[#A6192E]" : "border-[#E0D5C8]"
+                                form.paymentType === opt.id ? "border-[#E51B23]" : "border-[#E5E5E5]"
                               }`}>
                                 {form.paymentType === opt.id && (
-                                  <div className="w-2.5 h-2.5 rounded-full bg-[#A6192E]" />
+                                  <div className="w-2.5 h-2.5 rounded-full bg-[#E51B23]" />
                                 )}
                               </div>
                               <div>
                                 <p className="font-noto text-[#1A1A1A] font-[400]">{opt.sub}</p>
                                 {opt.tag && (
-                                  <span className="inline-block font-sans-ui text-[9px] tracking-widest uppercase text-[#C9A84C] border border-[#C9A84C]/40 px-2 py-0.5 mt-1">
+                                  <span className="inline-block font-sans-ui text-[9px] tracking-widest uppercase text-[#999999] border border-[#999999]/40 px-2 py-0.5 mt-1">
                                     {opt.tag}
                                   </span>
                                 )}
                               </div>
                             </div>
-                            <p className="font-noto text-2xl text-[#A6192E] font-[300] flex-shrink-0">{opt.price}</p>
+                            <p className="font-noto text-2xl text-[#E51B23] font-[300] flex-shrink-0">{opt.price}</p>
                           </button>
                         ))}
                       </div>
@@ -547,12 +547,12 @@ function BookingForm() {
                       <button type="submit" disabled={loading}
                         className={`w-full py-5 font-sans-ui text-sm tracking-widest uppercase transition-all ${
                           !loading
-                            ? "bg-[#A6192E] text-white hover:bg-[#8B1525]"
-                            : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
+                            ? "bg-[#E51B23] text-white hover:bg-[#C01018]"
+                            : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"
                         }`}>
                         {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$86" : "$20"} →`}
                       </button>
-                      <p className="font-sans-ui text-[10px] text-center text-[#8B7D72] tracking-wider mt-3">
+                      <p className="font-sans-ui text-[10px] text-center text-[#767676] tracking-wider mt-3">
                         由 Stripe 加密保护 · 我们不储存您的支付信息
                       </p>
                     </div>
@@ -561,10 +561,10 @@ function BookingForm() {
 
                 {/* Desktop nav buttons (steps 1–2) */}
                 {step < 3 && (
-                  <div className="hidden md:flex items-center justify-between mt-10 pt-8 border-t border-[#E0D5C8]">
+                  <div className="hidden md:flex items-center justify-between mt-10 pt-8 border-t border-[#E5E5E5]">
                     {step > 1 ? (
                       <button type="button" onClick={() => setStep((s) => s - 1)}
-                        className="font-sans-ui text-sm text-[#8B7D72] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
+                        className="font-sans-ui text-sm text-[#767676] hover:text-[#1A1A1A] transition-colors tracking-wide flex items-center gap-2">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
                         </svg>
@@ -574,8 +574,8 @@ function BookingForm() {
                     <button type="button" onClick={() => setStep((s) => s + 1)} disabled={!canNext()}
                       className={`px-10 py-4 font-sans-ui text-sm tracking-widest uppercase transition-all ${
                         canNext()
-                          ? "bg-[#A6192E] text-white hover:bg-[#8B1525]"
-                          : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
+                          ? "bg-[#E51B23] text-white hover:bg-[#C01018]"
+                          : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"
                       }`}>
                       下一步 →
                     </button>
@@ -587,60 +587,60 @@ function BookingForm() {
 
           {/* ── Right: Event info card (desktop only) ── */}
           <div className="hidden md:block sticky top-[130px]">
-            <div className="border border-[#E0D5C8] overflow-hidden">
+            <div className="border border-[#E5E5E5] overflow-hidden">
               {/* Dark header panel */}
               <div className="bg-[#1A1A1A] p-8 relative">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
-                <p className="font-sans-ui text-[9px] tracking-[0.25em] uppercase text-[#C9A84C]/70 mb-3">欧洲艺术史私人导览</p>
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#999999]/40 to-transparent" />
+                <p className="font-sans-ui text-[9px] tracking-[0.25em] uppercase text-[#999999]/70 mb-3">欧洲艺术史私人导览</p>
                 <h2 className="font-noto text-white text-xl font-[200] leading-tight mb-1">大都会艺术博物馆</h2>
                 <p className="font-noto text-white/40 text-sm">纽约 · 预约制 · 全程中文</p>
               </div>
 
               <div className="bg-white p-6 space-y-4">
                 <div className="flex items-start gap-3">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" className="mt-0.5 flex-shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999999" strokeWidth="2" className="mt-0.5 flex-shrink-0">
                     <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
                   </svg>
                   <div>
-                    <p className="font-sans-ui text-[10px] tracking-wider text-[#8B7D72] uppercase mb-0.5">场次</p>
+                    <p className="font-sans-ui text-[10px] tracking-wider text-[#767676] uppercase mb-0.5">场次</p>
                     <p className="font-noto text-sm text-[#1A1A1A]">每周六、日</p>
-                    <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-0.5">上午 10:00 · 下午 2:00</p>
+                    <p className="font-sans-ui text-[11px] text-[#767676] mt-0.5">上午 10:00 · 下午 2:00</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" className="mt-0.5 flex-shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999999" strokeWidth="2" className="mt-0.5 flex-shrink-0">
                     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                   </svg>
                   <div>
-                    <p className="font-sans-ui text-[10px] tracking-wider text-[#8B7D72] uppercase mb-0.5">时长</p>
+                    <p className="font-sans-ui text-[10px] tracking-wider text-[#767676] uppercase mb-0.5">时长</p>
                     <p className="font-noto text-sm text-[#1A1A1A]">3.5 小时</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" className="mt-0.5 flex-shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999999" strokeWidth="2" className="mt-0.5 flex-shrink-0">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                   </svg>
                   <div>
-                    <p className="font-sans-ui text-[10px] tracking-wider text-[#8B7D72] uppercase mb-0.5">地点</p>
+                    <p className="font-sans-ui text-[10px] tracking-wider text-[#767676] uppercase mb-0.5">地点</p>
                     <p className="font-noto text-sm text-[#1A1A1A]">大都会艺术博物馆</p>
-                    <p className="font-sans-ui text-[11px] text-[#8B7D72] mt-0.5">1000 Fifth Ave, New York, NY</p>
+                    <p className="font-sans-ui text-[11px] text-[#767676] mt-0.5">1000 Fifth Ave, New York, NY</p>
                   </div>
                 </div>
 
-                <div className="border-t border-[#E0D5C8] pt-4 space-y-2">
+                <div className="border-t border-[#E5E5E5] pt-4 space-y-2">
                   {["含拉斐尔特展", "全程中文", "参观前个性化问卷", "每组最多 6 人"].map((item) => (
                     <div key={item} className="flex items-center gap-2.5">
-                      <div className="w-3.5 h-px bg-[#A6192E]" />
-                      <span className="font-noto text-xs text-[#6B5E52]">{item}</span>
+                      <div className="w-3.5 h-px bg-[#E51B23]" />
+                      <span className="font-noto text-xs text-[#666666]">{item}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-2 border-t border-[#E0D5C8]">
-                  <p className="font-noto text-sm text-[#8B7D72]">价格从</p>
-                  <p className="font-noto text-3xl text-[#A6192E] font-[200]">$86<span className="text-base text-[#8B7D72]"> / 人</span></p>
+                <div className="pt-2 border-t border-[#E5E5E5]">
+                  <p className="font-noto text-sm text-[#767676]">价格从</p>
+                  <p className="font-noto text-3xl text-[#E51B23] font-[200]">$86<span className="text-base text-[#767676]"> / 人</span></p>
                 </div>
               </div>
             </div>
@@ -649,11 +649,11 @@ function BookingForm() {
       </div>
 
       {/* ── Mobile sticky footer ─────────────────────────────────────── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-[#E0D5C8] p-4 safe-area-bottom">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-[#E5E5E5] p-4 safe-area-bottom">
         <div className="flex items-center gap-3">
           {step > 1 && (
             <button type="button" onClick={() => setStep((s) => s - 1)}
-              className="flex-shrink-0 w-12 h-12 border border-[#E0D5C8] flex items-center justify-center text-[#8B7D72] hover:border-[#1A1A1A] transition-colors">
+              className="flex-shrink-0 w-12 h-12 border border-[#E5E5E5] flex items-center justify-center text-[#767676] hover:border-[#1A1A1A] transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
               </svg>
@@ -664,8 +664,8 @@ function BookingForm() {
             <button type="button" onClick={() => setStep((s) => s + 1)} disabled={!canNext()}
               className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${
                 canNext()
-                  ? "bg-[#A6192E] text-white active:bg-[#8B1525]"
-                  : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
+                  ? "bg-[#E51B23] text-white active:bg-[#C01018]"
+                  : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"
               }`}>
               下一步 →
             </button>
@@ -675,15 +675,15 @@ function BookingForm() {
               disabled={loading}
               className={`flex-1 h-12 font-sans-ui text-sm tracking-widest uppercase transition-all ${
                 !loading
-                  ? "bg-[#A6192E] text-white active:bg-[#8B1525]"
-                  : "bg-[#E0D5C8] text-[#8B7D72] cursor-not-allowed"
+                  ? "bg-[#E51B23] text-white active:bg-[#C01018]"
+                  : "bg-[#E5E5E5] text-[#767676] cursor-not-allowed"
               }`}>
               {loading ? "正在处理..." : form.paymentType === "paid" ? "确认预约 →" : `前往支付 ${form.paymentType === "full" ? "$86" : "$20"} →`}
             </button>
           )}
         </div>
         {step === 3 && (
-          <p className="font-sans-ui text-[9px] text-center text-[#8B7D72] tracking-wider mt-2">
+          <p className="font-sans-ui text-[9px] text-center text-[#767676] tracking-wider mt-2">
             由 Stripe 加密保护
           </p>
         )}
@@ -697,8 +697,8 @@ export default function BookPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-[#A6192E] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="font-sans-ui text-[11px] tracking-widest text-[#8B7D72] uppercase">加载中</p>
+          <div className="w-8 h-8 border-2 border-[#E51B23] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="font-sans-ui text-[11px] tracking-widest text-[#767676] uppercase">加载中</p>
         </div>
       </div>
     }>

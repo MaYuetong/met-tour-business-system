@@ -14,25 +14,25 @@ export default function FAQAccordion() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div className="divide-y divide-[#E0D5C8]">
+    <div className="divide-y divide-[#E5E5E5]">
       {FAQS.map((faq, i) => (
         <div key={faq.q}>
           <button
             type="button"
             onClick={() => setOpen(open === i ? null : i)}
             className="w-full flex items-center justify-between py-6 text-left gap-4 group">
-            <h3 className="font-noto text-[#1A1A1A] font-[400] text-lg leading-snug group-hover:text-[#A6192E] transition-colors">
+            <h3 className="font-noto text-[#1A1A1A] font-[400] text-lg leading-snug group-hover:text-[#E51B23] transition-colors">
               {faq.q}
             </h3>
             <svg
               width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="#A6192E" strokeWidth="1.5"
+              stroke="#E51B23" strokeWidth="1.5"
               className={`flex-shrink-0 transition-transform duration-200 ${open === i ? "rotate-45" : ""}`}>
               <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
             </svg>
           </button>
           {open === i && (
-            <p className="font-noto text-[#6B5E52] leading-relaxed pb-6 -mt-1">
+            <p className="font-noto text-[#666666] leading-relaxed pb-6 -mt-1">
               {faq.a}
             </p>
           )}
