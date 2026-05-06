@@ -64,6 +64,7 @@ function PostSurveyForm() {
     pricePerception: "",
     nps: -1,
     testimonial: "",
+    allowPublic: false,
     interestedInFuture: "",
     contactEmail: "",
   });
@@ -310,6 +311,15 @@ function PostSurveyForm() {
                 <textarea value={form.testimonial} onChange={(e) => setField("testimonial", e.target.value)}
                   placeholder="请用几句话分享您的体验..." rows={5}
                   className="w-full bg-white border border-[#E5E5E5] rounded-sm px-5 py-4 font-noto text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors resize-none leading-relaxed" />
+                <label className="flex items-start gap-3 mt-4 cursor-pointer select-none">
+                  <input type="checkbox" checked={form.allowPublic}
+                    onChange={(e) => setField("allowPublic", e.target.checked)}
+                    className="met-checkbox mt-0.5 flex-shrink-0" />
+                  <span className="font-noto text-sm text-[#444444] leading-relaxed">
+                    我同意将以上评语用于导览介绍或社交媒体推广
+                    <span className="text-[#767676]">（姓名可匿名，您可随时撤回授权）</span>
+                  </span>
+                </label>
               </div>
               <div>
                 <p className="font-noto text-[#444444] mb-5 text-sm">有兴趣参加未来的导览或特别展览吗？</p>

@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
         合理价位:   PRICE_MAP[body.pricePerception] ?? body.pricePerception ?? "未填写",
         推荐指数:   `${body.nps ?? "—"} / 10`,
         评语:       body.testimonial || "无",
+        公开授权:   body.allowPublic ? "✅ 已同意公开" : "❌ 未授权",
         未来兴趣:   body.interestedInFuture === "yes" ? "非常有兴趣" : "暂时不需要",
         联系邮箱:   body.contactEmail || "未填写",
       },

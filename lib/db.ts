@@ -103,6 +103,7 @@ export type PostSurveyRecord = {
   pricePerception: string;
   nps: number;
   testimonial: string;
+  allowPublic?: boolean;
   interestedInFuture: string;
   contactEmail?: string;
 };
