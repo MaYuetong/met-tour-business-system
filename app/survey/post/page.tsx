@@ -272,7 +272,8 @@ function PostSurveyForm() {
 
           {step === 3 && (
             <div>
-              <p className="text-[#444444] font-noto mb-6 leading-relaxed text-sm">根据今天的体验，您认为合理的价格是多少？</p>
+              <p className="text-[#444444] font-noto mb-1 leading-relaxed text-sm">根据今天的体验，您认为合理的价格是多少？</p>
+              <p className="font-sans-ui text-[11px] text-[#767676] tracking-wide mb-6">每人 / per person</p>
               <div className="grid grid-cols-2 gap-4">
                 {PRICE_OPTIONS.map((opt) => (
                   <button key={opt.id} onClick={() => setField("pricePerception", opt.id)}
