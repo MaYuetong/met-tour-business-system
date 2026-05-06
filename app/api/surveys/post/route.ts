@@ -4,7 +4,7 @@ import { sendSurveyConfirmation, notifyAdminFormspreeRaw } from "@/lib/email";
 
 const GENDER_MAP: Record<string, string> = { male: "男", female: "女", undisclosed: "不便透露" };
 const SECTION_MAP: Record<string, string> = {
-  architecture: "建筑与雕塑", medieval: "中世纪艺术", renaissance: "文艺复兴（拉斐尔特展）",
+  architecture: "背景与历史", medieval: "中世纪艺术", renaissance: "文艺复兴（拉斐尔特展）",
   "17-18th": "十七至十八世纪", impressionism: "印象派", other: "其他",
 };
 const PRICE_MAP: Record<string, string> = {

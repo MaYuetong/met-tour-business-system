@@ -8,7 +8,7 @@ import MetLogo from "@/components/MetLogo";
 const TOTAL_STEPS = 5;
 
 const SECTIONS = [
-  { id: "architecture", label: "建筑与雕塑" },
+  { id: "architecture", label: "背景与历史" },
   { id: "medieval",     label: "中世纪艺术" },
   { id: "renaissance",  label: "文艺复兴（拉斐尔特展）" },
   { id: "17-18th",      label: "十七至十八世纪" },
