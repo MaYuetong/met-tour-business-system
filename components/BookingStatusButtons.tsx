@@ -14,20 +14,21 @@ type Props = {
 const RATE_SMALL = 86; // per person, 1–2 people
 const RATE_GROUP = 75; // per person, 3+ people
 
+function calcAmount(groupSize: number) {
+  const rate = groupSize >= 3 ? RATE_GROUP : RATE_SMALL;
+  return { rate, total: rate * groupSize };
+}
+
 export default function BookingStatusButtons({ id, status, groupSize = 1 }: Props) {
   const [isPending, startTransition] = useTransition();
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  // auto-suggest based on group size
-  const suggestedRate = groupSize >= 3 ? RATE_GROUP : RATE_SMALL;
-  const [selectedRate, setSelectedRate] = useState<number>(suggestedRate);
-
-  const totalAmount = selectedRate * groupSize;
+  const { rate, total } = calcAmount(groupSize);
 
   const handleConfirm = () => {
     startTransition(async () => {
-      await confirmWithAmount(id, totalAmount);
-      setShowConfirmModal(false);
+      await confirmWithAmount(id, total);
+      setShowModal(false);
     });
   };
 
@@ -43,7 +44,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1 }: Prop
         {status === "pending" && (
           <>
             <button
-              onClick={() => { setSelectedRate(groupSize >= 3 ? RATE_GROUP : RATE_SMALL); setShowConfirmModal(true); }}
+              onClick={() => setShowModal(true)}
               disabled={isPending}
               className="font-sans-ui text-[10px] tracking-widest uppercase bg-green-600 text-white px-3 py-1.5 hover:bg-green-700 transition-colors disabled:opacity-40 rounded-sm">
               确认预约
@@ -82,56 +83,39 @@ export default function BookingStatusButtons({ id, status, groupSize = 1 }: Prop
         )}
       </div>
 
-      {/* 价格确认弹窗 */}
-      {showConfirmModal && (
+      {showModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setShowConfirmModal(false); }}>
-          <div className="bg-white border border-[#E5E5E5] w-full max-w-sm">
+          onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}>
+          <div className="bg-white border border-[#E5E5E5] w-full max-w-xs">
             <div className="bg-[#1A1A1A] px-5 py-4">
-              <p className="font-sans-ui text-[11px] tracking-[0.2em] text-[#999999] uppercase">确认预约 — 线下支付</p>
+              <p className="font-sans-ui text-[11px] tracking-[0.2em] text-[#999999] uppercase">确认预约</p>
             </div>
             <div className="p-5 space-y-4">
-              <p className="font-noto text-sm text-[#666666]">
-                人数：<span className="text-[#1A1A1A] font-medium">{groupSize} 人</span>
-                &nbsp;·&nbsp;请选择单价：
-              </p>
-
-              <div className="space-y-2">
-                {[
-                  { rate: RATE_SMALL, label: `$${RATE_SMALL} / 人`, desc: "标准价（1–2 人）" },
-                  { rate: RATE_GROUP, label: `$${RATE_GROUP} / 人`, desc: "团体价（3 人及以上）" },
-                ].map(({ rate, label, desc }) => (
-                  <button
-                    key={rate}
-                    onClick={() => setSelectedRate(rate)}
-                    className={`w-full flex items-center justify-between px-4 py-3 border transition-colors ${
-                      selectedRate === rate
-                        ? "border-[#E51B23] bg-[#E51B23]/5"
-                        : "border-[#E5E5E5] hover:border-[#999999]"
-                    }`}>
-                    <div className="text-left">
-                      <p className={`font-noto text-sm font-medium ${selectedRate === rate ? "text-[#E51B23]" : "text-[#1A1A1A]"}`}>{label}</p>
-                      <p className="font-noto text-xs text-[#999999]">{desc}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className={`font-noto text-lg font-light ${selectedRate === rate ? "text-[#E51B23]" : "text-[#999999]"}`}>
-                        = ${rate * groupSize}
-                      </p>
-                      <p className="font-noto text-[10px] text-[#BBBBBB]">合计</p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-
-              <div className="bg-[#F5F5F5] px-4 py-3 flex items-center justify-between">
-                <span className="font-noto text-sm text-[#767676]">应收金额</span>
-                <span className="font-noto text-2xl text-[#E51B23] font-light">${totalAmount}</span>
+              {/* 计算明细 */}
+              <div className="bg-[#F5F5F5] px-4 py-4 space-y-2">
+                <div className="flex justify-between text-sm font-noto">
+                  <span className="text-[#767676]">人数</span>
+                  <span className="text-[#1A1A1A] font-medium">{groupSize} 人</span>
+                </div>
+                <div className="flex justify-between text-sm font-noto">
+                  <span className="text-[#767676]">单价</span>
+                  <span className="text-[#1A1A1A]">
+                    ${rate} / 人
+                    <span className="ml-1 text-xs text-[#999999]">
+                      （{groupSize >= 3 ? "团体价" : "标准价"}）
+                    </span>
+                  </span>
+                </div>
+                <div className="border-t border-[#E5E5E5] pt-2 flex justify-between">
+                  <span className="font-noto text-sm text-[#767676]">合计</span>
+                  <span className="font-noto text-2xl text-[#E51B23] font-light">${total}</span>
+                </div>
               </div>
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => setShowConfirmModal(false)}
+                  onClick={() => setShowModal(false)}
                   className="flex-1 border border-[#E5E5E5] py-2.5 font-sans-ui text-[11px] tracking-widest uppercase text-[#767676] hover:border-[#999999] transition-colors">
                   取消
                 </button>
@@ -139,7 +123,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1 }: Prop
                   onClick={handleConfirm}
                   disabled={isPending}
                   className="flex-1 bg-green-600 text-white py-2.5 font-sans-ui text-[11px] tracking-widest uppercase hover:bg-green-700 transition-colors disabled:opacity-40">
-                  {isPending ? "确认中..." : `确认 $${totalAmount}`}
+                  {isPending ? "确认中..." : `确认 $${total}`}
                 </button>
               </div>
             </div>
