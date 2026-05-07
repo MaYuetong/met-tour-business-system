@@ -8,19 +8,21 @@ export default async function AdminOverview() {
     getBookings(), getPreSurveys(), getPostSurveys(), getAnalytics(), getReviews(),
   ]);
 
-  const confirmed = bookings.filter((b) => b.status === "confirmed" || b.status === "completed");
-  const revenue   = confirmed.reduce((s, b) => s + b.amount, 0);
-  const upcoming  = bookings.filter((b) => b.tourDate && b.status === "confirmed");
+  const confirmed       = bookings.filter((b) => b.status === "confirmed" || b.status === "completed");
+  const revenue         = confirmed.reduce((s, b) => s + b.amount, 0);
+  const upcoming        = bookings.filter((b) => b.tourDate && b.status === "confirmed");
+  const upcomingPeople  = upcoming.reduce((s, b) => s + (b.groupSize ?? 1), 0);
 
   return (
     <div>
       {/* 数据概览 */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
         {[
-          { label: "总预约数", value: bookings.length,  note: `${confirmed.length} 已确认`, color: "text-[#E51B23]" },
-          { label: "总收入",   value: `$${revenue}`,    note: "来自已确认预约",              color: "text-[#999999]" },
-          { label: "平均评分", value: analytics.responseCount > 0 ? analytics.avgRatings.overall.toFixed(1) + " / 5" : "—", note: `${post.length} 份反馈`, color: "text-[#E51B23]" },
-          { label: "NPS 分数", value: analytics.responseCount > 0 ? analytics.nps : "—", note: analytics.nps >= 50 ? "优秀" : analytics.nps >= 0 ? "良好" : "—", color: analytics.nps >= 50 ? "text-green-700" : "text-[#999999]" },
+          { label: "总预约数",   value: bookings.length,  note: `${confirmed.length} 已确认`, color: "text-[#E51B23]" },
+          { label: "即将到来",   value: upcoming.length,  note: `共 ${upcomingPeople} 人`,    color: "text-green-700" },
+          { label: "总收入",     value: `$${revenue}`,    note: "来自已确认预约",              color: "text-[#999999]" },
+          { label: "平均评分",   value: analytics.responseCount > 0 ? analytics.avgRatings.overall.toFixed(1) + " / 5" : "—", note: `${post.length} 份反馈`, color: "text-[#E51B23]" },
+          { label: "NPS 分数",   value: analytics.responseCount > 0 ? analytics.nps : "—", note: analytics.nps >= 50 ? "优秀" : analytics.nps >= 0 ? "良好" : "—", color: analytics.nps >= 50 ? "text-green-700" : "text-[#999999]" },
         ].map((s) => (
           <div key={s.label} className="bg-white border border-[#E5E5E5] rounded-sm p-6">
             <p className="text-xs text-[#767676] font-noto mb-2">{s.label}</p>
