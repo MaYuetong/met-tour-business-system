@@ -1,5 +1,6 @@
 import { getBookings, getPreSurveys } from "@/lib/db";
 import DeleteButton from "@/components/DeleteButton";
+import BookingStatusButtons from "@/components/BookingStatusButtons";
 
 export const dynamic = "force-dynamic";
 
@@ -98,6 +99,7 @@ export default async function BookingsPage() {
                       {new Date(b.createdAt).toLocaleDateString("zh-CN")}
                     </p>
                     <DeleteButton id={b.id} type="booking" />
+                    <BookingStatusButtons id={b.id} status={b.status} groupSize={b.groupSize} />
                   </div>
                 </div>
               </div>

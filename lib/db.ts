@@ -163,6 +163,17 @@ export async function updateBookingStatus(id: string, status: Booking["status"])
   if (idx !== -1) { records[idx].status = status; await write("bookings.json", records); }
 }
 
+export async function confirmBookingWithAmount(id: string, amount: number): Promise<void> {
+  const records = await read<Booking>("bookings.json");
+  const idx = records.findIndex((b) => b.id === id);
+  if (idx !== -1) {
+    records[idx].status = "confirmed";
+    records[idx].amount = amount;
+    records[idx].paymentType = "paid";
+    await write("bookings.json", records);
+  }
+}
+
 // ─── Pre Survey ──────────────────────────────────────────────────────────────
 
 function deriveProfileTag(data: { knowledgeLevel: string; experiencePreference: string }): string {

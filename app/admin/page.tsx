@@ -50,40 +50,110 @@ export default async function AdminOverview() {
         ))}
       </div>
 
-      {/* 即将到来的导览 */}
+      {/* 导览简报 */}
       <div className="mb-10">
-        <h2 className="font-noto text-xl text-[#1A1A1A] mb-5">即将到来的导览</h2>
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="font-noto text-xl text-[#1A1A1A]">导览简报</h2>
+          <span className="text-xs text-[#767676] font-noto">已确认 · 按日期排序</span>
+        </div>
+
         {upcoming.length === 0 ? (
           <div className="bg-white border border-[#E5E5E5] rounded-sm p-8 text-center">
-            <p className="text-[#767676] font-noto">暂无已安排的导览。</p>
+            <p className="text-[#767676] font-noto">暂无已确认的导览安排。</p>
           </div>
         ) : (
-          <div className="space-y-3">
-            {upcoming.slice(0, 5).map((b) => {
-              const preSurvey = pre.find((s) => s.bookingId === b.id);
-              return (
-                <div key={b.id} className="bg-white border border-[#E5E5E5] rounded-sm p-5 flex items-center justify-between">
-                  <div>
-                    <p className="font-noto text-[#1A1A1A]">{b.name}</p>
-                    <p className="text-sm font-noto text-[#767676]">{b.email}</p>
-                    {preSurvey && (
-                      <div className="flex flex-wrap gap-1.5 mt-2">
-                        <span className="text-xs bg-[#E51B23]/10 text-[#E51B23] px-2 py-0.5 rounded-sm font-noto">
-                          {b.profileTag ?? preSurvey.profileTag}
-                        </span>
-                        {(preSurvey.interests ?? []).slice(0, 2).map((i) => (
-                          <span key={i} className="text-xs bg-[#F5F5F5] border border-[#E5E5E5] text-[#767676] px-2 py-0.5 rounded-sm font-noto">{i}</span>
-                        ))}
+          <div className="space-y-4">
+            {[...upcoming]
+              .sort((a, b) => new Date(a.tourDate!).getTime() - new Date(b.tourDate!).getTime())
+              .map((b, idx) => {
+                const preSurvey = pre.find((s) => s.bookingId === b.id);
+                const tourDateObj = new Date(b.tourDate!);
+                const isNext = idx === 0;
+                const daysUntil = Math.ceil((tourDateObj.getTime() - Date.now()) / 86400000);
+                const daysLabel = daysUntil === 0 ? "今天" : daysUntil === 1 ? "明天" : `${daysUntil} 天后`;
+
+                return (
+                  <div key={b.id} className={`bg-white border rounded-sm overflow-hidden ${isNext ? "border-[#E51B23]" : "border-[#E5E5E5]"}`}>
+                    {/* 顶部日期栏 */}
+                    <div className={`flex items-center justify-between px-5 py-3 border-b ${isNext ? "bg-[#E51B23] border-[#E51B23]" : "bg-[#F5F5F5] border-[#E5E5E5]"}`}>
+                      <div className="flex items-center gap-3">
+                        {isNext && <span className="font-sans-ui text-[10px] tracking-widest uppercase text-white/80">下次导览</span>}
+                        <p className={`font-noto text-sm font-medium ${isNext ? "text-white" : "text-[#1A1A1A]"}`}>
+                          {tourDateObj.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" })}
+                          {b.timeSlot && <span className="ml-2 opacity-80">{b.timeSlot}</span>}
+                        </p>
                       </div>
-                    )}
+                      <span className={`font-sans-ui text-[10px] tracking-widest ${isNext ? "text-white/70" : "text-[#999999]"}`}>{daysLabel}</span>
+                    </div>
+
+                    {/* 内容 */}
+                    <div className="p-5 grid md:grid-cols-3 gap-5">
+                      {/* 左：访客信息 */}
+                      <div>
+                        <p className="font-sans-ui text-[9px] tracking-[0.15em] uppercase text-[#999999] mb-2">访客</p>
+                        <p className="font-noto text-lg text-[#1A1A1A] font-medium">{b.name}</p>
+                        <p className="text-xs font-noto text-[#767676] mt-0.5">{b.email}</p>
+                        {b.phone && <p className="text-xs font-noto text-[#767676]">{b.phone}</p>}
+                        <div className="flex items-center gap-2 mt-3">
+                          <span className="font-sans-ui text-[10px] tracking-widest text-[#999999]">人数</span>
+                          <span className="font-noto text-xl text-[#E51B23] font-light">{b.groupSize ?? 1}</span>
+                          <span className="font-noto text-xs text-[#767676]">人</span>
+                        </div>
+                      </div>
+
+                      {/* 中：预期与画像 */}
+                      <div>
+                        <p className="font-sans-ui text-[9px] tracking-[0.15em] uppercase text-[#999999] mb-2">画像与兴趣</p>
+                        {(b.profileTag || preSurvey?.profileTag) && (
+                          <span className="inline-block text-xs bg-[#E51B23]/10 text-[#E51B23] px-2 py-0.5 rounded-sm font-noto mb-2">
+                            {b.profileTag ?? preSurvey?.profileTag}
+                          </span>
+                        )}
+                        {preSurvey && (preSurvey.interests?.length ?? 0) > 0 ? (
+                          <div className="flex flex-wrap gap-1.5">
+                            {(preSurvey.interests ?? []).map((i) => (
+                              <span key={i} className="text-xs bg-[#F5F5F5] border border-[#E5E5E5] text-[#767676] px-2 py-0.5 rounded-sm font-noto">{i}</span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs font-noto text-[#BBBBBB]">尚未填写前置问卷</p>
+                        )}
+                        {preSurvey?.openQuestion && (
+                          <p className="text-xs font-noto text-[#666666] mt-2 border-l-2 border-[#E51B23]/30 pl-2 italic">
+                            「{preSurvey.openQuestion}」
+                          </p>
+                        )}
+                        {preSurvey && (
+                          <div className="mt-2 flex gap-3 text-[10px] font-noto text-[#999999]">
+                            {preSurvey.firstVisit === "yes" && <span>首次参观</span>}
+                            {preSurvey.knowledgeLevel && <span>程度：{preSurvey.knowledgeLevel}</span>}
+                            {preSurvey.country && <span>来自 {preSurvey.country}</span>}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* 右：备注与支付 */}
+                      <div>
+                        <p className="font-sans-ui text-[9px] tracking-[0.15em] uppercase text-[#999999] mb-2">备注 & 支付</p>
+                        {b.notes ? (
+                          <p className="text-sm font-noto text-[#444444] leading-relaxed bg-[#FFFBEA] border border-[#FFE58F] rounded-sm px-3 py-2">
+                            {b.notes}
+                          </p>
+                        ) : (
+                          <p className="text-xs font-noto text-[#BBBBBB]">无特殊备注</p>
+                        )}
+                        <div className="mt-3 flex items-center gap-2">
+                          <span className="font-noto text-xl text-[#1A1A1A] font-light">${b.amount}</span>
+                          <span className="text-xs font-noto text-[#999999]">{b.paymentType === "full" ? "全额" : b.paymentType === "deposit" ? "定金" : b.paymentType}</span>
+                        </div>
+                        {b.bookingCode && (
+                          <p className="text-[10px] font-sans-ui tracking-widest text-[#BBBBBB] mt-1"># {b.bookingCode}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-noto text-[#999999]">{new Date(b.tourDate!).toLocaleDateString("zh-CN", { month: "long", day: "numeric" })}</p>
-                    <p className="text-xs text-[#767676] font-noto mt-0.5">${b.amount}</p>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         )}
       </div>
