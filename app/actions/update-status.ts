@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { updateBookingStatus, confirmBookingWithAmount, updateBookingDateTime, getBookings, type Booking } from "@/lib/db";
-import { sendDateChangeNotification } from "@/lib/email";
+import { sendDateChangeNotification, sendCancellationNotification } from "@/lib/email";
 
 export async function updateStatus(
   id: string,
@@ -76,6 +76,37 @@ export async function updateDateTime(
     newDate,
     timeSlot:    timeSlot || undefined,
   });
+
+  revalidatePath("/admin/bookings");
+  revalidatePath("/admin");
+  return { ok: true };
+}
+
+export async function cancelBooking(
+  id: string,
+  sendEmail: boolean,
+  reason?: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("admin_session")?.value;
+  const secret  = process.env.ADMIN_SECRET ?? "change-this-secret";
+  if (!session || session !== secret) return { ok: false, error: "未授权" };
+
+  const bookings = await getBookings();
+  const booking  = bookings.find((b) => b.id === id);
+  if (!booking) return { ok: false, error: "预约未找到" };
+
+  await updateBookingStatus(id, "cancelled");
+
+  if (sendEmail) {
+    await sendCancellationNotification({
+      name:        booking.name,
+      email:       booking.email,
+      bookingCode: booking.bookingCode,
+      tourDate:    booking.tourDate,
+      reason,
+    });
+  }
 
   revalidatePath("/admin/bookings");
   revalidatePath("/admin");

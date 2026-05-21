@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { confirmWithAmount, updateStatus, updateDateTime } from "@/app/actions/update-status";
+import { confirmWithAmount, updateStatus, updateDateTime, cancelBooking } from "@/app/actions/update-status";
 
 type Status = "pending" | "confirmed" | "completed" | "cancelled";
 
@@ -24,11 +24,14 @@ function calcAmount(groupSize: number) {
 export default function BookingStatusButtons({ id, status, groupSize = 1, tourDate, timeSlot }: Props) {
   const [isPending, startTransition] = useTransition();
   const [showConfirm, setShowConfirm]   = useState(false);
+  const [showCancel, setShowCancel]     = useState(false);
   const [showEdit, setShowEdit]         = useState(false);
   const [newDate, setNewDate]           = useState(tourDate ?? "");
   const [newSlot, setNewSlot]           = useState(timeSlot ?? "");
   const [editDone, setEditDone]         = useState(false);
   const [editSize, setEditSize]         = useState(groupSize);
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancelSend, setCancelSend]     = useState(true);
 
   const { rate, total } = calcAmount(editSize);
 
@@ -41,6 +44,13 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
 
   const handleStatus = (next: Status) => {
     startTransition(async () => { await updateStatus(id, next); });
+  };
+
+  const handleCancel = () => {
+    startTransition(async () => {
+      await cancelBooking(id, cancelSend, cancelReason || undefined);
+      setShowCancel(false);
+    });
   };
 
   const handleDateSave = () => {
@@ -71,7 +81,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
               className="font-sans-ui text-[10px] tracking-widest uppercase bg-green-600 text-white px-3 py-1.5 hover:bg-green-700 transition-colors disabled:opacity-40">
               确认预约
             </button>
-            <button onClick={() => handleStatus("cancelled")} disabled={isPending}
+            <button onClick={() => { setCancelReason(""); setCancelSend(true); setShowCancel(true); }} disabled={isPending}
               className="font-sans-ui text-[10px] tracking-widest uppercase border border-red-200 text-red-600 px-3 py-1.5 hover:bg-red-50 transition-colors disabled:opacity-40">
               取消
             </button>
@@ -83,7 +93,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
               className="font-sans-ui text-[10px] tracking-widest uppercase bg-blue-600 text-white px-3 py-1.5 hover:bg-blue-700 transition-colors disabled:opacity-40">
               标记完成
             </button>
-            <button onClick={() => handleStatus("cancelled")} disabled={isPending}
+            <button onClick={() => { setCancelReason(""); setCancelSend(true); setShowCancel(true); }} disabled={isPending}
               className="font-sans-ui text-[10px] tracking-widest uppercase border border-red-200 text-red-600 px-3 py-1.5 hover:bg-red-50 transition-colors disabled:opacity-40">
               取消
             </button>
@@ -143,6 +153,57 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
                 <button onClick={handleConfirm} disabled={isPending}
                   className="flex-1 bg-green-600 text-white py-3 font-sans-ui text-[11px] tracking-widest uppercase hover:bg-green-700 transition-colors disabled:opacity-40">
                   {isPending ? "确认中…" : `确认 $${total}`}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Cancel modal ── */}
+      {showCancel && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 px-4 pb-4 sm:pb-0"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowCancel(false); }}>
+          <div className="bg-white border border-[#E5E5E5] w-full max-w-sm">
+            <div className="bg-[#1A1A1A] px-5 py-4">
+              <p className="font-sans-ui text-[11px] tracking-[0.2em] text-white/50 uppercase">取消预约</p>
+              <p className="font-noto text-white mt-0.5">确认后无法撤销</p>
+            </div>
+            <div className="p-5 space-y-4">
+
+              {/* Send email toggle */}
+              <div className="flex items-center justify-between py-1">
+                <div>
+                  <p className="font-noto text-sm text-[#1A1A1A]">通知客人</p>
+                  <p className="font-sans-ui text-[10px] text-[#999999] tracking-wide mt-0.5">发送取消通知邮件给客人</p>
+                </div>
+                <button type="button" onClick={() => setCancelSend((v) => !v)}
+                  className={`relative w-11 h-6 rounded-full transition-colors ${cancelSend ? "bg-[#E51B23]" : "bg-[#E5E5E5]"}`}>
+                  <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform ${cancelSend ? "translate-x-5" : "translate-x-0.5"}`} />
+                </button>
+              </div>
+
+              {/* Reason (only shown if sending email) */}
+              {cancelSend && (
+                <div>
+                  <label className="block font-sans-ui text-[10px] tracking-widest uppercase text-[#999999] mb-2">
+                    取消原因（选填，将发送给客人）
+                  </label>
+                  <textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)}
+                    placeholder="如：时间冲突，建议重新预约另一日期…"
+                    rows={3}
+                    className="w-full border border-[#E5E5E5] px-4 py-3 font-noto text-sm text-[#1A1A1A] placeholder:text-[#AAAAAA] focus:outline-none focus:border-[#E51B23] transition-colors resize-none" />
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-1">
+                <button onClick={() => setShowCancel(false)}
+                  className="flex-1 border border-[#E5E5E5] py-3 font-sans-ui text-[11px] tracking-widest uppercase text-[#767676] hover:border-[#999999] transition-colors">
+                  返回
+                </button>
+                <button onClick={handleCancel} disabled={isPending}
+                  className="flex-1 bg-red-600 text-white py-3 font-sans-ui text-[11px] tracking-widest uppercase hover:bg-red-700 transition-colors disabled:opacity-40">
+                  {isPending ? "处理中…" : cancelSend ? "取消并发邮件" : "仅取消"}
                 </button>
               </div>
             </div>

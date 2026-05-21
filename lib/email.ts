@@ -368,3 +368,77 @@ export async function sendDateChangeNotification(data: {
     console.error("[email] Date change email error:", e);
   }
 }
+
+// ─── Cancellation Notification ───────────────────────────────────────────────
+
+export async function sendCancellationNotification(data: {
+  name: string;
+  email: string;
+  bookingCode?: string;
+  tourDate?: string;
+  reason?: string;
+}): Promise<void> {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  if (!user || !pass) {
+    console.warn("[email] GMAIL credentials not set — skipping cancellation email");
+    return;
+  }
+
+  const fmt = (d?: string) =>
+    d ? new Date(d).toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" }) : "—";
+
+  const html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body { margin:0; padding:0; background:#F5F5F5; font-family:"Noto Serif SC","Songti SC",serif; }
+  .wrap { max-width:520px; margin:32px auto; background:#fff; border:1px solid #E5E5E5; }
+  .header { background:#1A1A1A; padding:28px 32px; }
+  .header p { margin:0; color:#fff; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.5; }
+  .header h1 { margin:6px 0 0; color:#fff; font-size:22px; font-weight:300; }
+  .body { padding:28px 32px; }
+  .row { display:flex; justify-content:space-between; border-bottom:1px solid #F0F0F0; padding:10px 0; font-size:14px; }
+  .row span:first-child { color:#999; }
+  .row span:last-child { color:#1A1A1A; text-align:right; }
+  .note { background:#F5F5F5; border-left:3px solid #E5E5E5; padding:14px 16px; margin-top:20px; font-size:13px; color:#666; line-height:1.7; }
+  .footer { background:#F5F5F5; border-top:1px solid #E5E5E5; padding:18px 32px; font-size:11px; color:#999; line-height:1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <p>预约取消通知</p>
+    <h1>您的导览预约已取消</h1>
+  </div>
+  <div class="body">
+    <p style="font-size:15px;color:#333;margin:0 0 20px;">亲爱的 ${data.name}，</p>
+    <p style="font-size:14px;color:#555;margin:0 0 20px;line-height:1.8;">非常遗憾通知您，您的大都会艺术博物馆私人导览预约已被取消。</p>
+    ${data.tourDate ? `<div class="row"><span>原定日期</span><span>${fmt(data.tourDate)}</span></div>` : ""}
+    ${data.bookingCode ? `<div class="row"><span>预约码</span><span style="font-family:monospace;letter-spacing:0.15em">${data.bookingCode}</span></div>` : ""}
+    ${data.reason ? `<div class="note">${data.reason}</div>` : ""}
+    <p style="font-size:14px;color:#555;margin:24px 0 0;line-height:1.8;">如有任何问题，或希望重新安排时间，欢迎随时联系我们。</p>
+  </div>
+  <div class="footer">
+    大都会艺术博物馆 · 欧洲艺术史私人导览<br>
+    微信：Yuti_9999 · 或直接回复此邮件<br>
+    © 2026 · 版权所有
+  </div>
+</div>
+</body>
+</html>`;
+
+  try {
+    const nodemailer = await import("nodemailer");
+    const transporter = nodemailer.createTransport({ service: "gmail", auth: { user, pass } });
+    await transporter.sendMail({
+      from: `"大都会艺术史导览" <${user}>`,
+      to: data.email,
+      subject: `【预约取消】大都会艺术博物馆 欧洲艺术史私人导览`,
+      html,
+    });
+    console.log(`[email] Cancellation notification sent to ${data.email} ✓`);
+  } catch (e) {
+    console.error("[email] Cancellation email error:", e);
+  }
+}
