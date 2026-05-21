@@ -59,13 +59,16 @@ export default async function SurveysPage() {
 
       {/* ── 参观前问卷 ── */}
       <section>
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="font-noto text-2xl text-[#1A1A1A]">
-            参观前问卷 <span className="text-[#E51B23] font-light">({pre.length})</span>
-          </h1>
+        <div className="flex items-start justify-between mb-4 gap-3">
+          <div>
+            <p className="font-sans-ui text-[9px] tracking-[0.2em] uppercase text-[#999999] mb-1">问卷数据</p>
+            <h1 className="font-noto text-xl font-[300] text-[#1A1A1A]">
+              参观前问卷 <span className="text-[#E51B23]">({pre.length})</span>
+            </h1>
+          </div>
           <a href="/api/admin/export?type=pre-surveys" download
-            className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E5E5E5] bg-white px-4 py-2 text-[#767676] hover:border-[#E51B23] hover:text-[#E51B23] transition-colors">
-            下载 CSV
+            className="flex-shrink-0 font-sans-ui text-[10px] tracking-widest uppercase border border-[#E5E5E5] bg-white px-3 py-2 text-[#767676] hover:border-[#E51B23] hover:text-[#E51B23] transition-colors mt-1">
+            CSV
           </a>
         </div>
 
@@ -136,13 +139,13 @@ export default async function SurveysPage() {
 
       {/* ── 参观后问卷 ── */}
       <section>
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="font-noto text-2xl text-[#1A1A1A]">
-            参观后问卷 <span className="text-[#E51B23] font-light">({post.length})</span>
-          </h1>
+        <div className="flex items-start justify-between mb-4 gap-3 mt-8">
+          <h2 className="font-noto text-xl font-[300] text-[#1A1A1A]">
+            参观后问卷 <span className="text-[#E51B23]">({post.length})</span>
+          </h2>
           <a href="/api/admin/export?type=post-surveys" download
-            className="font-sans-ui text-[11px] tracking-widest uppercase border border-[#E5E5E5] bg-white px-4 py-2 text-[#767676] hover:border-[#E51B23] hover:text-[#E51B23] transition-colors">
-            下载 CSV
+            className="flex-shrink-0 font-sans-ui text-[10px] tracking-widest uppercase border border-[#E5E5E5] bg-white px-3 py-2 text-[#767676] hover:border-[#E51B23] hover:text-[#E51B23] transition-colors mt-1">
+            CSV
           </a>
         </div>
 

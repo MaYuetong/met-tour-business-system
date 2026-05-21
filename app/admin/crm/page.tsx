@@ -35,12 +35,15 @@ export default async function CRMPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-noto text-2xl text-[#1A1A1A]">访客管理</h1>
-        <p className="text-sm font-noto text-[#767676]">共 {guests.length} 位访客</p>
+      <div className="mb-5">
+        <p className="font-sans-ui text-[9px] tracking-[0.2em] uppercase text-[#999999] mb-1">访客管理</p>
+        <div className="flex items-end justify-between">
+          <h1 className="font-noto text-2xl font-[300] text-[#1A1A1A]">访客 / CRM</h1>
+          <p className="font-sans-ui text-[10px] text-[#999999] tracking-wide">{guests.length} 位</p>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-8">
+      <div className="flex flex-wrap gap-2 mb-5">
         {[
           { label: `文艺复兴爱好者（${renaissanceFans.length}）`,   color: "bg-[#E51B23]/10 text-[#E51B23] border-[#E51B23]/20" },
           { label: `印象派爱好者（${impressionismFans.length}）`,   color: "bg-[#999999]/20 text-[#8B5E00] border-[#999999]/30" },
