@@ -24,6 +24,7 @@ function calcAmount(groupSize: number) {
 export default function BookingStatusButtons({ id, status, groupSize = 1, tourDate, timeSlot }: Props) {
   const [isPending, startTransition] = useTransition();
   const [showConfirm, setShowConfirm]   = useState(false);
+  const [confirmSend, setConfirmSend]   = useState(false); // default OFF for confirm
   const [showCancel, setShowCancel]     = useState(false);
   const [showEdit, setShowEdit]         = useState(false);
   const [newDate, setNewDate]           = useState(tourDate ?? "");
@@ -37,7 +38,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
 
   const handleConfirm = () => {
     startTransition(async () => {
-      await confirmWithAmount(id, total, editSize);
+      await confirmWithAmount(id, total, editSize, confirmSend);
       setShowConfirm(false);
     });
   };
@@ -145,6 +146,18 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
                   <span className="font-noto text-2xl text-[#E51B23] font-light">${total}</span>
                 </div>
               </div>
+              {/* Send email toggle */}
+              <div className="flex items-center justify-between py-1 border-t border-[#F0F0F0] pt-3">
+                <div>
+                  <p className="font-noto text-sm text-[#1A1A1A]">发送确认邮件给客人</p>
+                  <p className="font-sans-ui text-[10px] text-[#999999] tracking-wide mt-0.5">包含预约详情和导游微信</p>
+                </div>
+                <button type="button" onClick={() => setConfirmSend((v) => !v)}
+                  className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ml-4 ${confirmSend ? "bg-green-600" : "bg-[#E5E5E5]"}`}>
+                  <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform ${confirmSend ? "translate-x-5" : "translate-x-0.5"}`} />
+                </button>
+              </div>
+
               <div className="flex gap-3">
                 <button onClick={() => setShowConfirm(false)}
                   className="flex-1 border border-[#E5E5E5] py-3 font-sans-ui text-[11px] tracking-widest uppercase text-[#767676] hover:border-[#999999] transition-colors">
@@ -152,7 +165,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
                 </button>
                 <button onClick={handleConfirm} disabled={isPending}
                   className="flex-1 bg-green-600 text-white py-3 font-sans-ui text-[11px] tracking-widest uppercase hover:bg-green-700 transition-colors disabled:opacity-40">
-                  {isPending ? "确认中…" : `确认 $${total}`}
+                  {isPending ? "确认中…" : confirmSend ? `确认并发邮件 $${total}` : `确认 $${total}`}
                 </button>
               </div>
             </div>

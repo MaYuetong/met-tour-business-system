@@ -1,6 +1,6 @@
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://met-tour-business-system.vercel.app";
 
-type BookingEmailData = {
+export type BookingEmailData = {
   id: string;
   name: string;
   email: string;
