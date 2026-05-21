@@ -105,6 +105,12 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
             </button>
           </>
         )}
+        {status === "completed" && (
+          <button onClick={() => handleStatus("confirmed")} disabled={isPending}
+            className="font-sans-ui text-[10px] tracking-widest uppercase border border-[#E5E5E5] text-[#767676] px-3 py-1.5 hover:border-amber-400 hover:text-amber-700 transition-colors disabled:opacity-40">
+            撤销完成
+          </button>
+        )}
         {status === "cancelled" && (
           <button onClick={() => handleStatus("pending")} disabled={isPending}
             className="font-sans-ui text-[10px] tracking-widest uppercase border border-[#E5E5E5] text-[#767676] px-3 py-1.5 hover:border-green-400 hover:text-green-700 transition-colors disabled:opacity-40">
