@@ -133,7 +133,7 @@ export default async function BookingsPage() {
                     {new Date(b.createdAt).toLocaleDateString("zh-CN")}
                   </p>
                   <div className="flex items-center gap-2">
-                    <BookingStatusButtons id={b.id} status={b.status} groupSize={b.groupSize} />
+                    <BookingStatusButtons id={b.id} status={b.status} groupSize={b.groupSize} tourDate={b.tourDate} timeSlot={b.timeSlot} />
                     <DeleteButton id={b.id} type="booking" />
                   </div>
                 </div>

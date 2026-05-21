@@ -219,15 +219,30 @@ export async function updateBookingStatus(id: string, status: Booking["status"])
   if (idx !== -1) { records[idx].status = status; await write("bookings.json", records); }
 }
 
-export async function confirmBookingWithAmount(id: string, amount: number): Promise<void> {
+export async function confirmBookingWithAmount(id: string, amount: number, groupSize?: number): Promise<void> {
   const records = await read<Booking>("bookings.json");
   const idx = records.findIndex((b) => b.id === id);
   if (idx !== -1) {
     records[idx].status = "confirmed";
     records[idx].amount = amount;
     records[idx].paymentType = "paid";
+    if (groupSize !== undefined) records[idx].groupSize = groupSize;
     await write("bookings.json", records);
   }
+}
+
+export async function updateBookingDateTime(
+  id: string,
+  tourDate: string,
+  timeSlot?: string,
+): Promise<Booking | null> {
+  const records = await read<Booking>("bookings.json");
+  const idx = records.findIndex((b) => b.id === id);
+  if (idx === -1) return null;
+  records[idx].tourDate = tourDate;
+  if (timeSlot !== undefined) records[idx].timeSlot = timeSlot;
+  await write("bookings.json", records);
+  return records[idx];
 }
 
 // ─── Pre Survey ──────────────────────────────────────────────────────────────

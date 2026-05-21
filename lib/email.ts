@@ -289,3 +289,82 @@ export async function sendSurveyConfirmation(data: SurveyEmailData): Promise<voi
     console.error("[email] Survey email error:", e);
   }
 }
+
+// ─── Date Change Notification ────────────────────────────────────────────────
+
+export async function sendDateChangeNotification(data: {
+  name: string;
+  email: string;
+  bookingCode?: string;
+  oldDate?: string;
+  newDate: string;
+  timeSlot?: string;
+}): Promise<void> {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  if (!user || !pass) {
+    console.warn("[email] GMAIL credentials not set — skipping date change email");
+    return;
+  }
+
+  const fmt = (d?: string) =>
+    d ? new Date(d).toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" }) : "—";
+
+  const html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body { margin:0; padding:0; background:#F5F5F5; font-family:"Noto Serif SC","Songti SC",serif; }
+  .wrap { max-width:520px; margin:32px auto; background:#fff; border:1px solid #E5E5E5; }
+  .header { background:#E51B23; padding:28px 32px; }
+  .header p { margin:0; color:#fff; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.8; }
+  .header h1 { margin:6px 0 0; color:#fff; font-size:22px; font-weight:300; }
+  .body { padding:28px 32px; }
+  .notice { background:#FFF8E1; border:1px solid #FFE082; border-left:3px solid #E51B23; padding:16px 18px; margin-bottom:24px; }
+  .notice p { margin:0; font-size:14px; color:#333; line-height:1.7; }
+  .row { display:flex; justify-content:space-between; border-bottom:1px solid #F0F0F0; padding:10px 0; font-size:14px; }
+  .row span:first-child { color:#999; }
+  .row span:last-child { color:#1A1A1A; font-weight:400; text-align:right; }
+  .new-date { color:#E51B23 !important; font-size:16px !important; }
+  .footer { background:#F5F5F5; border-top:1px solid #E5E5E5; padding:18px 32px; font-size:11px; color:#999; line-height:1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <p>导览时间变更通知</p>
+    <h1>您的参观时间已更新</h1>
+  </div>
+  <div class="body">
+    <p style="font-size:15px;color:#333;margin:0 0 20px;">亲爱的 ${data.name}，</p>
+    <div class="notice">
+      <p>您的导览时间已由我方更新，请以新时间为准。如有疑问，请微信联系 Yuti_9999 或直接回复此邮件。</p>
+    </div>
+    ${data.oldDate ? `<div class="row"><span>原定日期</span><span style="text-decoration:line-through;color:#999">${fmt(data.oldDate)}</span></div>` : ""}
+    <div class="row"><span>新确认日期</span><span class="new-date">${fmt(data.newDate)}</span></div>
+    ${data.timeSlot ? `<div class="row"><span>时间段</span><span>${data.timeSlot}</span></div>` : ""}
+    ${data.bookingCode ? `<div class="row"><span>预约码</span><span style="font-family:monospace;letter-spacing:0.15em">${data.bookingCode}</span></div>` : ""}
+  </div>
+  <div class="footer">
+    大都会艺术博物馆 · 欧洲艺术史私人导览<br>
+    如需调整，请微信联系 Yuti_9999 或回复此邮件。<br>
+    © 2026 · 版权所有
+  </div>
+</div>
+</body>
+</html>`;
+
+  try {
+    const nodemailer = await import("nodemailer");
+    const transporter = nodemailer.createTransport({ service: "gmail", auth: { user, pass } });
+    await transporter.sendMail({
+      from: `"大都会艺术史导览" <${user}>`,
+      to: data.email,
+      subject: `【导览时间变更】${fmt(data.newDate)} · 大都会艺术博物馆`,
+      html,
+    });
+    console.log(`[email] Date change notification sent to ${data.email} ✓`);
+  } catch (e) {
+    console.error("[email] Date change email error:", e);
+  }
+}

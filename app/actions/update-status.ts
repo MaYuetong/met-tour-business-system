@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { updateBookingStatus, confirmBookingWithAmount, type Booking } from "@/lib/db";
+import { updateBookingStatus, confirmBookingWithAmount, updateBookingDateTime, getBookings, type Booking } from "@/lib/db";
+import { sendDateChangeNotification } from "@/lib/email";
 
 export async function updateStatus(
   id: string,
@@ -29,7 +30,8 @@ export async function updateStatus(
 
 export async function confirmWithAmount(
   id: string,
-  amount: number
+  amount: number,
+  groupSize?: number,
 ): Promise<{ ok: boolean; error?: string }> {
   const cookieStore = await cookies();
   const session = cookieStore.get("admin_session")?.value;
@@ -38,10 +40,44 @@ export async function confirmWithAmount(
   if (!session || session !== secret) return { ok: false, error: "未授权" };
   if (!id || amount <= 0) return { ok: false, error: "参数错误" };
 
-  await confirmBookingWithAmount(id, amount);
+  await confirmBookingWithAmount(id, amount, groupSize);
 
   revalidatePath("/admin/bookings");
   revalidatePath("/admin");
 
+  return { ok: true };
+}
+
+export async function updateDateTime(
+  id: string,
+  newDate: string,
+  timeSlot: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("admin_session")?.value;
+  const secret  = process.env.ADMIN_SECRET ?? "change-this-secret";
+  if (!session || session !== secret) return { ok: false, error: "未授权" };
+  if (!id || !newDate) return { ok: false, error: "参数错误" };
+
+  // Get old date before updating
+  const bookings = await getBookings();
+  const existing = bookings.find((b) => b.id === id);
+  const oldDate  = existing?.tourDate;
+
+  const updated = await updateBookingDateTime(id, newDate, timeSlot || undefined);
+  if (!updated) return { ok: false, error: "预约未找到" };
+
+  // Send email to customer
+  await sendDateChangeNotification({
+    name:        updated.name,
+    email:       updated.email,
+    bookingCode: updated.bookingCode,
+    oldDate,
+    newDate,
+    timeSlot:    timeSlot || undefined,
+  });
+
+  revalidatePath("/admin/bookings");
+  revalidatePath("/admin");
   return { ok: true };
 }
