@@ -22,7 +22,7 @@ const INTEREST_LABELS: Record<string, string> = {
 export default async function BookingsPage() {
   const [bookings, pre] = await Promise.all([getBookings(), getPreSurveys()]);
   const sorted  = [...bookings].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  const revenue = bookings.filter((b) => b.status !== "cancelled").reduce((s, b) => s + b.amount, 0);
+  const revenue = bookings.filter((b) => b.status === "completed").reduce((s, b) => s + b.amount, 0);
 
   return (
     <div>
@@ -133,7 +133,7 @@ export default async function BookingsPage() {
                     {new Date(b.createdAt).toLocaleDateString("zh-CN")}
                   </p>
                   <div className="flex items-center gap-2">
-                    <BookingStatusButtons id={b.id} status={b.status} groupSize={b.groupSize} tourDate={b.tourDate} timeSlot={b.timeSlot} />
+                    <BookingStatusButtons id={b.id} status={b.status} groupSize={b.groupSize} tourDate={b.tourDate} timeSlot={b.timeSlot} notes={b.notes} amount={b.amount} />
                     <DeleteButton id={b.id} type="booking" />
                   </div>
                 </div>

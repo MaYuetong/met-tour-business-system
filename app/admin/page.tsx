@@ -13,7 +13,7 @@ export default async function AdminOverview() {
   ]);
 
   const confirmed      = bookings.filter((b) => b.status === "confirmed" || b.status === "completed");
-  const revenue        = confirmed.reduce((s, b) => s + b.amount, 0);
+  const revenue        = bookings.filter((b) => b.status === "completed").reduce((s, b) => s + b.amount, 0);
   const upcoming       = bookings
     .filter((b) => b.tourDate && b.status === "confirmed")
     .sort((a, b) => new Date(a.tourDate!).getTime() - new Date(b.tourDate!).getTime());
@@ -23,7 +23,7 @@ export default async function AdminOverview() {
   const stats = [
     { label: "总预约",  value: bookings.length,     sub: `${confirmed.length} 已确认` },
     { label: "即将到来", value: upcoming.length,     sub: `共 ${upcomingPeople} 人` },
-    { label: "总收入",  value: `$${revenue}`,        sub: "已确认订单" },
+    { label: "总收入",  value: `$${revenue}`,        sub: "已完成订单" },
     { label: "平均评分", value: analytics.responseCount > 0 ? `${analytics.avgRatings.overall.toFixed(1)}` : "—", sub: `共 ${post.length} 份` },
     { label: "NPS",     value: analytics.responseCount > 0 ? analytics.nps : "—", sub: analytics.nps >= 50 ? "优秀" : analytics.nps >= 0 ? "良好" : "暂无数据" },
   ];

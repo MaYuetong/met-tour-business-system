@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { updateBookingStatus, confirmBookingWithAmount, updateBookingDateTime, getBookings, findGuideForDate, type Booking } from "@/lib/db";
+import { updateBookingStatus, confirmBookingWithAmount, updateBookingDateTime, updateBookingInfo, getBookings, findGuideForDate, type Booking } from "@/lib/db";
 import { sendDateChangeNotification, sendCancellationNotification, sendBookingConfirmation } from "@/lib/email";
 
 export async function updateStatus(
@@ -124,6 +124,38 @@ export async function cancelBooking(
       bookingCode: booking.bookingCode,
       tourDate:    booking.tourDate,
       reason,
+    });
+  }
+
+  revalidatePath("/admin/bookings");
+  revalidatePath("/admin");
+  return { ok: true };
+}
+
+export async function editBookingInfo(
+  id: string,
+  fields: { groupSize?: number; amount?: number; tourDate?: string; timeSlot?: string; notes?: string },
+  notifyDateChange: boolean,
+  oldDate?: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("admin_session")?.value;
+  const secret  = process.env.ADMIN_SECRET ?? "change-this-secret";
+  if (!session || session !== secret) return { ok: false, error: "未授权" };
+  if (!id) return { ok: false, error: "缺少 ID" };
+
+  const updated = await updateBookingInfo(id, fields);
+  if (!updated) return { ok: false, error: "预约未找到" };
+
+  // If date changed and notification requested, send email
+  if (notifyDateChange && fields.tourDate && updated.email) {
+    await sendDateChangeNotification({
+      name:        updated.name,
+      email:       updated.email,
+      bookingCode: updated.bookingCode,
+      oldDate,
+      newDate:     fields.tourDate,
+      timeSlot:    fields.timeSlot,
     });
   }
 

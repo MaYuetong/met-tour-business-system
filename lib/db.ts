@@ -245,6 +245,22 @@ export async function updateBookingDateTime(
   return records[idx];
 }
 
+export async function updateBookingInfo(
+  id: string,
+  fields: { groupSize?: number; amount?: number; tourDate?: string; timeSlot?: string; notes?: string },
+): Promise<Booking | null> {
+  const records = await read<Booking>("bookings.json");
+  const idx = records.findIndex((b) => b.id === id);
+  if (idx === -1) return null;
+  if (fields.groupSize !== undefined) records[idx].groupSize = fields.groupSize;
+  if (fields.amount    !== undefined) records[idx].amount    = fields.amount;
+  if (fields.tourDate  !== undefined) records[idx].tourDate  = fields.tourDate;
+  if (fields.timeSlot  !== undefined) records[idx].timeSlot  = fields.timeSlot;
+  if (fields.notes     !== undefined) records[idx].notes     = fields.notes;
+  await write("bookings.json", records);
+  return records[idx];
+}
+
 // ─── Pre Survey ──────────────────────────────────────────────────────────────
 
 function deriveProfileTag(data: { knowledgeLevel: string; experiencePreference: string }): string {
