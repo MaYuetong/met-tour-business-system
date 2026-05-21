@@ -12,6 +12,7 @@ const notoSerifSC = Noto_Serif_SC({
 
 const NAV = [
   { href: "/admin",            label: "概览" },
+  { href: "/admin/checkin",    label: "到场核销 ✓" },
   { href: "/admin/bookings",   label: "预约记录" },
   { href: "/admin/surveys",    label: "问卷数据" },
   { href: "/admin/reviews",    label: "访客评价" },

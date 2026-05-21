@@ -69,6 +69,9 @@ export type Booking = {
   referralCode?: string;
   profileTag?: string;
   bookingCode?: string;
+  checkedIn?: boolean;
+  checkedInAt?: string;
+  guideNotes?: string;
 };
 
 export type PreSurveyRecord = {
@@ -150,6 +153,59 @@ export async function createBooking(data: Omit<Booking, "id" | "createdAt" | "bo
 
 export async function getBookings(): Promise<Booking[]> {
   return read<Booking>("bookings.json");
+}
+
+export async function checkInBooking(
+  bookingCode: string,
+  guideNotes?: string,
+): Promise<Booking | null> {
+  const records = await read<Booking>("bookings.json");
+  const idx = records.findIndex(
+    (r) => r.bookingCode?.toUpperCase() === bookingCode.toUpperCase(),
+  );
+  if (idx === -1) return null;
+  records[idx].checkedIn  = true;
+  records[idx].checkedInAt = new Date().toISOString();
+  if (guideNotes !== undefined) records[idx].guideNotes = guideNotes;
+  await write("bookings.json", records);
+  return records[idx];
+}
+
+export async function lookupCheckin(code: string): Promise<{
+  booking: Booking | null;
+  preSurvey: PreSurveyRecord | null;
+  postSurvey: PostSurveyRecord | null;
+}> {
+  const [bookings, preSurveys, postSurveys] = await Promise.all([
+    read<Booking>("bookings.json"),
+    read<PreSurveyRecord>("pre-surveys.json"),
+    read<PostSurveyRecord>("post-surveys.json"),
+  ]);
+
+  // Match by bookingCode (primary) or referral-style lookup by email
+  const booking = bookings.find(
+    (b) => b.bookingCode?.toUpperCase() === code.toUpperCase(),
+  ) ?? null;
+
+  if (!booking) return { booking: null, preSurvey: null, postSurvey: null };
+
+  // Link pre-survey: by bookingId or by email + closest date
+  const preSurvey =
+    preSurveys.find((s) => s.bookingId === booking.id) ??
+    preSurveys
+      .filter((s) => s.email?.toLowerCase() === booking.email?.toLowerCase())
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ??
+    null;
+
+  // Link post-survey: by bookingId or email
+  const postSurvey =
+    postSurveys.find((s) => s.bookingId === booking.id) ??
+    postSurveys
+      .filter((s) => s.contactEmail?.toLowerCase() === booking.email?.toLowerCase())
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ??
+    null;
+
+  return { booking, preSurvey, postSurvey };
 }
 
 export async function deleteBooking(id: string): Promise<void> {
