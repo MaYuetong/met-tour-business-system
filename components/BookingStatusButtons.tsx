@@ -35,10 +35,15 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
   const [cancelSend, setCancelSend]     = useState(true);
 
   const { rate, total } = calcAmount(editSize);
+  const [finalAmount, setFinalAmount]   = useState(total);
+
+  // Keep finalAmount in sync when editSize changes (unless user has manually edited it)
+  const [amountEdited, setAmountEdited] = useState(false);
+  const displayTotal = amountEdited ? finalAmount : total;
 
   const handleConfirm = () => {
     startTransition(async () => {
-      await confirmWithAmount(id, total, editSize, confirmSend);
+      await confirmWithAmount(id, displayTotal, editSize, confirmSend);
       setShowConfirm(false);
     });
   };
@@ -124,13 +129,13 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
                   <span className="font-noto text-sm text-[#767676]">人数</span>
                   <div className="flex items-center gap-3">
                     <button type="button"
-                      onClick={() => setEditSize((n) => Math.max(1, n - 1))}
+                      onClick={() => { setEditSize((n) => Math.max(1, n - 1)); setAmountEdited(false); }}
                       className="w-8 h-8 border border-[#E5E5E5] bg-white text-[#444444] font-noto text-lg hover:border-[#E51B23] hover:text-[#E51B23] transition-colors flex items-center justify-center">
                       −
                     </button>
                     <span className="font-noto text-xl text-[#1A1A1A] w-6 text-center">{editSize}</span>
                     <button type="button"
-                      onClick={() => setEditSize((n) => Math.min(12, n + 1))}
+                      onClick={() => { setEditSize((n) => Math.min(12, n + 1)); setAmountEdited(false); }}
                       className="w-8 h-8 border border-[#E5E5E5] bg-white text-[#444444] font-noto text-lg hover:border-[#E51B23] hover:text-[#E51B23] transition-colors flex items-center justify-center">
                       +
                     </button>
@@ -141,9 +146,25 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
                   <span className="text-[#767676]">单价</span>
                   <span className="text-[#1A1A1A]">${rate}/人 <span className="text-xs text-[#999999]">({editSize >= 3 ? "团体价" : "标准价"})</span></span>
                 </div>
-                <div className="flex justify-between border-t border-[#E5E5E5] pt-2">
-                  <span className="font-noto text-sm text-[#767676]">合计</span>
-                  <span className="font-noto text-2xl text-[#E51B23] font-light">${total}</span>
+                <div className="flex items-center justify-between border-t border-[#E5E5E5] pt-2">
+                  <div>
+                    <span className="font-noto text-sm text-[#767676]">实收金额</span>
+                    {amountEdited && displayTotal !== total && (
+                      <span className="font-sans-ui text-[9px] text-[#E51B23] ml-2 tracking-wide">
+                        已调整（原 ${total}）
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="font-noto text-xl text-[#E51B23]">$</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={displayTotal}
+                      onChange={(e) => { setFinalAmount(Number(e.target.value)); setAmountEdited(true); }}
+                      className="w-20 text-right font-noto text-2xl text-[#E51B23] font-light bg-transparent border-b border-[#E5E5E5] focus:border-[#E51B23] focus:outline-none"
+                    />
+                  </div>
                 </div>
               </div>
               {/* Send email toggle */}
@@ -165,7 +186,7 @@ export default function BookingStatusButtons({ id, status, groupSize = 1, tourDa
                 </button>
                 <button onClick={handleConfirm} disabled={isPending}
                   className="flex-1 bg-green-600 text-white py-3 font-sans-ui text-[11px] tracking-widest uppercase hover:bg-green-700 transition-colors disabled:opacity-40">
-                  {isPending ? "确认中…" : confirmSend ? `确认并发邮件 $${total}` : `确认 $${total}`}
+                  {isPending ? "确认中…" : confirmSend ? `确认并发邮件 $${displayTotal}` : `确认 $${displayTotal}`}
                 </button>
               </div>
             </div>
